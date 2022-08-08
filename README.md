@@ -16,7 +16,7 @@ Adding funfacts
 If correct, tree added to their profile in the app.
 Have an own tree collection page
  
-# Extra features:
+# Extra features
 Gain points every time that adds a tree in their profile
 High ranking users can be in a leaderboard
 Interact with other users

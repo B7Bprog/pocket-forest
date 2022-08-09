@@ -1,6 +1,6 @@
 # Pocket Forest
 
-# Project brief
+# Summary
 
 Our main goal is to help people get out and learn about trees. 
 In this app, a user has the ability to find a tree which is in their location and capture it to add their collection. 

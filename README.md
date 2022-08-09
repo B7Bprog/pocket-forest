@@ -24,10 +24,11 @@ Interact with other users
 
 
 # Tech Stack
-React Native: Mobile app to use on the go 
-MapBox: map API which allows for customisation  
-Mongo DB: Users database(user profile / collected trees),  Trees database(location, species, type etc) popular alternative to SQL, works well for mobile applications
-P5.js / React Native Canvas / Fabric.js (still choosing): Visualisation of the forest
-TypeScript
+React Native
+
+MapBox
+
+Mongo DB
+
 APIs
 

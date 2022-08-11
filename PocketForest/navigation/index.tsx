@@ -13,8 +13,9 @@ import { ColorSchemeName, Pressable } from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomePage from '../screens/HomeScreen';
-import ForestPage from '../screens/ForestScreen';
 import MapPage from '../screens/MapScreen';
+import ForestPage from '../screens/ForestScreen';
+import CameraPage from '../screens/CameraScreen';
 import UserPage from '../screens/UserScreen';
 import StylesPage from '../screens/StylesScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
@@ -41,6 +42,7 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomePage} />
       <Stack.Screen name="Map" component={MapPage} />
+      <Stack.Screen name="Camera" component={CameraPage} />
       <Stack.Screen name="Forest" component={ForestPage} />
       <Stack.Screen name="User" component={UserPage} />
       <Stack.Screen name="Styles" component={StylesPage} />

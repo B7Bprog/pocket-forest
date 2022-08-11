@@ -3,12 +3,11 @@ import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
-import Map from '../components/Map';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 
-export default function MapPage() {
+export default function CameraPage() {
 
 
   const navigation = useNavigation<homeScreenProp>();
@@ -16,10 +15,10 @@ export default function MapPage() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Camera Page will go here</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text>This page will be for the map</Text>
       <Button title="Forest" onPress={() => navigation.navigate('Forest')} />
-      <Map />
+      <Text>When we take the picture, we will navigate to the Forest</Text>
     </View>
   );
 }

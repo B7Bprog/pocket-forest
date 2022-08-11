@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {FontAwesome5} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Map() {
+
+  const image = { uri: "https://cdn-icons.flaticon.com/png/512/3704/premium/3704101.png?token=exp=1660229984~hmac=57e9dc9effe1a9c1bbae17c2de551045" };
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
@@ -123,12 +125,27 @@ export default function Map() {
             </Marker>
           )) : null }
        </MapView>
+       {        
+        !treeDistance &&
+        <View style={styles.textbox}>
+            <Text style={styles.textInsideTextbox}>Let's go find some trees!</Text>
+            <View style={styles.animal}>
+            <Image style={styles.animalImage}
+        source={{
+          uri: 'https://cdn-icons.flaticon.com/png/512/3704/premium/3704101.png?token=exp=1660229984~hmac=57e9dc9effe1a9c1bbae17c2de551045',
+        }}
+      /></View>
+        </View>
+       }
+       {/* <View style={styles.textbox}>
+        <Text>hello</Text>
+       </View>
        <View style={styles.textbox}>
         {
           !treeDistance && <Text style={styles.textInsideTextbox}>Find some lovely trees near you!</Text>
         }
         {
-          !closeEnough && <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, get a bit closer!</Text>
+          !closeEnough && <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
         }
         {
           closeEnough && <Button 
@@ -136,7 +153,7 @@ export default function Map() {
           onPress={() => navigation.navigate("Camera")}
          />
         }
-        </View>
+        </View> */}
     </View>
   );
 }
@@ -183,18 +200,30 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   textbox: {
-    backgroundColor: 'white',
-    height: '15%',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    height: '12%',
     width: '100%',
     position: 'absolute',
     bottom: 0,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: 0.8
+    flexDirection: 'row'
   },
   textInsideTextbox: {
     fontSize: 18,
     color: 'black'
   },
+  animal: {
+    backgroundColor: '#69a297',
+    borderRadius: '50%',
+    padding: 10,
+    marginLeft: 20,
+    borderColor: '#ff7733',
+    borderWidth: 3
+  },
+  animalImage: {
+    height: 40,
+    width: 40,
+  }
 });

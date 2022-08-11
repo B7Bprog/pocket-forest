@@ -1,17 +1,15 @@
-import { StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+export default function HomePage({ navigation }: RootTabScreenProps<'TabTwo'>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Map Page</Text>
+      <Text style={styles.title}>Home</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Button title="switch page" onPress={() => {
-        navigation.navigate("Home")
-      }}/>
+      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
     </View>
   );
 }

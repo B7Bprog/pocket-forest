@@ -19,6 +19,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Home: undefined;
   Map: undefined;
+  Camera: undefined;
   Forest: undefined;
   User: undefined;
   Styles: undefined;

@@ -40,12 +40,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomePage} />
-      <Stack.Screen name="Map" component={MapPage} />
-      <Stack.Screen name="Camera" component={CameraPage} />
-      <Stack.Screen name="Forest" component={ForestPage} />
-      <Stack.Screen name="User" component={UserPage} />
-      <Stack.Screen name="Styles" component={StylesPage} />
+      <Stack.Screen name="Home" component={HomePage} options={{headerShown: false}} />
+      <Stack.Screen name="Map" component={MapPage} options={{headerShown: false}} />
+      <Stack.Screen name="Camera" component={CameraPage} options={{headerShown: false}} />
+      <Stack.Screen name="Forest" component={ForestPage} options={{headerShown: false}} />
+      <Stack.Screen name="User" component={UserPage} options={{headerShown: false}} />
+      <Stack.Screen name="Styles" component={StylesPage} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 }

@@ -22,9 +22,16 @@ export default function HomePage() {
         <Text style={styles.title}>POCKET</Text>
         <Text style={styles.title}>FOREST</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <View>
         <Pressable style={styles.button} onPress={() => navigation.navigate('Map')}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </Pressable>
+        </View>
+        <View style={styles.bottomButton}>
+        <Pressable style={styles.button2} onPress={() => navigation.navigate('Camera')}>
+          <Text style={styles.buttonText2}>Snap a pic!</Text>
+        </Pressable>
+        </View>
         </View>
       </ImageBackground>
     </View>
@@ -70,5 +77,21 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: '500'
+  },
+  button2: {
+    borderRadius: 5,
+    borderColor: 'white',
+    padding: 15,
+    paddingHorizontal: 30,
+    color: 'white',
+    borderWidth: 3
+  },
+  buttonText2: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  bottomButton: {
+    marginTop: 25,
+    backgroundColor: 'transparent'
   }
 });

@@ -7,6 +7,9 @@ const {
   getAllTrees,
   getTreeByID,
   addTree,
+  addUser,
+  getAllUsers,
+  updateUser,
 } = require("./controllers/tree-controller");
 const app = express();
 
@@ -34,6 +37,10 @@ app.use(express.json());
 
 app.get("/api/all-trees", getAllTrees);
 app.get("/api/trees/:tree_id", getTreeByID);
-
 app.post("/api/add-tree", addTree);
+
+app.post("/api/add-user", addUser);
+app.get("/api/all-users", getAllUsers);
+app.patch("/api/users/:username", updateUser);
+
 module.exports = app;

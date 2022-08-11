@@ -63,3 +63,57 @@ describe("Tree endpoints", () => {
       });
   });
 });
+describe("User endpoints", () => {
+  test("Adds a new user", () => {
+    const new_user = {
+      name: "Peter",
+      username: "peter22",
+      points: 15,
+      favorite_tree: `Maple`,
+    };
+    return request(app)
+      .post(`/api/add-user`)
+      .send(new_user)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body).toHaveProperty("_id");
+        expect(body).toHaveProperty("name");
+        expect(body).toHaveProperty("username");
+        expect(body).toHaveProperty("points");
+        expect(body).toHaveProperty("favorite_tree");
+      });
+  });
+  test("Responds with all the users", () => {
+    return request(app)
+      .get("/api/all-users")
+      .expect(200)
+      .then(({ body }) => {
+        body.forEach((user) => {
+          expect(user).toHaveProperty("_id");
+          expect(user).toHaveProperty("name");
+          expect(user).toHaveProperty("username");
+          expect(user).toHaveProperty("points");
+          expect(user).toHaveProperty("favorite_tree");
+        });
+      });
+  });
+  test("Finds and updates a user", () => {
+    const username = "peter22";
+    const update = {
+      points: 16,
+    };
+    return request(app)
+      .patch(`/api/users/${username}`)
+      .send(update)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toHaveProperty("_id");
+        expect(body).toHaveProperty("name");
+        expect(body).toHaveProperty("username");
+        expect(body).toHaveProperty("points");
+        expect(body).toHaveProperty("favorite_tree");
+
+        expect(body.points).toBe(16);
+      });
+  });
+});

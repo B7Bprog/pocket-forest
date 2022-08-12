@@ -42,16 +42,17 @@ exports.getAllUsers = (req, res, next) => {
     .catch((err) => {});
 };
 
-exports.updateUser = (req, res, next) => {
+exports.updateUser = async (req, res, next) => {
+  const opts = { new: true, upsert: true };
   const { username } = req.params;
   const query = { username: username };
   console.log(username, "<<< username");
-  User.findOneAndUpdate(query, req.body, (result) => {
-    console.log(result, "<<< result here");
-    res.status(200).send(result);
-  });
+  console.log(req.body);
+  const result = await User.findOneAndUpdate(query, req.body, opts);
   /* .then((result) => {
       res.status(200).send(result);
     })
     .catch((err) => {}); */
+  console.log(result, "<<<result");
+  res.status(200).send(result);
 };

@@ -55,7 +55,7 @@ export default function CameraPage() {
       Promise.resolve(photo.base64).then((base64files) => {
         //console.log(base64files);
         const data = {
-          api_key: "K8TIo4HNKoGcvlcNkwI8dLGe2rUPNrYZhNgSuWYuym6AM3NBY9",
+          api_key: "dOlliWXgIAihBnx1uDmtApkDXNQQes0kBqjtZ1ggaZOZVh2gSD",
           images: [`image/jpeg;base64,${base64files}`],
           // modifiers docs: https://github.com/flowerchecker/Plant-id-API/wiki/Modifiers
           modifiers: ["crops_fast", "similar_images"],
@@ -83,7 +83,7 @@ export default function CameraPage() {
           })
           .then((data) => {
             setPlantData(data);
-            // console.log("Success:", data);
+            console.log("Success:", data);
           })
           .catch((error) => {
             console.error("Error:", error);

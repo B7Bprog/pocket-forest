@@ -123,7 +123,7 @@ export default function CameraPage() {
   return (
     <Camera style={styles.container} ref={cameraRef}>
       <View style={styles.buttonContainer}>
-        <Button title="Take Pic" onPress={takePic} />
+        <Button title="" onPress={takePic} />
       </View>
       <StatusBar style="auto" />
     </Camera>
@@ -133,12 +133,18 @@ export default function CameraPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    flexDirection:"row",
     justifyContent: "center",
+    alignItems: "flex-end",
   },
   buttonContainer: {
-    backgroundColor: "#fff",
-    alignSelf: "flex-end",
+    backgroundColor: "#00b894",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    marginBottom: 50,
   },
   preview: {
     alignSelf: "stretch",

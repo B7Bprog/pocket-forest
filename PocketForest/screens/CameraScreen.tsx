@@ -6,18 +6,51 @@ import {
   SafeAreaView,
   Button,
   Image,
+  Modal,
 } from "react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
+import { useNavigation } from "@react-navigation/native";
+import { RootTabScreenProps, RootStackParamList } from "../types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import MatchModal from "../components/MatchModal";
+
+type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function CameraPage() {
+  const navigation = useNavigation<cameraScreenProp>();
+
+  const dummyTree = {
+    coords: { latitude: 53.47245095145229, longitude: -2.24236224810586 },
+    species: "Tradescantia fluminensis",
+  };
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
   const [plantData, setPlantData] = useState();
+  const [match, setMatch] = useState(false);
+
+  useEffect(() => {
+    if (plantData) {
+      if (
+        plantData.suggestions[0].plant_details.scientific_name ===
+        dummyTree.species
+      ) {
+        console.log("matching!");
+        console.log(
+          plantData.suggestions[0].plant_details,
+          "plantData.suggestions[0].plant_details"
+        );
+        setMatch(true);
+        // navigation.navigate("SingleTree", {
+        //   treeInfo: plantData.suggestions[0].plant_details,
+        // });
+      }
+    }
+  }, [plantData]);
 
   useEffect(() => {
     (async () => {
@@ -83,7 +116,8 @@ export default function CameraPage() {
           })
           .then((data) => {
             setPlantData(data);
-            console.log("Success:", data);
+
+            // console.log("Success:", data);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -105,17 +139,37 @@ export default function CameraPage() {
 
     return (
       <SafeAreaView style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={match}
+          // onRequestClose={() => {
+          //   Alert.alert("Modal has been closed.");
+          //   setModalVisible(!modalVisible);
+          // }}
+        >
+          <MatchModal
+            matchingDetails={
+              plantData && plantData.suggestions[0].plant_details
+            }
+          />
+        </Modal>
+
         <Image
           style={styles.preview}
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
-        <Button title="upload" onPress={uploadPic} />
+        {!match && (
+          <View>
+            <Button title="upload" onPress={uploadPic} />
 
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={savePhoto} />
-        ) : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
+            <Button title="Share" onPress={sharePic} />
+            {hasMediaLibraryPermission ? (
+              <Button title="Save" onPress={savePhoto} />
+            ) : undefined}
+            <Button title="Discard" onPress={() => setPhoto(undefined)} />
+          </View>
+        )}
       </SafeAreaView>
     );
   }

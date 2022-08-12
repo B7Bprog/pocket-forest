@@ -12,8 +12,7 @@ import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
 
-export default function App() {
-  console.log("data:image/png;base64," + image.substring(0, 100), "<<<<IMAGE");
+export default function CameraPage() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();

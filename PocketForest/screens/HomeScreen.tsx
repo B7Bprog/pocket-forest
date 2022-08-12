@@ -1,4 +1,4 @@
-import { StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { StyleSheet, ImageBackground, Pressable, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';

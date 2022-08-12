@@ -28,7 +28,6 @@ exports.addTree = async (req, res, next) => {
 
 exports.addUser = async (req, res, next) => {
   const new_user = req.body;
-  console.log(new_user, "<<<new user");
   const result = await User.create(new_user);
 
   res.status(201).send(result);
@@ -46,13 +45,6 @@ exports.updateUser = async (req, res, next) => {
   const opts = { new: true, upsert: true };
   const { username } = req.params;
   const query = { username: username };
-  console.log(username, "<<< username");
-  console.log(req.body);
   const result = await User.findOneAndUpdate(query, req.body, opts);
-  /* .then((result) => {
-      res.status(200).send(result);
-    })
-    .catch((err) => {}); */
-  console.log(result, "<<<result");
   res.status(200).send(result);
 };

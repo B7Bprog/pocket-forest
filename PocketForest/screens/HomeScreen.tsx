@@ -31,6 +31,9 @@ export default function HomePage() {
         <Pressable style={styles.button2} onPress={() => navigation.navigate('Camera')}>
           <Text style={styles.buttonText2}>Snap a pic!</Text>
         </Pressable>
+        <Pressable style={styles.button2} onPress={() => navigation.navigate('Forest')}>
+          <Text style={styles.buttonText2}>Go straight to forest</Text>
+        </Pressable>
         </View>
         </View>
       </ImageBackground>

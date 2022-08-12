@@ -1,20 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {FontAwesome5} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Map() {
 
-  const image = { uri: "https://cdn-icons.flaticon.com/png/512/3704/premium/3704101.png?token=exp=1660229984~hmac=57e9dc9effe1a9c1bbae17c2de551045" };
-
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
   const navigation = useNavigation(); 
+
+  let foxMessage;
+
+  if (closeEnough) {
+    foxMessage = <Pressable
+     onPress={() => navigation.navigate("Camera")}>
+      <Text style={styles.textInsideTextbox}>Let's add this tree to our forest!</Text>
+      </Pressable>
+  } else if (!closeEnough && treeDistance) {
+    foxMessage = <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
+  } else {
+    foxMessage = <Text style={styles.textInsideTextbox}>Hi! Let's go find some trees!</Text>
+  }
+
   const [trees] = useState([
     {
       id: 1,
@@ -82,12 +94,9 @@ export default function Map() {
     const distance = Math.sqrt(deltaLatitude + deltaLongitude) * 111139;
 
     if (distance < 20) {
-      console.log("close enough");
       setCloseEnough(true);
     } else {
-
     setTreeDistance(distance);
-      console.log(`you are ${Math.round(distance)} meters away, please get closer`)
       setCloseEnough(false);
     }
   }
@@ -125,35 +134,13 @@ export default function Map() {
             </Marker>
           )) : null }
        </MapView>
-       {        
-        !treeDistance &&
         <View style={styles.textbox}>
-            <Text style={styles.textInsideTextbox}>Let's go find some trees!</Text>
+            {foxMessage}
             <View style={styles.animal}>
-            <Image style={styles.animalImage}
-        source={{
-          uri: 'https://cdn-icons.flaticon.com/png/512/3704/premium/3704101.png?token=exp=1660229984~hmac=57e9dc9effe1a9c1bbae17c2de551045',
-        }}
-      /></View>
+              <Image style={styles.animalImage} source={require('../assets/images/fox.png')}/>
+            </View>
         </View>
-       }
-       {/* <View style={styles.textbox}>
-        <Text>hello</Text>
-       </View>
-       <View style={styles.textbox}>
-        {
-          !treeDistance && <Text style={styles.textInsideTextbox}>Find some lovely trees near you!</Text>
-        }
-        {
-          !closeEnough && <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
-        }
-        {
-          closeEnough && <Button 
-          title="Let's add this tree to our forest!"
-          onPress={() => navigation.navigate("Camera")}
-         />
-        }
-        </View> */}
+
     </View>
   );
 }

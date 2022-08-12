@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Button,
   Image,
+  Pressable,
 } from "react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
@@ -122,8 +123,8 @@ export default function CameraPage() {
 
   return (
     <Camera style={styles.container} ref={cameraRef}>
-      <View style={styles.buttonContainer}>
-        <Button title="" onPress={takePic} />
+      <View>
+        <Pressable style={styles.button} onPress={takePic} />
       </View>
       <StatusBar style="auto" />
     </Camera>
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
   },
-  buttonContainer: {
+  button :{
     backgroundColor: "#00b894",
     justifyContent: "center",
     alignItems: "flex-end",

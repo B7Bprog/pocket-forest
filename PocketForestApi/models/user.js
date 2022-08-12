@@ -18,6 +18,10 @@ const userSchema = new Schema(
     },
     favorite_tree: {
       type: String,
+      required: false,
+    },
+    num_of_trees_collected: {
+      type: Number,
       required: true,
     },
   },

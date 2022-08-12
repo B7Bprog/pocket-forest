@@ -15,14 +15,18 @@ export default function Map() {
   const navigation = useNavigation(); 
 
   let foxMessage;
+  let alertIcon;
 
   if (closeEnough) {
-    foxMessage = <Pressable
-     onPress={() => navigation.navigate("Camera")}>
-      <Text style={styles.textInsideTextbox}>Let's add this tree to our forest!</Text>
-      </Pressable>
+    foxMessage = 
+    <Pressable onPress={() => navigation.navigate("Camera")}>
+      <Text style={styles.textInsideTextbox}>Let's <Text style={styles.click}>add this tree</Text> to our forest!</Text>
+    </Pressable>
+    alertIcon = 
+      <View style={[styles.alert, styles.primaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
   } else if (!closeEnough && treeDistance) {
     foxMessage = <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
+    alertIcon = <View style={[styles.alert, styles.secondaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
   } else {
     foxMessage = <Text style={styles.textInsideTextbox}>Hi! Let's go find some trees!</Text>
   }
@@ -135,6 +139,7 @@ export default function Map() {
           )) : null }
        </MapView>
         <View style={styles.textbox}>
+            {alertIcon}
             {foxMessage}
             <View style={styles.animal}>
               <Image style={styles.animalImage} source={require('../assets/images/fox.png')}/>
@@ -193,9 +198,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingLeft: 20
   },
   textInsideTextbox: {
     fontSize: 18,
@@ -207,10 +213,33 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 20,
     borderColor: '#ff7733',
-    borderWidth: 3
+    borderWidth: 3,
+    position: 'absolute',
+    right: 20
   },
   animalImage: {
     height: 40,
     width: 40,
+  },
+  alert: {
+    position: 'absolute',
+    right: 35,
+    top: -25,
+    backgroundColor: '#ff7733',
+    width: 35,
+    height: 35,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  primaryColour: {
+    backgroundColor: '#ff7733',
+  },
+  secondaryColour: {
+    backgroundColor: '#69a297',
+  },
+  click: {
+    color: '#ff7733',
   }
 });

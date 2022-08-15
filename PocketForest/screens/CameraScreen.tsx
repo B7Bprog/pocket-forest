@@ -131,6 +131,45 @@ export default function CameraPage() {
       });
     };
 
+    useEffect(() => {
+      if (match) {
+
+        Promise.resolve(photo.base64).then((base64files) => {
+
+          const options = { quality: 0.7, base64: true };
+        
+            let base64Img = `data:image/jpg;base64,${base64files}`;
+            let apiUrl =
+              'https://api.cloudinary.com/v1_1/pocketforest/image/upload';
+            let data = {
+              file: base64Img,
+              upload_preset: 'treeUpload'
+            };
+      
+            fetch(apiUrl, {
+              body: JSON.stringify(data),
+              headers: {
+                'content-type': 'application/json'
+              },
+              method: 'POST'
+            })
+              .then(async response => {
+                console.log('we did the thing')
+                let data = await response.json();
+                if (data.secure_url) {
+                  console.log('we did it')
+                  alert('Upload successful');
+                }
+              })
+              .catch(err => {
+                alert('Cannot upload');
+              });
+
+        })
+            
+      }
+    }, [match])
+
     const sharePic = () => {
       shareAsync(photo.uri).then(() => {
         setPhoto(undefined);

@@ -60,7 +60,7 @@ export default function Map() {
         latitude: 53.450312,
         longitude: -2.530635
       },
-      icon: "tree"
+      icon: "question"
     }, 
     {
       id: 4,
@@ -70,8 +70,48 @@ export default function Map() {
         latitude: 53.45394162343724,
         longitude: -2.5236933834300235
       },
-      icon: "tree"
-    }
+      icon: "question"
+    },
+    {
+      id: 5,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.47209257474375,
+        longitude: -2.238243474494392
+      },
+      icon: "question"
+    },
+    {
+      id: 6,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.47061682068318,
+        longitude: -2.2381110286010633
+      },
+      icon: "question"
+    },
+    {
+      id: 7,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.4699969889311,
+        longitude: -2.2386341689692553
+      },
+      icon: "question"
+    },
+    {
+      id: 8,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.47058623012321,
+        longitude: -2.23926192489555
+      },
+      icon: "question"
+    },
   ]);
 
   useEffect(() => {

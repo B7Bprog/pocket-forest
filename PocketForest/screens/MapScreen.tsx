@@ -1,9 +1,12 @@
 import { StyleSheet, Button } from 'react-native';
+
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 import Map from '../components/Map';
+
+
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -17,6 +20,8 @@ export default function MapPage() {
   return (
     <View style={styles.container}>
       <Map />
+      <Button title="Home" onPress={() => navigation.navigate('Home')} />
+
     </View>
   );
 }

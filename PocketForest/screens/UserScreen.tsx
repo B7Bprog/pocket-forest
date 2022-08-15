@@ -9,7 +9,6 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function UserPage() {
 
-
   const navigation = useNavigation<homeScreenProp>();
 
 
@@ -17,8 +16,11 @@ export default function UserPage() {
     <View style={styles.container}>
       <Text style={styles.title}>User Profile</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Button title="Styles" onPress={() => navigation.navigate('Styles')} />
-      <Text>This page can be used to edit the user's name and avatar, as well as maybe viewing statistics</Text>
+      <Text>Please log in</Text>
+      <Button title="Login" onPress={() => {
+        navigation.navigate('Map')
+        
+      } } />
     </View>
   );
 }

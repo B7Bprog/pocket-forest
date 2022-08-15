@@ -8,16 +8,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
+import { useState } from "react";
 import { ColorSchemeName, Pressable } from 'react-native';
-
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+
 import HomePage from '../screens/HomeScreen';
 import MapPage from '../screens/MapScreen';
 import ForestPage from '../screens/ForestScreen';
 import CameraPage from '../screens/CameraScreen';
 import UserPage from '../screens/UserScreen';
-import StylesPage from '../screens/StylesScreen';
+
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -38,15 +39,16 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomePage} options={{headerShown: false}} />
-      <Stack.Screen name="Map" component={MapPage} options={{headerShown: false}} />
-      <Stack.Screen name="Camera" component={CameraPage} options={{headerShown: false}} />
-      <Stack.Screen name="Forest" component={ForestPage} options={{headerShown: false}} />
-      <Stack.Screen name="User" component={UserPage} options={{headerShown: false}} />
-      <Stack.Screen name="Styles" component={StylesPage} options={{headerShown: false}} />
-    </Stack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomePage} options={{headerShown: false}} />
+        <Stack.Screen name="Map" component={MapPage} options={{headerShown: false}} />
+        <Stack.Screen name="Camera" component={CameraPage} options={{headerShown: false}} />
+        <Stack.Screen name="Forest" component={ForestPage} options={{headerShown: false}} />
+        <Stack.Screen name="User" component={UserPage} options={{headerShown: false}} />
+      </Stack.Navigator>
   );
 }
 

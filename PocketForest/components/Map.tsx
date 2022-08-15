@@ -1,36 +1,67 @@
-
-import React, {useEffect, useState} from 'react';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import {FontAwesome5} from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from "react";
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  Pressable,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Map() {
-
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
 
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   let foxMessage;
   let alertIcon;
 
   if (closeEnough) {
-    foxMessage = 
-    <Pressable onPress={() => navigation.navigate("Camera")}>
-      <Text style={styles.textInsideTextbox}>Let's <Text style={styles.click}>add this tree</Text> to our forest!</Text>
-    </Pressable>
-    alertIcon = 
-      <View style={[styles.alert, styles.primaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
+    foxMessage = (
+      <Pressable onPress={() => navigation.navigate("Camera")}>
+        <Text style={styles.textInsideTextbox}>
+          Let's <Text style={styles.click}>add this tree</Text> to our forest!
+        </Text>
+      </Pressable>
+    );
+    alertIcon = (
+      <View style={[styles.alert, styles.primaryColour]}>
+        <FontAwesome5
+          name={"exclamation"}
+          size={20}
+          style={{ color: "white" }}
+        />
+      </View>
+    );
   } else if (!closeEnough && treeDistance) {
-    foxMessage = <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
-    alertIcon = <View style={[styles.alert, styles.secondaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
+    foxMessage = (
+      <Text style={styles.textInsideTextbox}>
+        You are {Math.round(treeDistance)}m away, keep going!
+      </Text>
+    );
+    alertIcon = (
+      <View style={[styles.alert, styles.secondaryColour]}>
+        <FontAwesome5
+          name={"exclamation"}
+          size={20}
+          style={{ color: "white" }}
+        />
+      </View>
+    );
   } else {
-    foxMessage = <Text style={styles.textInsideTextbox}>Hi! Let's go find some trees!</Text>
+    foxMessage = (
+      <Text style={styles.textInsideTextbox}>
+        Hi! Let's go find some trees!
+      </Text>
+    );
   }
 
   const [trees] = useState([
@@ -62,8 +93,8 @@ export default function Map() {
         latitude: 53.450312,
         longitude: -2.530635,
       },
-      icon: "question"
-    }, 
+      icon: "question",
+    },
     {
       id: 4,
       title: "Tree in my garden",
@@ -73,47 +104,47 @@ export default function Map() {
         longitude: -2.5236933834300235,
       },
 
-      icon: "question"
+      icon: "question",
     },
     {
       id: 5,
-      title: 'Unknown Tree',
-      description: 'try to add it to your Forest!',
+      title: "Unknown Tree",
+      description: "try to add it to your Forest!",
       location: {
         latitude: 53.47209257474375,
-        longitude: -2.238243474494392
+        longitude: -2.238243474494392,
       },
-      icon: "question"
+      icon: "question",
     },
     {
       id: 6,
-      title: 'Unknown Tree',
-      description: 'try to add it to your Forest!',
+      title: "Unknown Tree",
+      description: "try to add it to your Forest!",
       location: {
         latitude: 53.47061682068318,
-        longitude: -2.2381110286010633
+        longitude: -2.2381110286010633,
       },
-      icon: "question"
+      icon: "question",
     },
     {
       id: 7,
-      title: 'Unknown Tree',
-      description: 'try to add it to your Forest!',
+      title: "Unknown Tree",
+      description: "try to add it to your Forest!",
       location: {
         latitude: 53.4699969889311,
-        longitude: -2.2386341689692553
+        longitude: -2.2386341689692553,
       },
-      icon: "question"
+      icon: "question",
     },
     {
       id: 8,
-      title: 'Unknown Tree',
-      description: 'try to add it to your Forest!',
+      title: "Unknown Tree",
+      description: "try to add it to your Forest!",
       location: {
         latitude: 53.47058623012321,
-        longitude: -2.23926192489555
+        longitude: -2.23926192489555,
       },
-      icon: "question"
+      icon: "question",
     },
   ]);
 
@@ -135,21 +166,42 @@ export default function Map() {
     })();
   }, []);
 
+  function measure(lat1, lon1, lat2, lon2) {
+    // generally used geo measurement function
+    var R = 6378.137; // Radius of earth in KM
+    var dLat = (lat2 * Math.PI) / 180 - (lat1 * Math.PI) / 180;
+    var dLon = (lon2 * Math.PI) / 180 - (lon1 * Math.PI) / 180;
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d * 1000; // meters
+  }
+
   function handleOnPress() {
-    const deltaLatitude = Math.pow(
-      this.coordinate.latitude - mapRegion.latitude,
-      2
-    );
-    const deltaLongitude = Math.pow(
-      this.coordinate.longitude - mapRegion.longitude,
-      2
-    );
-    const distance = Math.sqrt(deltaLatitude + deltaLongitude) * 111139;
+    const radiusEarth = 6378137; // Radius of earth in KM
+    const φ1 = (this.coordinate.latitude * Math.PI) / 180; // φ, λ in radians
+    const φ2 = (mapRegion.latitude * Math.PI) / 180;
+    const Δφ =
+      ((mapRegion.latitude - this.coordinate.latitude) * Math.PI) / 180;
+    const Δλ =
+      ((mapRegion.longitude - this.coordinate.longitude) * Math.PI) / 180;
+
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = radiusEarth * c;
 
     if (distance < 20) {
       setCloseEnough(true);
     } else {
-    setTreeDistance(distance);
+      setTreeDistance(distance);
       setCloseEnough(false);
     }
   }
@@ -185,18 +237,20 @@ export default function Map() {
                   size={26}
                   style={{ color: "#00ff6a" }}
                 />
-
-            </Marker>
-          )) : null }
-       </MapView>
-        <View style={styles.textbox}>
-            {alertIcon}
-            {foxMessage}
-            <View style={styles.animal}>
-              <Image style={styles.animalImage} source={require('../assets/images/fox.png')}/>
-            </View>
+              </Marker>
+            ))
+          : null}
+      </MapView>
+      <View style={styles.textbox}>
+        {alertIcon}
+        {foxMessage}
+        <View style={styles.animal}>
+          <Image
+            style={styles.animalImage}
+            source={require("../assets/images/fox.png")}
+          />
         </View>
-
+      </View>
     </View>
   );
 }
@@ -250,10 +304,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     flex: 1,
 
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingLeft: 20
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingLeft: 20,
   },
   textInsideTextbox: {
     fontSize: 18,
@@ -264,34 +318,34 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     padding: 10,
     marginLeft: 20,
-    borderColor: '#ff7733',
+    borderColor: "#ff7733",
     borderWidth: 3,
-    position: 'absolute',
-    right: 20
+    position: "absolute",
+    right: 20,
   },
   animalImage: {
     height: 40,
     width: 40,
   },
   alert: {
-    position: 'absolute',
+    position: "absolute",
     right: 35,
     top: -25,
-    backgroundColor: '#ff7733',
+    backgroundColor: "#ff7733",
     width: 35,
     height: 35,
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   primaryColour: {
-    backgroundColor: '#ff7733',
+    backgroundColor: "#ff7733",
   },
   secondaryColour: {
-    backgroundColor: '#69a297',
+    backgroundColor: "#69a297",
   },
   click: {
-    color: '#ff7733',
-  }
+    color: "#ff7733",
+  },
 });

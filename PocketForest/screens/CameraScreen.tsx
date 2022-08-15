@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootTabScreenProps, RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import MatchModal from "../components/MatchModal";
+import NotMatchModal from "../components/NotMatchModal";
 
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
@@ -34,6 +35,8 @@ export default function CameraPage() {
   const [photo, setPhoto] = useState();
   const [plantData, setPlantData] = useState();
   const [match, setMatch] = useState(false);
+  const [notMatch, setNotMatch] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (plantData) {
@@ -47,9 +50,10 @@ export default function CameraPage() {
           "plantData.suggestions[0].plant_details"
         );
         setMatch(true);
-        // navigation.navigate("SingleTree", {
-        //   treeInfo: plantData.suggestions[0].plant_details,
-        // });
+        setIsLoading(false);
+      } else {
+        setNotMatch(true);
+        setIsLoading(false);
       }
     }
   }, [plantData]);
@@ -86,6 +90,7 @@ export default function CameraPage() {
 
   if (photo) {
     const uploadPic = () => {
+      setIsLoading(true);
       Promise.resolve(photo.base64).then((base64files) => {
         //console.log(base64files);
         const data = {
@@ -139,16 +144,8 @@ export default function CameraPage() {
     };
 
     return (
-      <SafeAreaView style={styles.container}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={match}
-          // onRequestClose={() => {
-          //   Alert.alert("Modal has been closed.");
-          //   setModalVisible(!modalVisible);
-          // }}
-        >
+      <View style={styles.container}>
+        <Modal animationType="slide" transparent={true} visible={match}>
           <MatchModal
             setMatch={setMatch}
             matchingDetails={
@@ -156,12 +153,27 @@ export default function CameraPage() {
             }
           />
         </Modal>
+        <Modal animationType="slide" transparent={true} visible={notMatch}>
+          <NotMatchModal setNotMatch={setNotMatch} />
+        </Modal>
+
+        {isLoading && (
+          <View style={styles.loadingMsgBox}>
+            <Text style={styles.loadingMsgTxt}>Checking Tree Species...</Text>
+            <View style={styles.animal}>
+              <Image
+                style={styles.animalImage}
+                source={require("../assets/images/fox.png")}
+              />
+            </View>
+          </View>
+        )}
 
         <Image
           style={styles.preview}
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
-        {!match && (
+        {!match && !notMatch && !isLoading && (
           <View>
             <Button title="upload" onPress={uploadPic} />
 
@@ -172,7 +184,7 @@ export default function CameraPage() {
             <Button title="Discard" onPress={() => setPhoto(undefined)} />
           </View>
         )}
-      </SafeAreaView>
+      </View>
     );
   }
 
@@ -199,6 +211,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
   },
+  loadingMsgBox: {
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    height: "20%",
+    width: "90%",
+    position: "absolute",
+    top: 300,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    zIndex: 100,
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  loadingMsgTxt: {
+    fontSize: 18,
+    fontWeight: "500",
+  },
+
   button: {
     backgroundColor: "#00b894",
     justifyContent: "center",
@@ -211,5 +250,18 @@ const styles = StyleSheet.create({
   preview: {
     alignSelf: "stretch",
     flex: 1,
+  },
+
+  animal: {
+    backgroundColor: "#69a297",
+    borderRadius: "50%",
+    padding: 10,
+    marginLeft: 20,
+    borderColor: "#ff7733",
+    borderWidth: 3,
+  },
+  animalImage: {
+    height: 40,
+    width: 40,
   },
 });

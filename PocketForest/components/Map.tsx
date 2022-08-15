@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -12,6 +13,7 @@ export default function Map() {
   const [mapRegion, setMapRegion] = useState(null);
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
+
   const navigation = useNavigation(); 
 
   let foxMessage;
@@ -34,42 +36,43 @@ export default function Map() {
   const [trees] = useState([
     {
       id: 1,
-      title: 'Unknown Tree',
-      description: 'try to add it to your Forest!',
+      title: "Unknown Tree",
+      description: "try to add it to your Forest!",
       location: {
         latitude: 53.451657,
-        longitude: -2.515016
+        longitude: -2.515016,
       },
-      icon: "question"
+      icon: "question",
     },
     {
       id: 2,
-      title: 'Unknown Tree',
-      description: 'try to add it to your Forest!',
+      title: "Unknown Tree",
+      description: "try to add it to your Forest!",
       location: {
         latitude: 53.453316,
-        longitude: -2.519637
+        longitude: -2.519637,
       },
-      icon: "question"
+      icon: "question",
     },
     {
       id: 3,
-      title: 'English Oak',
-      description: 'Added to your forest 09/08/22',
+      title: "English Oak",
+      description: "Added to your forest 09/08/22",
       location: {
         latitude: 53.450312,
-        longitude: -2.530635
+        longitude: -2.530635,
       },
       icon: "question"
     }, 
     {
       id: 4,
-      title: 'Tree in my garden',
-      description: 'Added to your forest 09/08/22',
+      title: "Tree in my garden",
+      description: "Added to your forest 09/08/22",
       location: {
         latitude: 53.45394162343724,
-        longitude: -2.5236933834300235
+        longitude: -2.5236933834300235,
       },
+
       icon: "question"
     },
     {
@@ -117,8 +120,8 @@ export default function Map() {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
@@ -127,14 +130,20 @@ export default function Map() {
         longitude: location.coords.longitude,
         latitude: location.coords.latitude,
         longitudeDelta: 0.0012,
-        latitudeDelta: 0.0021
-      })
+        latitudeDelta: 0.0021,
+      });
     })();
   }, []);
 
   function handleOnPress() {
-    const deltaLatitude = Math.pow(this.coordinate.latitude - mapRegion.latitude, 2);
-    const deltaLongitude = Math.pow(this.coordinate.longitude - mapRegion.longitude, 2);
+    const deltaLatitude = Math.pow(
+      this.coordinate.latitude - mapRegion.latitude,
+      2
+    );
+    const deltaLongitude = Math.pow(
+      this.coordinate.longitude - mapRegion.longitude,
+      2
+    );
     const distance = Math.sqrt(deltaLatitude + deltaLongitude) * 111139;
 
     if (distance < 20) {
@@ -145,36 +154,38 @@ export default function Map() {
     }
   }
 
-
   return (
     <View style={styles.container}>
-      <StatusBar style="dark"/>
-      <MapView
-        style={styles.map}
-        initialRegion={mapRegion}
-        >
-        { mapRegion &&
-          <Marker coordinate={mapRegion} title="Me" description="This is my current location">
+      <StatusBar style="dark" />
+      <MapView style={styles.map} initialRegion={mapRegion}>
+        {mapRegion && (
+          <Marker
+            coordinate={mapRegion}
+            title="Me"
+            description="This is my current location"
+          >
             <View style={styles.circle}>
               <View style={styles.stroke}>
                 <View style={styles.core}></View>
               </View>
             </View>
           </Marker>
-        }
-          { trees ? trees.map(tree => (
-            <Marker 
-              coordinate={tree.location} 
-              title={tree.title} 
-              description={tree.description}
-              key={tree.id}
-              onPress={handleOnPress}
+        )}
+        {trees
+          ? trees.map((tree) => (
+              <Marker
+                coordinate={tree.location}
+                title={tree.title}
+                description={tree.description}
+                key={tree.id}
+                onPress={handleOnPress}
               >
-                <FontAwesome5 
+                <FontAwesome5
                   name={tree.icon}
-                  size={26} 
-                  style={ { color: '#00ff6a'}}
+                  size={26}
+                  style={{ color: "#00ff6a" }}
                 />
+
             </Marker>
           )) : null }
        </MapView>
@@ -193,51 +204,52 @@ export default function Map() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
   circle: {
     width: 26,
-    height:26,
+    height: 26,
     borderRadius: 50,
-    shadowColor: '#555',
+    shadowColor: "#555",
     shadowOffset: {
       width: 2,
-      height: 2
+      height: 2,
     },
-    shadowOpacity:0.9
+    shadowOpacity: 0.9,
   },
   stroke: {
     width: 26,
     height: 26,
     borderRadius: 50,
-    backgroundColor: '#fff',
-    zIndex: 1
+    backgroundColor: "#fff",
+    zIndex: 1,
   },
   core: {
     width: 24,
     height: 24,
-    position: 'absolute',
+    position: "absolute",
     left: 1,
     top: 1,
     right: 1,
     bottom: 1,
-    backgroundColor: 'red',
+    backgroundColor: "red",
     zIndex: 2,
-    borderRadius: 50
+    borderRadius: 50,
   },
   textbox: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    height: '12%',
-    width: '100%',
-    position: 'absolute',
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    height: "12%",
+    width: "100%",
+    position: "absolute",
     bottom: 0,
     flex: 1,
+
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
@@ -245,11 +257,11 @@ const styles = StyleSheet.create({
   },
   textInsideTextbox: {
     fontSize: 18,
-    color: 'black'
+    color: "black",
   },
   animal: {
-    backgroundColor: '#69a297',
-    borderRadius: '50%',
+    backgroundColor: "#69a297",
+    borderRadius: "50%",
     padding: 10,
     marginLeft: 20,
     borderColor: '#ff7733',

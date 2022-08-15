@@ -28,8 +28,6 @@ export default function CameraPage() {
     species: "Sorbus aucuparia",
   };
 
-
-export default function CameraPage() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
@@ -197,11 +195,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: "#fff",
     alignSelf: "flex-end",
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-end",
   },
-  button :{
+  button: {
     backgroundColor: "#00b894",
     justifyContent: "center",
     alignItems: "flex-end",

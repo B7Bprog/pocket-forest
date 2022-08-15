@@ -22,7 +22,6 @@ import ForestPage from "../screens/ForestScreen";
 import CameraPage from "../screens/CameraScreen";
 import UserPage from "../screens/UserScreen";
 import StylesPage from "../screens/StylesScreen";
-import SingleTreePage from "../screens/SingleTreeScreen";
 
 import {
   RootStackParamList,
@@ -83,11 +82,6 @@ function RootNavigator() {
       <Stack.Screen
         name="Styles"
         component={StylesPage}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SingleTree"
-        component={SingleTreePage}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

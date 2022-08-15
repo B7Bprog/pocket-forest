@@ -23,9 +23,10 @@ export default function CameraPage() {
   const navigation = useNavigation<cameraScreenProp>();
 
   const dummyTree = {
-    coords: { latitude: 53.47245095145229, longitude: -2.24236224810586 },
-    species: "Tradescantia fluminensis",
+    coords: { latitude: 53.179332013090665, longitude: -2.883641382896462 },
+    species: "Sorbus aucuparia",
   };
+
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
@@ -88,7 +89,7 @@ export default function CameraPage() {
       Promise.resolve(photo.base64).then((base64files) => {
         //console.log(base64files);
         const data = {
-          api_key: "dOlliWXgIAihBnx1uDmtApkDXNQQes0kBqjtZ1ggaZOZVh2gSD",
+          api_key: "0QaJnCInVbv2wysEGzT5uZkAXFniTTNlMjVbR2qZqsAebjfKdP",
           images: [`image/jpeg;base64,${base64files}`],
           // modifiers docs: https://github.com/flowerchecker/Plant-id-API/wiki/Modifiers
           modifiers: ["crops_fast", "similar_images"],
@@ -149,6 +150,7 @@ export default function CameraPage() {
           // }}
         >
           <MatchModal
+            setMatch={setMatch}
             matchingDetails={
               plantData && plantData.suggestions[0].plant_details
             }

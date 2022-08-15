@@ -7,19 +7,40 @@ import {
   Image,
   Modal,
   Dimensions,
+  Pressable,
 } from "react-native";
+
+import { RootTabScreenProps, RootStackParamList } from "../types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 
 const dimensions = Dimensions.get("window");
 const modalHeight = Math.round(dimensions.height * 0.6);
 const modalWidth = dimensions.width * 0.93;
 
+type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
+
 export default function MatchModal(props) {
+  const navigation = useNavigation<homeScreenProp>();
+  const { setMatch } = props;
+  console.log(setMatch, "setMatch");
+
   console.log(props, "in MatchModal");
+
+  const handleOnPressMap = () => {
+    setMatch(false);
+    return navigation.navigate("Map");
+  };
+
+  const handleOnPressForest = () => {
+    setMatch(false);
+    return navigation.navigate("Forest");
+  };
 
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
-        <View style={styles.textbox}>
+        <View style={styles.textboxTop}>
           <Text style={styles.textInsideTextbox}>Congratulations!</Text>
           <View style={styles.animal}>
             <Image
@@ -27,6 +48,25 @@ export default function MatchModal(props) {
               source={require("../assets/images/fox.png")}
             />
           </View>
+        </View>
+
+        <View style={styles.textboxMid}>
+          <Text style={styles.textInsideTextbox}>
+            A {props.matchingDetails.common_names[0]} tree is being added to
+            your forest!
+          </Text>
+        </View>
+
+        <View style={styles.buttonBoxBottom}>
+          <Pressable style={styles.leftPressable} onPress={handleOnPressMap}>
+            <Text style={styles.leftPressableText}>Map</Text>
+          </Pressable>
+          <Pressable
+            style={styles.rightPressable}
+            onPress={handleOnPressForest}
+          >
+            <Text style={styles.rightPressableText}>Forest</Text>
+          </Pressable>
         </View>
       </View>
     </View>
@@ -57,17 +97,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
+
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -78,7 +108,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  textbox: {
+  textboxTop: {
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     height: "20%",
     width: "90%",
@@ -89,6 +119,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
+  textboxMid: {
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    height: "20%",
+    width: "90%",
+    position: "absolute",
+    top: 180,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
   textInsideTextbox: {
     fontSize: 18,
     color: "black",
@@ -104,5 +146,41 @@ const styles = StyleSheet.create({
   animalImage: {
     height: 40,
     width: 40,
+  },
+  buttonBoxBottom: {
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    height: "20%",
+    width: "90%",
+    position: "absolute",
+    bottom: 70,
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  leftPressable: {
+    backgroundColor: "white",
+    borderColor: "green",
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 30,
+    borderWidth: 3,
+  },
+  leftPressableText: {
+    fontSize: 20,
+    fontWeight: "500",
+  },
+  rightPressable: {
+    borderRadius: 5,
+    backgroundColor: "green",
+    borderColor: "green",
+    padding: 15,
+    paddingHorizontal: 30,
+    color: "green",
+    borderWidth: 3,
+  },
+  rightPressableText: {
+    fontSize: 20,
+    fontWeight: "500",
   },
 });

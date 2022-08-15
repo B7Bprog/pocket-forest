@@ -1,11 +1,13 @@
-const app = require("../../PocketForestApi/app");
-
 import axios from "axios";
+const pocketForestApi = axios.create({
+  baseURL: "https://pocket-forest-api.herokuapp.com/api",
+});
+
 let user;
 
-axios.get("/api/all-users").then((result) => {
+pocketForestApi.get("/all-users").then((result) => {
   console.log(result, "<<< Result here");
-  user = result;
+  user = result.data;
 });
 
 exports.getCurrentUser = () => {

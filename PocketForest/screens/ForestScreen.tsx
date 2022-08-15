@@ -1,4 +1,4 @@
-import { StyleSheet, Button, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Button, Image, ImageBackground, Pressable, TouchableHighlight, ScrollView } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -15,41 +15,79 @@ export default function ForestPage() {
   const navigation = useNavigation<homeScreenProp>();
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+    <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+      
         <View style={styles.innerContainer}>
           <View style={styles.cardsSection}>
-            <View style={styles.card}>
-              <View style={styles.imageWrapper}>
-                <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
+            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+              <View style={styles.card}>
+                <View style={styles.imageWrapper}>
+                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
+                </View>
+                <View style={styles.textWrapper}>
+                  <Text style={styles.cardTitle}>European Willow</Text>
+                </View>
               </View>
-              <View style={styles.textWrapper}>
-                <Text>Title</Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+              <View style={styles.card}>
+                <View style={styles.imageWrapper}>
+                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
+                </View>
+                <View style={styles.textWrapper}>
+                  <Text style={styles.cardTitle}>Example Tree</Text>
+                </View>
               </View>
-            </View>
-            <View style={styles.card}>
-              <View style={styles.imageWrapper}>
-                <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+              <View style={styles.card}>
+                <View style={styles.imageWrapper}>
+                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
+                </View>
+                <View style={styles.textWrapper}>
+                  <Text style={styles.cardTitle}>English Oak</Text>
+                </View>
               </View>
-              <View style={styles.textWrapper}>
-                <Text>Title</Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+              <View style={styles.card}>
+                <View style={styles.imageWrapper}>
+                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
+                </View>
+                <View style={styles.textWrapper}>
+                  <Text style={styles.cardTitle}>Another Tree</Text>
+                </View>
               </View>
-            </View>
+            </TouchableHighlight>
           </View>
-          <Button title="Home" onPress={() => navigation.navigate('Home')} />
+          <Pressable onPress={() => navigation.navigate('Home')} >
+            <Text style={styles.homeButtonText}>Home</Text>
+          </Pressable>
         </View>
-        </ImageBackground>
         
         
-      </View>
+        </View>
+      </ScrollView>
+      </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  
+  scrollView: {
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0, 0.60)',
+  },
   container: {
-    flex: 1,
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  backgroundImage: {
+    height: '100%',
   },
   title: {
     fontSize: 20,
@@ -62,46 +100,70 @@ const styles = StyleSheet.create({
   },
   cardsSection: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignContent: 'center',
     flexDirection: 'row',
-    width: '100%',
-    backgroundColor: 'transparent'
+    width: '90%',
+    backgroundColor: 'transparent',
+    margin: 20,
+    flexWrap: 'wrap'
+  },
+  cardTouchable: {
+    height: 200,
+    display: 'flex',
+    width: '44%',
+    margin: 10,
+    borderRadius: 20,
   },
   card: {
-    width: 100,
-    height: 200,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 15,
     borderRadius: 20,
-    backgroundColor: '#fff3B0',
+    backgroundColor: '#fff',
+    alignSelf: 'stretch',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 2,
+      height: 2
+    },
+    shadowOpacity:0.9
+  },
+  cardTitle: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
   },
   imageWrapper: {
-    height: 100,
-    width: 100,
-    borderRadius: 20,
+    height: 110,
+    width: '100%',
+    overflow: 'hidden',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   forestImage: {
-    maxWidth: '100%',
-    maxHeight: '100%',
-    borderRadius: 0,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'cover'
   },
   textWrapper: {
     backgroundColor: 'transparent',
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: 'center',
-    width: '100%',
+    padding: 20,
+    textAlign: 'center',
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent: 'center',
+    height: '45%'
   },
   innerContainer: {
     flex: 1,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0, 0.60)'
+    backgroundColor: 'transparent',
+    marginTop: 30
   },
+  homeButton: {
+    color: 'white',
+  },
+  homeButtonText: {
+    fontSize: 20
+  }
 });

@@ -22,7 +22,7 @@ export default function HomePage() {
         <Text style={styles.title}>POCKET</Text>
         <Text style={styles.title}>FOREST</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <View>
+        <View style={styles.buttonArea}>
         <Pressable style={styles.button} onPress={() => navigation.navigate('Map')}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </Pressable>
@@ -69,13 +69,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0, 0.60)'
   },
+  buttonArea: {
+    backgroundColor: 'transparent'
+  },
   button: {
     backgroundColor: 'green',
     borderRadius: 5,
     color: 'white',
     padding: 15,
     paddingHorizontal: 30
-    
   },
   buttonText: {
     fontSize: 20,

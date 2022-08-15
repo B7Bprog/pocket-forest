@@ -6,6 +6,80 @@ import {useNavigation} from '@react-navigation/native';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
+const exampleTrees = [
+  {
+    id: 1,
+    name: 'Example Tree 1',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 2,
+    name: 'Example Tree 2',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 3,
+    name: 'Example Tree 3',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 4,
+    name: 'Example Tree 4',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 5,
+    name: 'Example Tree 5',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 6,
+    name: 'Example Tree 6',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 7,
+    name: 'Example Tree 7',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 8,
+    name: 'Example Tree 8',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 9,
+    name: 'Example Tree 9',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 10,
+    name: 'Example Tree 10',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 11,
+    name: 'Example Tree 11',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 12,
+    name: 'Example Tree 12',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 13,
+    name: 'Example Tree 13',
+    img: '../assets/images/tree.jpeg',
+  },
+  {
+    id: 14,
+    name: 'Example Tree 14',
+    img: '../assets/images/tree.jpeg',
+  },
+
+]
+
 
 export default function ForestPage() {
 
@@ -21,146 +95,19 @@ export default function ForestPage() {
       
         <View style={styles.innerContainer}>
           <View style={styles.cardsSection}>
+
+          {exampleTrees.map((tree) => (
             <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>European Willow</Text>
-                </View>
+            <View style={styles.card}>
+              <View style={styles.imageWrapper}>
+                <Image style={styles.forestImage} source={require('{../assets/images/tree.jpeg}')}/>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Example Tree</Text>
-                </View>
+              <View style={styles.textWrapper}>
+                <Text style={styles.cardTitle}>{tree.name}</Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
+            </View>
+          </TouchableHighlight>
+          )) }
           </View>
           <Pressable onPress={() => navigation.navigate('Home')} >
             <Text style={styles.homeButtonText}>Home</Text>

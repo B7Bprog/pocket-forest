@@ -9,73 +9,101 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 const exampleTrees = [
   {
     id: 1,
-    name: 'Example Tree 1',
-    img: '../assets/images/tree.jpeg',
+    name: 'Apple Tree',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg" 
+    }
   },
   {
     id: 2,
-    name: 'Example Tree 2',
-    img: '../assets/images/tree.jpeg',
+    name: 'Pear Tree',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/pear-tree-11032021.jpg" 
+    }
   },
   {
     id: 3,
-    name: 'Example Tree 3',
-    img: '../assets/images/tree.jpeg',
+    name: 'Black Ash',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/black-ash-tree-dec11.jpg" 
+    }
   },
   {
     id: 4,
-    name: 'Example Tree 4',
-    img: '../assets/images/tree.jpeg',
+    name: 'Mahogany',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Mahogany-tree.jpg" 
+    }
   },
   {
     id: 5,
-    name: 'Example Tree 5',
-    img: '../assets/images/tree.jpeg',
+    name: 'Peach Tree',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/peach-tree-11032021.jpg" 
+    }
   },
   {
     id: 6,
-    name: 'Example Tree 6',
-    img: '../assets/images/tree.jpeg',
+    name: 'Common Fig',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/common-fig-tree-10032021.jpg" 
+    }
   },
   {
     id: 7,
-    name: 'Example Tree 7',
-    img: '../assets/images/tree.jpeg',
+    name: 'European Beech',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/european-beech-tree-09032021.jpg" 
+    }
   },
   {
     id: 8,
-    name: 'Example Tree 8',
-    img: '../assets/images/tree.jpeg',
+    name: 'Black Birch',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-birch.jpg" 
+    }
   },
   {
     id: 9,
-    name: 'Example Tree 9',
-    img: '../assets/images/tree.jpeg',
+    name: 'Sweet Cherry',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/sweet-cherry-trees-09032021.jpg" 
+    }
   },
   {
     id: 10,
-    name: 'Example Tree 10',
-    img: '../assets/images/tree.jpeg',
+    name: 'American Elm',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/American-elm.jpg" 
+    }
   },
   {
     id: 11,
-    name: 'Example Tree 11',
-    img: '../assets/images/tree.jpeg',
+    name: 'Pignut Hickory',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Pignut-hickory.jpg" 
+    }
   },
   {
     id: 12,
-    name: 'Example Tree 12',
-    img: '../assets/images/tree.jpeg',
+    name: 'European Larch',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/European-larch.jpg" 
+    }
   },
   {
     id: 13,
-    name: 'Example Tree 13',
-    img: '../assets/images/tree.jpeg',
+    name: 'Red Maple',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" 
+    }
   },
   {
     id: 14,
-    name: 'Example Tree 14',
-    img: '../assets/images/tree.jpeg',
+    name: 'Black Oak',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg" 
+    }
   },
 
 ]
@@ -97,10 +125,10 @@ export default function ForestPage() {
           <View style={styles.cardsSection}>
 
           {exampleTrees.map((tree) => (
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+            <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
             <View style={styles.card}>
               <View style={styles.imageWrapper}>
-                <Image style={styles.forestImage} source={require('{../assets/images/tree.jpeg}')}/>
+                <Image style={styles.forestImage} source={tree.img}/>
               </View>
               <View style={styles.textWrapper}>
                 <Text style={styles.cardTitle}>{tree.name}</Text>

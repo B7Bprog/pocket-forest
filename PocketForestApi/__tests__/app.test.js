@@ -20,11 +20,18 @@ describe("Tree endpoints", () => {
           expect(tree).toHaveProperty("latitude");
           expect(tree).toHaveProperty("createdAt");
           expect(tree).toHaveProperty("updatedAt");
+          expect(tree).toHaveProperty("species");
+          expect(tree).toHaveProperty("image_url");
+          expect(tree).toHaveProperty("description");
+          expect(tree).toHaveProperty("username");
+          expect(tree).toHaveProperty("point_value");
+          expect(tree).toHaveProperty("edible_parts");
+          expect(tree).toHaveProperty("propagation_method");
         });
       });
   });
   test("Responds with a single tree selected by it's id", () => {
-    const tree_id = "62f247e8652482c6df2f3742";
+    const tree_id = "62f63c4eb9af5ccf4ef7865a";
     return request(app)
       .get(`/api/trees/${tree_id}`)
       .expect(200)
@@ -36,6 +43,13 @@ describe("Tree endpoints", () => {
         expect(body).toHaveProperty("latitude");
         expect(body).toHaveProperty("createdAt");
         expect(body).toHaveProperty("updatedAt");
+        expect(body).toHaveProperty("species");
+        expect(body).toHaveProperty("image_url");
+        expect(body).toHaveProperty("description");
+        expect(body).toHaveProperty("username");
+        expect(body).toHaveProperty("point_value");
+        expect(body).toHaveProperty("edible_parts");
+        expect(body).toHaveProperty("propagation_method");
 
         expect(Array.isArray(body)).toBe(false);
         expect(body._id).toBe(tree_id);
@@ -44,9 +58,16 @@ describe("Tree endpoints", () => {
   test("Adds a new tree", () => {
     const new_tree = {
       name: "Maple",
+      species: "someSpecies",
       family: "Sapindaceae",
       latitude: `13°28'12.9"N`,
       longitude: `3°44'13.6"W`,
+      image_url: "url",
+      description: "description here",
+      username: "peter22",
+      point_value: 20,
+      edible_parts: ["fruit", "leaves"],
+      propagation_method: ["cuttings", "seeds"],
     };
     return request(app)
       .post(`/api/add-tree`)
@@ -60,6 +81,13 @@ describe("Tree endpoints", () => {
         expect(body).toHaveProperty("latitude");
         expect(body).toHaveProperty("createdAt");
         expect(body).toHaveProperty("updatedAt");
+        expect(body).toHaveProperty("species");
+        expect(body).toHaveProperty("image_url");
+        expect(body).toHaveProperty("description");
+        expect(body).toHaveProperty("username");
+        expect(body).toHaveProperty("point_value");
+        expect(body).toHaveProperty("edible_parts");
+        expect(body).toHaveProperty("propagation_method");
       });
   });
 });
@@ -67,9 +95,10 @@ describe("User endpoints", () => {
   test("Adds a new user", () => {
     const new_user = {
       name: "Peter",
-      username: "peter22",
+      username: "john11",
       points: 15,
       favorite_tree: `Maple`,
+      num_of_trees_collected: 5,
     };
     return request(app)
       .post(`/api/add-user`)
@@ -81,6 +110,7 @@ describe("User endpoints", () => {
         expect(body).toHaveProperty("username");
         expect(body).toHaveProperty("points");
         expect(body).toHaveProperty("favorite_tree");
+        expect(body).toHaveProperty("num_of_trees_collected");
       });
   });
   test("Responds with all the users", () => {
@@ -94,6 +124,7 @@ describe("User endpoints", () => {
           expect(user).toHaveProperty("username");
           expect(user).toHaveProperty("points");
           expect(user).toHaveProperty("favorite_tree");
+          expect(user).toHaveProperty("num_of_trees_collected");
         });
       });
   });
@@ -112,6 +143,7 @@ describe("User endpoints", () => {
         expect(body).toHaveProperty("username");
         expect(body).toHaveProperty("points");
         expect(body).toHaveProperty("favorite_tree");
+        expect(body).toHaveProperty("num_of_trees_collected");
 
         expect(body.points).toBe(16);
       });

@@ -1,21 +1,38 @@
-import React, { useEffect, useState } from "react";
-import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+
+import React, {useEffect, useState} from 'react';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import {FontAwesome5} from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Map() {
-  const image = {
-    uri: "https://cdn-icons.flaticon.com/png/512/3704/premium/3704101.png?token=exp=1660229984~hmac=57e9dc9effe1a9c1bbae17c2de551045",
-  };
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
-  const navigation = useNavigation();
+
+  const navigation = useNavigation(); 
+
+  let foxMessage;
+  let alertIcon;
+
+  if (closeEnough) {
+    foxMessage = 
+    <Pressable onPress={() => navigation.navigate("Camera")}>
+      <Text style={styles.textInsideTextbox}>Let's <Text style={styles.click}>add this tree</Text> to our forest!</Text>
+    </Pressable>
+    alertIcon = 
+      <View style={[styles.alert, styles.primaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
+  } else if (!closeEnough && treeDistance) {
+    foxMessage = <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
+    alertIcon = <View style={[styles.alert, styles.secondaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
+  } else {
+    foxMessage = <Text style={styles.textInsideTextbox}>Hi! Let's go find some trees!</Text>
+  }
+
   const [trees] = useState([
     {
       id: 1,
@@ -45,8 +62,8 @@ export default function Map() {
         latitude: 53.450312,
         longitude: -2.530635,
       },
-      icon: "tree",
-    },
+      icon: "question"
+    }, 
     {
       id: 4,
       title: "Tree in my garden",
@@ -55,7 +72,48 @@ export default function Map() {
         latitude: 53.45394162343724,
         longitude: -2.5236933834300235,
       },
-      icon: "tree",
+
+      icon: "question"
+    },
+    {
+      id: 5,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.47209257474375,
+        longitude: -2.238243474494392
+      },
+      icon: "question"
+    },
+    {
+      id: 6,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.47061682068318,
+        longitude: -2.2381110286010633
+      },
+      icon: "question"
+    },
+    {
+      id: 7,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.4699969889311,
+        longitude: -2.2386341689692553
+      },
+      icon: "question"
+    },
+    {
+      id: 8,
+      title: 'Unknown Tree',
+      description: 'try to add it to your Forest!',
+      location: {
+        latitude: 53.47058623012321,
+        longitude: -2.23926192489555
+      },
+      icon: "question"
     },
   ]);
 
@@ -89,13 +147,9 @@ export default function Map() {
     const distance = Math.sqrt(deltaLatitude + deltaLongitude) * 111139;
 
     if (distance < 20) {
-      console.log("close enough");
       setCloseEnough(true);
     } else {
-      setTreeDistance(distance);
-      console.log(
-        `you are ${Math.round(distance)} meters away, please get closer`
-      );
+    setTreeDistance(distance);
       setCloseEnough(false);
     }
   }
@@ -131,42 +185,18 @@ export default function Map() {
                   size={26}
                   style={{ color: "#00ff6a" }}
                 />
-              </Marker>
-            ))
-          : null}
-      </MapView>
-      {!treeDistance && (
+
+            </Marker>
+          )) : null }
+       </MapView>
         <View style={styles.textbox}>
-          <Text style={styles.textInsideTextbox}>
-            Let's go find some trees!
-          </Text>
-          <View style={styles.animal}>
-            <Image
-              style={styles.animalImage}
-              source={{
-                uri: "https://cdn-icons.flaticon.com/png/512/3704/premium/3704101.png?token=exp=1660229984~hmac=57e9dc9effe1a9c1bbae17c2de551045",
-              }}
-            />
-          </View>
+            {alertIcon}
+            {foxMessage}
+            <View style={styles.animal}>
+              <Image style={styles.animalImage} source={require('../assets/images/fox.png')}/>
+            </View>
         </View>
-      )}
-      {/* <View style={styles.textbox}>
-        <Text>hello</Text>
-       </View>
-       <View style={styles.textbox}>
-        {
-          !treeDistance && <Text style={styles.textInsideTextbox}>Find some lovely trees near you!</Text>
-        }
-        {
-          !closeEnough && <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
-        }
-        {
-          closeEnough && <Button 
-          title="Let's add this tree to our forest!"
-          onPress={() => navigation.navigate("Camera")}
-         />
-        }
-        </View> */}
+
     </View>
   );
 }
@@ -219,9 +249,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: 20
   },
   textInsideTextbox: {
     fontSize: 18,
@@ -232,11 +264,34 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     padding: 10,
     marginLeft: 20,
-    borderColor: "#ff7733",
+    borderColor: '#ff7733',
     borderWidth: 3,
+    position: 'absolute',
+    right: 20
   },
   animalImage: {
     height: 40,
     width: 40,
   },
+  alert: {
+    position: 'absolute',
+    right: 35,
+    top: -25,
+    backgroundColor: '#ff7733',
+    width: 35,
+    height: 35,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  primaryColour: {
+    backgroundColor: '#ff7733',
+  },
+  secondaryColour: {
+    backgroundColor: '#69a297',
+  },
+  click: {
+    color: '#ff7733',
+  }
 });

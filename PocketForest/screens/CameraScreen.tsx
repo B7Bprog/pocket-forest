@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   Modal,
+  Pressable,
 } from "react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
@@ -27,6 +28,8 @@ export default function CameraPage() {
     species: "Sorbus aucuparia",
   };
 
+
+export default function CameraPage() {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
@@ -52,7 +55,6 @@ export default function CameraPage() {
       }
     }
   }, [plantData]);
-
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -178,8 +180,8 @@ export default function CameraPage() {
 
   return (
     <Camera style={styles.container} ref={cameraRef}>
-      <View style={styles.buttonContainer}>
-        <Button title="Take Pic" onPress={takePic} />
+      <View>
+        <Pressable style={styles.button} onPress={takePic} />
       </View>
       <StatusBar style="auto" />
     </Camera>
@@ -195,6 +197,18 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: "#fff",
     alignSelf: "flex-end",
+    flexDirection:"row",
+    justifyContent: "center",
+    alignItems: "flex-end",
+  },
+  button :{
+    backgroundColor: "#00b894",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    marginBottom: 50,
   },
   preview: {
     alignSelf: "stretch",

@@ -184,7 +184,6 @@ export default function Map() {
 
   function handleOnPress() {
     const radiusEarth = 6378137; // Radius of earth in KM
-
     const φ1 = (this.coordinate.latitude * Math.PI) / 180; // φ, λ in radians
     const φ2 = (mapRegion.latitude * Math.PI) / 180;
     const Δφ =
@@ -198,7 +197,6 @@ export default function Map() {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     const distance = radiusEarth * c;
-    console.log(distance);
 
     if (distance < 20) {
       setCloseEnough(true);

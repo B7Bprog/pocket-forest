@@ -7,12 +7,11 @@ import {useNavigation} from '@react-navigation/native';
 import Map from '../components/Map';
 
 
-
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 
 export default function MapPage() {
-
+  
 
   const navigation = useNavigation<homeScreenProp>();
 
@@ -21,7 +20,7 @@ export default function MapPage() {
     <View style={styles.container}>
       <Map />
       <Button title="Home" onPress={() => navigation.navigate('Home')} />
-
+      <Text>{username}</Text>
     </View>
   );
 }

@@ -6,6 +6,108 @@ import {useNavigation} from '@react-navigation/native';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
+const exampleTrees = [
+  {
+    id: 1,
+    name: 'Apple Tree',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg" 
+    }
+  },
+  {
+    id: 2,
+    name: 'Pear Tree',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/pear-tree-11032021.jpg" 
+    }
+  },
+  {
+    id: 3,
+    name: 'Black Ash',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/black-ash-tree-dec11.jpg" 
+    }
+  },
+  {
+    id: 4,
+    name: 'Mahogany',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Mahogany-tree.jpg" 
+    }
+  },
+  {
+    id: 5,
+    name: 'Peach Tree',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/peach-tree-11032021.jpg" 
+    }
+  },
+  {
+    id: 6,
+    name: 'Common Fig',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/common-fig-tree-10032021.jpg" 
+    }
+  },
+  {
+    id: 7,
+    name: 'European Beech',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/european-beech-tree-09032021.jpg" 
+    }
+  },
+  {
+    id: 8,
+    name: 'Black Birch',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-birch.jpg" 
+    }
+  },
+  {
+    id: 9,
+    name: 'Sweet Cherry',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/sweet-cherry-trees-09032021.jpg" 
+    }
+  },
+  {
+    id: 10,
+    name: 'American Elm',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/American-elm.jpg" 
+    }
+  },
+  {
+    id: 11,
+    name: 'Pignut Hickory',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Pignut-hickory.jpg" 
+    }
+  },
+  {
+    id: 12,
+    name: 'European Larch',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/European-larch.jpg" 
+    }
+  },
+  {
+    id: 13,
+    name: 'Red Maple',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" 
+    }
+  },
+  {
+    id: 14,
+    name: 'Black Oak',
+    img: { 
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg" 
+    }
+  },
+
+]
+
 
 export default function ForestPage() {
 
@@ -21,146 +123,19 @@ export default function ForestPage() {
       
         <View style={styles.innerContainer}>
           <View style={styles.cardsSection}>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>European Willow</Text>
-                </View>
+
+          {exampleTrees.map((tree) => (
+            <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+            <View style={styles.card}>
+              <View style={styles.imageWrapper}>
+                <Image style={styles.forestImage} source={tree.img}/>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Example Tree</Text>
-                </View>
+              <View style={styles.textWrapper}>
+                <Text style={styles.cardTitle}>{tree.name}</Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>English Oak</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
-              <View style={styles.card}>
-                <View style={styles.imageWrapper}>
-                  <Image style={styles.forestImage} source={require('../assets/images/tree.jpeg')}/>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.cardTitle}>Another Tree</Text>
-                </View>
-              </View>
-            </TouchableHighlight>
+            </View>
+          </TouchableHighlight>
+          )) }
           </View>
           <Pressable onPress={() => navigation.navigate('Home')} >
             <Text style={styles.homeButtonText}>Home</Text>

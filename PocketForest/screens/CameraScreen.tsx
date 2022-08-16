@@ -44,11 +44,6 @@ export default function CameraPage() {
         plantData.suggestions[0].plant_details.scientific_name ===
         dummyTree.species
       ) {
-        console.log("matching!");
-        console.log(
-          plantData.suggestions[0].plant_details,
-          "plantData.suggestions[0].plant_details"
-        );
         setMatch(true);
         setIsLoading(false);
       } else {
@@ -57,6 +52,7 @@ export default function CameraPage() {
       }
     }
   }, [plantData]);
+
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -117,13 +113,10 @@ export default function CameraPage() {
           body: JSON.stringify(data),
         })
           .then((response) => {
-            // console.log(response, "<<< response");
             return response.json();
           })
           .then((data) => {
             setPlantData(data);
-
-            // console.log("Success:", data);
           })
           .catch((error) => {
             console.error("Error:", error);

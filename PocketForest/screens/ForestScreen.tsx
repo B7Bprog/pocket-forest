@@ -125,7 +125,7 @@ export default function ForestPage() {
           <View style={styles.cardsSection}>
 
           {exampleTrees.map((tree) => (
-            <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
+            <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('SingleTreePage')}>
             <View style={styles.card}>
               <View style={styles.imageWrapper}>
                 <Image style={styles.forestImage} source={tree.img}/>
@@ -137,7 +137,7 @@ export default function ForestPage() {
           </TouchableHighlight>
           )) }
           </View>
-          <Pressable onPress={() => navigation.navigate('Home')} >
+          <Pressable onPress={() => navigation.navigate('SingleTreePage')} >
             <Text style={styles.homeButtonText}>Home</Text>
           </Pressable>
         </View>

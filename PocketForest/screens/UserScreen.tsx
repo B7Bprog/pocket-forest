@@ -1,10 +1,11 @@
-import { StyleSheet, Button } from 'react-native';
+import { StyleSheet, Button, Pressable } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { setCurrentUser } from '../context/UserContext';
-import {getCurrentUser} from '../context/UserContext'
+import { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../contexts/User';
+import { getUsers } from '../utils/api'
 
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -12,23 +13,45 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function UserPage() {
 
-  const usernames = getCurrentUser().map((user) => {
-    return user.username;
-  });
+
+  const usernames = [
+    'one', 'two', 'three'
+  ]
+
+  const [users, setUsers] = useState([])
+  const {loggedInUser, setLoggedInUser} = useContext(UserContext)
 
   const navigation = useNavigation<homeScreenProp>();
+
+  useEffect(() => {
+    getUsers().then((users) => {
+        setUsers(users)
+    })
+}, [])
+
+  function userPress() {
+    navigation.navigate('Map')
+  }
+
+  const clickUser = (username) => {
+    setLoggedInUser(username)
+  }
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>User Profile</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <View>{usernames.map((username) => <Text>{username}</Text>)}</View>
-      <Text>Please log in</Text>
-      <Button title="Login" onPress={() => {
-        navigation.navigate('Map')
-        setCurrentUser([{ username: "Sofia" }])
-      }} />
+      <View>
+        {users.map((user) => (
+          <Pressable key={user.username} style={styles.users} onPress={()=>  clickUser(user.username) }><Text>{user.username}</Text></Pressable>
+        ))}
+        </View>
+        <Text>{loggedInUser}</Text>
+        {console.log(users)}
+        
+        
+        <Button onPress={userPress} title='go to map'></Button>
     </View>
   );
 }
@@ -48,4 +71,9 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  users: {
+    backgroundColor: 'green',
+    padding: 20,
+    margin: 10
+  }
 });

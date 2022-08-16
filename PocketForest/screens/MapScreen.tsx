@@ -20,7 +20,6 @@ export default function MapPage() {
     <View style={styles.container}>
       <Map />
       <Button title="Home" onPress={() => navigation.navigate('Home')} />
-      <Text>{username}</Text>
     </View>
   );
 }

@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {FontAwesome5} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../contexts/User';
 
 export default function Map() {
 
@@ -13,6 +14,7 @@ export default function Map() {
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
   const navigation = useNavigation(); 
+  const {loggedInUser, setLoggedInUser, isLoggedIn} = useContext(UserContext);
 
   let foxMessage;
   let alertIcon;
@@ -28,7 +30,7 @@ export default function Map() {
     foxMessage = <Text style={styles.textInsideTextbox}>You are {Math.round(treeDistance)}m away, keep going!</Text>
     alertIcon = <View style={[styles.alert, styles.secondaryColour]}><FontAwesome5 name={'exclamation'} size={20} style={ { color: 'white'}} /></View>
   } else {
-    foxMessage = <Text style={styles.textInsideTextbox}>Hi! Let's go find some trees!</Text>
+    foxMessage = <Text style={styles.textInsideTextbox}>Hi {loggedInUser}! Let's go find some trees!</Text>
   }
 
   const [trees] = useState([

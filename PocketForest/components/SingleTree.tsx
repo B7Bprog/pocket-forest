@@ -3,18 +3,19 @@ import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import StylesPage from '../screens/StylesScreen';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function SingleTreePage(props) {
     const navigation = useNavigation<homeScreenProp>();
-    const { setMatch } = props;
+    const { tree } = props;
     console.log(props, "<<<props from single tree page");
-    console.log(setMatch, "<<< props from single tree page");
+    console.log(tree, "<<<tree");
     
     return (
         <View style={styles.centeredView}>
-            <Text style={styles.title}>Information about your tree:</Text>
+            <Text>Hello from Single Tree Page</Text>
             <Image
             source={{
               uri: 'https://www.gardeningknowhow.com/wp-content/uploads/2021/11/rowan-berries.jpg',
@@ -27,17 +28,12 @@ export default function SingleTreePage(props) {
     )
 }
 
-
 const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        margin: 10,
-        padding: 10
-    },
-     title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+        marginTop: 22,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+    }
 })

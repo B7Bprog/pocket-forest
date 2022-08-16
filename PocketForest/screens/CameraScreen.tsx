@@ -88,7 +88,6 @@ export default function CameraPage() {
     const uploadPic = () => {
       setIsLoading(true);
       Promise.resolve(photo.base64).then((base64files) => {
-        //console.log(base64files);
         const data = {
           api_key: "0QaJnCInVbv2wysEGzT5uZkAXFniTTNlMjVbR2qZqsAebjfKdP",
           images: [`image/jpeg;base64,${base64files}`],

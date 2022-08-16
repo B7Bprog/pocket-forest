@@ -10,22 +10,21 @@ export default function SingleTreePage(props) {
     const navigation = useNavigation<homeScreenProp>();
     const { setMatch, route } = props;
     const { matchingDetails } = route.params;
+
     console.log(matchingDetails, "<<<matching from single tree page");
-    
-    // console.log(props, "<<<props from single tree page");
-    // console.log(setMatch, "<<< props from single tree page");
     
     return (
         <View style={styles.centeredView}>
-            <Text style={styles.title}>Information about your tree:</Text>
+            <Text style={styles.title}>Information about {matchingDetails.common_names[0]}:</Text>
             <Image
             source={{
               uri: 'https://www.gardeningknowhow.com/wp-content/uploads/2021/11/rowan-berries.jpg',
             }}
             />
-            <Text>Sorbus aucuparia, commonly called rowan and mountain-ash, is a species of deciduous tree or shrub in the rose family. It is a highly variable species, and botanists have used different definitions of the species to include or exclude trees native to certain areas; a recent definition includes trees native to most of Europe and parts of Asia, as well as northern Africa. The range extends from Madeira, the British Isles and Iceland to Russia and northern China. Unlike many plants with similar distributions, it is not native to Japan.</Text>
+            <Text>It belongs to {matchingDetails.structured_name.species} family</Text>
+            <Text>{matchingDetails.wiki_description.value}</Text>
             <View></View>
-            {/* <Pressable onPress={() => navigation.navigate('ForestPage')}><Text style={styles.homeButtonText}>Back to Forest</Text></Pressable> */}
+            <Pressable onPress={() => navigation.navigate('Forest')}><Text style={styles.homeButtonText}>Back to Forest</Text></Pressable>
         </View>
     )
 }

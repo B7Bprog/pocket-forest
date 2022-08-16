@@ -24,8 +24,6 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 export default function MatchModal(props) {
   const navigation = useNavigation<homeScreenProp>();
   const { matchingDetails, setMatch } = props;
-  // console.log(matchingDetails, "<<<matching details from Modal");
-  
 
   const handleOnPressMap = () => {
     setMatch(false);
@@ -39,7 +37,7 @@ export default function MatchModal(props) {
 
   const handleOnPressSingleTree = () => {
     setMatch(false);
-    return navigation.navigate("SingleTreePage",{matchingDetails});
+    return navigation.navigate("SingleTreePage", {matchingDetails});
   };
 
   return (

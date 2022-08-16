@@ -8,6 +8,7 @@ import {
   Modal,
   Dimensions,
   Pressable,
+  Route,
 } from "react-native";
 
 import { RootTabScreenProps, RootStackParamList } from "../types";
@@ -22,10 +23,9 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function MatchModal(props) {
   const navigation = useNavigation<homeScreenProp>();
-  const { setMatch } = props;
-  // console.log(setMatch, "setMatch");
-
-  // console.log(props, "in MatchModal");
+  const { matchingDetails, setMatch } = props;
+  // console.log(matchingDetails, "<<<matching details from Modal");
+  
 
   const handleOnPressMap = () => {
     setMatch(false);
@@ -39,7 +39,7 @@ export default function MatchModal(props) {
 
   const handleOnPressSingleTree = () => {
     setMatch(false);
-    return navigation.navigate("SingleTreePage");
+    return navigation.navigate("SingleTreePage",{matchingDetails});
   };
 
   return (

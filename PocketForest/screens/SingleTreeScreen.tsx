@@ -8,9 +8,12 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function SingleTreePage(props) {
     const navigation = useNavigation<homeScreenProp>();
-    const { setMatch } = props;
-    console.log(props, "<<<props from single tree page");
-    console.log(setMatch, "<<< props from single tree page");
+    const { setMatch, route } = props;
+    const { matchingDetails } = route.params;
+    console.log(matchingDetails, "<<<matching from single tree page");
+    
+    // console.log(props, "<<<props from single tree page");
+    // console.log(setMatch, "<<< props from single tree page");
     
     return (
         <View style={styles.centeredView}>

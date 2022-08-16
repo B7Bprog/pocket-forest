@@ -2,7 +2,7 @@ import { StyleSheet, ImageBackground, Pressable, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -22,8 +22,8 @@ export default function HomePage() {
         <Text style={styles.title}>POCKET</Text>
         <Text style={styles.title}>FOREST</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <View style={styles.buttonArea}>
-        <Pressable style={styles.button} onPress={() => navigation.navigate('Map')}>
+        <View>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('User')}>
           <Text style={styles.buttonText}>LOGIN</Text>
         </Pressable>
         </View>

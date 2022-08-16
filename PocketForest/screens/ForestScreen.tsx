@@ -137,7 +137,7 @@ export default function ForestPage() {
           </TouchableHighlight>
           )) }
           </View>
-          <Pressable onPress={() => navigation.navigate('SingleTreePage')} >
+          <Pressable style={styles.homeButton} onPress={() => navigation.navigate('Home')} >
             <Text style={styles.homeButtonText}>Home</Text>
           </Pressable>
         </View>
@@ -237,9 +237,16 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   homeButton: {
-    color: 'white',
+    borderRadius: 5,
+    backgroundColor: "green",
+    borderColor: "green",
+    padding: 15,
+    paddingHorizontal: 30,
+    color: "green",
+    borderWidth: 3,
   },
   homeButtonText: {
-    fontSize: 20
+    fontSize: 20,
+    fontWeight: "500",
   }
 });

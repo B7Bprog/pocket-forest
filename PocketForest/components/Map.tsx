@@ -344,5 +344,5 @@ const styles = StyleSheet.create({
   },
   click: {
     color: "#ff7733",
-  },
+  }
 });

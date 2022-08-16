@@ -118,6 +118,21 @@ export default function ForestPage() {
 
   const navigation = useNavigation<homeScreenProp>();
 
+  const [trees, setTrees] = useState([])
+
+  const {loggedInUser} = useContext(UserContext);
+
+  useEffect(() => {
+    getTrees().then((trees) => {
+        setTrees(trees)
+    })
+}, [])
+
+// trees.filter(tree => {
+//   return tree.username.includes(loggedInUser)
+// })
+
+
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
     <ScrollView style={styles.scrollView}>
@@ -126,7 +141,7 @@ export default function ForestPage() {
         <View style={styles.innerContainer}>
           <View style={styles.cardsSection}>
 
-          {exampleTrees.map((tree) => (
+          {trees.map((tree) => (
             <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
             <View style={styles.card}>
               <View style={styles.imageWrapper}>

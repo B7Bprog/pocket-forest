@@ -11,6 +11,13 @@ export const getUsers = () => {
     })
 }
 
+export const getTrees = () => {
+    return pocketForestApi.get(`all-trees`)
+    .then(({data}) => {
+        return data
+    })
+}
+
 
 
 

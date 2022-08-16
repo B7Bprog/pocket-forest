@@ -14,7 +14,7 @@ export default function Map() {
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
   const navigation = useNavigation(); 
-  const {loggedInUser, setLoggedInUser, isLoggedIn} = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
 
   let foxMessage;
   let alertIcon;
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20
   },
   textInsideTextbox: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'black'
   },
   animal: {

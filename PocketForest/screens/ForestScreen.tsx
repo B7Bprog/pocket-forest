@@ -9,6 +9,8 @@ import { UserContext } from '../contexts/User';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
+const exampleImage = { img: {uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg"}}
+
 const exampleTrees = [
   {
     id: 1,
@@ -128,10 +130,20 @@ export default function ForestPage() {
     })
 }, [])
 
-// trees.filter(tree => {
-//   return tree.username.includes(loggedInUser)
-// })
 
+  const userTrees = trees.filter((tree) => {
+     tree.username.includes(loggedInUser)
+  })
+
+  const filterByTags = [loggedInUser];
+
+const filterByTagSet = new Set(filterByTags);
+
+const result = trees.filter((o) => 
+  o.username.some((username) => filterByTagSet.has(username))
+);
+
+ 
 
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
@@ -141,11 +153,19 @@ export default function ForestPage() {
         <View style={styles.innerContainer}>
           <View style={styles.cardsSection}>
 
-          {trees.map((tree) => (
+          {result.map((tree) => (
             <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('Home')}>
             <View style={styles.card}>
               <View style={styles.imageWrapper}>
-                <Image style={styles.forestImage} source={tree.img}/>
+                {tree.users_image_url.length > 0 
+                ? <Image style={styles.forestImage} 
+                source={{
+                  uri: tree.users_image_url[0][loggedInUser]
+                }} />
+                
+                // source={tree.users_image_url[0]['sofia123']}/>
+                : <Image style={styles.forestImage} source={exampleImage.img}/>
+              }
               </View>
               <View style={styles.textWrapper}>
                 <Text style={styles.cardTitle}>{tree.name}</Text>

@@ -31,6 +31,9 @@ export default function HomePage() {
         <Pressable style={styles.button2} onPress={() => navigation.navigate('Camera')}>
           <Text style={styles.buttonText2}>Snap a pic!</Text>
         </Pressable>
+        <Pressable style={styles.button2} onPress={() => navigation.navigate('Forest')}>
+          <Text style={styles.buttonText2}>Go straight to forest</Text>
+        </Pressable>
         </View>
         </View>
       </ImageBackground>
@@ -66,13 +69,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0, 0.60)'
   },
+  buttonArea: {
+    backgroundColor: 'transparent'
+  },
   button: {
     backgroundColor: 'green',
     borderRadius: 5,
     color: 'white',
     padding: 15,
     paddingHorizontal: 30
-    
   },
   buttonText: {
     fontSize: 20,

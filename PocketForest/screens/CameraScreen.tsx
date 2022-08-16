@@ -63,7 +63,7 @@ export default function CameraPage() {
             let data = await response.json();
             if (data.secure_url) {
               console.log(data.secure_url);
-              alert("Upload successful");
+              // alert("Upload successful");
             }
           })
           .catch((err) => {

@@ -21,13 +21,11 @@ import NotMatchModal from "../components/NotMatchModal";
 
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
-export default function CameraPage() {
+export default function CameraPage({ route }) {
   const navigation = useNavigation<cameraScreenProp>();
 
-  const dummyTree = {
-    coords: { latitude: 53.179332013090665, longitude: -2.883641382896462 },
-    species: "Sorbus aucuparia",
-  };
+  console.log(route);
+  const { selectedTree, selectedTreeId } = route.params;
 
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -37,6 +35,83 @@ export default function CameraPage() {
   const [match, setMatch] = useState(false);
   const [notMatch, setNotMatch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [imgURL, setImgURL] = useState("");
+  const [newTreeImgUrls, setnewTreeImgUrls] = useState(null);
+  const [newTreeUsers, setnewnewTreeUsers] = useState(null);
+
+  const user = "dummyUser";
+  const tree_id = "62f63f5c23f3a423c37e5044";
+
+  console.log(imgURL, "imageURL");
+  console.log(newTreeImgUrls, "newTreeImgUrls");
+  console.log(newTreeUsers, "newTreeUsers");
+
+  useEffect(() => {
+    if (imgURL) {
+      const newUserImage = { [user]: imgURL };
+      const apiURL = `https://pocketforestapi.herokuapp.com/api/trees/${tree_id}`;
+      fetch(apiURL)
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          console.log(response.users_image_url, "response.users_image_url");
+
+          setnewTreeImgUrls([...response.users_image_url, newUserImage]);
+          setnewnewTreeUsers([...response.username, user]);
+        })
+        .catch((err) => {
+          alert("fetch tree data");
+          console.log(err, "error in newTreeImgUrls");
+        });
+    }
+  }, [imgURL]);
+
+  useEffect(() => {
+    if (newTreeImgUrls) {
+      const apiURL = `https://pocketforestapi.herokuapp.com/api/trees/${tree_id}/add-user-image`;
+      fetch(apiURL, {
+        method: "PATCH",
+        body: JSON.stringify(newTreeImgUrls),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          console.log(
+            response.users_image_url,
+            "response for updating image urls"
+          );
+        })
+        .catch((err) => {
+          alert("Cannot update tree image urls");
+          console.log(err, "error in newTreeImgUrls");
+        });
+    }
+  }, [newTreeImgUrls]);
+
+  useEffect(() => {
+    if (newTreeUsers) {
+      const apiURL = `https://pocketforestapi.herokuapp.com/api/trees/${tree_id}/add-user`;
+      fetch(apiURL, {
+        method: "PATCH",
+        body: JSON.stringify(newTreeUsers),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setnewnewTreeUsers([]);
+          console.log(response, "response for updating tree usernames");
+        })
+        .catch((err) => {
+          alert("Cannot update tree usernames");
+          console.log(err, "error in newTreeUsers");
+        });
+    }
+  }, [newTreeUsers]);
 
   useEffect(() => {
     if (match) {
@@ -63,7 +138,8 @@ export default function CameraPage() {
             let data = await response.json();
             if (data.secure_url) {
               console.log(data.secure_url);
-              // alert("Upload successful");
+              setImgURL(data.secure_url);
+              alert("Upload successful");
             }
           })
           .catch((err) => {
@@ -75,9 +151,12 @@ export default function CameraPage() {
 
   useEffect(() => {
     if (plantData) {
+      console.log(
+        plantData.suggestions[0].plant_details.scientific_name,
+        "top suggested Sci Name"
+      );
       if (
-        plantData.suggestions[0].plant_details.scientific_name ===
-        dummyTree.species
+        plantData.suggestions[0].plant_details.scientific_name === selectedTree
       ) {
         console.log("matching!");
         console.log(

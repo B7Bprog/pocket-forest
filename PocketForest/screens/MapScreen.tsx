@@ -7,16 +7,16 @@ import Map from '../components/Map';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
-
 export default function MapPage() {
 
-
   const navigation = useNavigation<homeScreenProp>();
-
 
   return (
     <View style={styles.container}>
       <Map />
+      <View style={styles.bottomBar}>
+        <Button title='forest' onPress={() => navigation.navigate('Forest')}/>
+      </View>
     </View>
   );
 }
@@ -36,4 +36,11 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  bottomBar: {
+    height: 100,
+    backgroundColor: 'green',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

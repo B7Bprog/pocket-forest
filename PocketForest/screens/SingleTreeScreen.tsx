@@ -1,22 +1,23 @@
-import { StyleSheet, Button, Image, ImageBackground, Pressable, TouchableHighlight, ScrollView } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { StyleSheet, Text, ScrollView, View, Image, ImageBackground, Pressable } from 'react-native';
 import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
-export default function SingleTreePage(props) {
+export default function SingleTreePage({ route }) {
+
+    const { treeId, result } = route.params;
+    const [tree, setTree] = useState({})
+    const { loggedInUser } = useContext(UserContext);
+
+    const exampleImage = { img: { uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" } }
 
     const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
+
     const navigation = useNavigation<homeScreenProp>();
-    const treeInfo = props.route.params.result;
-      const {loggedInUser} = useContext(UserContext);
-
-
-    console.log(treeInfo[0].createdAt, "<<<treeInfo");
 
     const handleOnPressHome = () => {
         return navigation.navigate("Home")
@@ -29,35 +30,62 @@ export default function SingleTreePage(props) {
     const handleOnPressForest = () => {
         return navigation.navigate("Forest");
     };
-    
+
+    useEffect(() => {
+        fetch(`https://pocket-forest.herokuapp.com/api/trees/${treeId}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setTree(data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [treeId])
+
+
+    const picsArray = tree.users_image_url;
+
+    let treePic = undefined;
+
+
+    if (picsArray) {
+        const filteredArray = picsArray.filter((item) => {
+            return item[loggedInUser]
+        })
+
+        treePic = filteredArray[0][loggedInUser]
+    }
+
     return (
         <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
-        <ScrollView style={styles.scrollView}>
-        <View style={styles.container}>
-                        
-            <View style={styles.treeImage}>
-                            <Image style={styles.forestImage} 
-                source={{
-                  uri: treeInfo[0].users_image_url[0][loggedInUser]
-                }} />
-            </View>
-            <View style={styles.cardSection}>
-            <View style={styles.title}>
-                            <Text style={styles.titleText}>{treeInfo[0].name}</Text>
-            </View>
+            <ScrollView style={styles.scrollView}>
+                <View style={styles.pageWrapper}>
+                    <View style={styles.upperContainer}>
+                        <View style={styles.title}>
+                            <Text style={styles.titleText}>{tree.name}</Text>
+                        </View>
+                        <View style={styles.treeImageWrapper}>
+                            {treePic ? <Image style={styles.treeImage}
+                                source={{
+                                    uri: treePic
+                                }} />
+                                : <Image style={styles.treeImage}
+                                    source={exampleImage.img} />
+                            }
+                        </View>
                         <View style={styles.singleTreeInfo}>
-                            <Text style={styles.family}>Belongs to {treeInfo[0].family} family</Text>
+                            <Text style={styles.text}>Belongs to {tree.family} family</Text>
                         </View>
                         <View style={styles.dateTime}>
-                            <Text style={styles.dateText}>found on {treeInfo[0].createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
-                            <Text style={styles.placeText}>at {treeInfo[0].latitude} and {treeInfo[0].longitude}</Text>
+                            <Text style={styles.text}>at {tree.latitude} and {tree.longitude}</Text>
                         </View>
-                         <View style={styles.description}>
-                            <Text style={styles.descriptionText}>{treeInfo[0].description}</Text>
-                </View>
-                </View>
-                        
-                    <View style={styles.buttonBoxBottom}>
+                        <View style={styles.description}>
+                            <Text style={styles.text}>{tree.description}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.bottomBoxButton}>
                         <Pressable style={styles.leftPressable} onPress={handleOnPressHome}>
                             <Text style={styles.leftPressableText}>Home</Text>
                         </Pressable>
@@ -68,73 +96,63 @@ export default function SingleTreePage(props) {
                             <Text style={styles.rightPressableText}>Forest</Text>
                         </Pressable>
                     </View>
-         </View>
-        </ScrollView>
+                </View>
+            </ScrollView>
         </ImageBackground>
     )
 }
 
-{/* <Text style={styles.title}>Information about {matchingDetails.common_names[0]}:</Text>
-            <Image
-            source={{
-              uri: 'https://www.gardeningknowhow.com/wp-content/uploads/2021/11/rowan-berries.jpg',
-            }}
-            />
-            <Text>It belongs to {matchingDetails.structured_name.species} family</Text>
-            <Text>{matchingDetails.wiki_description.value}</Text> */}
-            {/* <Pressable style={styles.forestPressable}onPress={() => navigation.navigate('Forest')}><Text style={styles.forestPressableText}>Forest</Text></Pressable> */}
 
 const styles = StyleSheet.create({
-
+    scrollView: {
+        backgroundColor: 'rgba(0,0,0, 0.60)',
+    },
     backgroundImage: {
         height: '100%',
     },
-    scrollView: {
+    pageWrapper: {
+        alignItems: 'center',
         height: '100%',
-        backgroundColor: 'rgba(0,0,0, 0.60)',
+        display: 'flex',
+        marginTop: 100,
+        marginBottom: 130,
+        width: '100%',
+        position: "relative"
     },
-    container: {
-        display:"flex",
+    upperContainer: {
+        display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: 'transparent',
-        // height: '100%'
+        height: "80%",
+        width: "90%",
+        marginTop: "5%"
     },
-    // innerContainer: {
-    //     flex: 1,
-    //     width: '100%',
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     backgroundColor: 'transparent',
-    //     marginTop: 30,
-    //     marginBottom: 50
-    // },
-    cardSection: {
-        // display: 'flex',
-        // justifyContent: 'flex-start',
-        // alignContent: 'center',
-        // flexDirection: 'row',
-        // width: '90%',
-        // backgroundColor: 'transparent',
-        // margin: 20,
-        // flexWrap: 'wrap'
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: 'transparent',
-        margin: 10,
-        padding: 10
+    titleText: {
+        color: 'white',
+        fontSize: 30,
     },
-    title: {
+    text: {
+        color: 'white',
+        zIndex: 1,
         fontSize: 20,
-        fontWeight: 'bold',
+        paddingBottom: 2,
+        lineHeight: 40
     },
-    buttonBoxBottom: {
+    treeImageWrapper: {
+        padding: 20
+    },
+    treeImage: {
+        height: 300,
+        width: 300,
+        borderRadius: 20
+    },
+    bottomBoxButton: {
         backgroundColor: "transparent",
-        height: "20%",
+        height: "10%",
         width: "90%",
         position: "absolute",
-        bottom: 70,
+        marginBottom: "20%",
+        bottom: 1,
         flex: 1,
         justifyContent: "space-between",
         alignItems: "center",
@@ -151,6 +169,7 @@ const styles = StyleSheet.create({
     leftPressableText: {
         fontSize: 20,
         fontWeight: "500",
+        color: "white"
     },
     centrePressable: {
         backgroundColor: "green",
@@ -158,11 +177,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 15,
         paddingHorizontal: 18,
-        borderWidth: 3, 
+        borderWidth: 3,
     },
     centrePressableText: {
         fontSize: 20,
         fontWeight: "500",
+        color: "white"
     },
     rightPressable: {
         borderRadius: 5,
@@ -176,5 +196,8 @@ const styles = StyleSheet.create({
     rightPressableText: {
         fontSize: 20,
         fontWeight: "500",
+        color: "white"
     },
+
+
 })

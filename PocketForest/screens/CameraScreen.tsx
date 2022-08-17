@@ -161,7 +161,6 @@ export default function CameraPage({ route }) {
           method: "POST",
         })
           .then(async (response) => {
-            console.log("we did the thing");
             let data = await response.json();
             if (data.secure_url) {
               console.log(data.secure_url);
@@ -228,7 +227,9 @@ export default function CameraPage({ route }) {
 
   if (photo) {
     const uploadPic = () => {
+
       setIsLoading(true);
+
       Promise.resolve(photo.base64).then((base64files) => {
         const data = {
           api_key: "kNy7fQGPhdis1LDUEP2hx4Ckuk8D2p6prUBnrSvrgWdSVi0Wt3",
@@ -246,6 +247,7 @@ export default function CameraPage({ route }) {
             "synonyms",
           ],
         };
+
         fetch("https://api.plant.id/v2/identify", {
           method: "POST",
           headers: {

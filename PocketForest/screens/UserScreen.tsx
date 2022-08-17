@@ -1,7 +1,7 @@
 import { StyleSheet, Button, Pressable, Image, ImageBackground } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
@@ -13,15 +13,15 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 export default function UserPage() {
 
   const [users, setUsers] = useState([])
-  const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext)
 
   const navigation = useNavigation<homeScreenProp>();
 
   useEffect(() => {
     getUsers().then((users) => {
-        setUsers(users)
+      setUsers(users)
     })
-}, [])
+  }, [])
 
   function userPress() {
     navigation.navigate('Map')

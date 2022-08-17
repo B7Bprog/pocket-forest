@@ -1,180 +1,111 @@
-import { StyleSheet, Button, Image, ImageBackground, Pressable, TouchableHighlight, ScrollView } from 'react-native';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, ScrollView, View, Image, ImageBackground} from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
+import axios from 'axios';
 
-type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
-export default function SingleTreePage(props) {
+export default function SingleTreePage({route}) {
+
+    const { treeId, result } = route.params;
+
+    const [tree, setTree] = useState({})
+
+    // result = ALL trees collected by USER
+
+    const exampleImage = { img: {uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg"}}
+    const {loggedInUser} = useContext(UserContext);
 
     const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
-    const navigation = useNavigation<homeScreenProp>();
-    const treeInfo = props.route.params.result;
-      const {loggedInUser} = useContext(UserContext);
 
 
-    console.log(treeInfo[0].createdAt, "<<<treeInfo");
+    // console.log(treeInfo[0].users_image_url[0][loggedInUser])
 
-    const handleOnPressHome = () => {
-        return navigation.navigate("Home")
-    };
+    // console.log(treeId)
+    // console.log(result)
 
-    const handleOnPressMap = () => {
-        return navigation.navigate("Map");
-    };
 
-    const handleOnPressForest = () => {
-        return navigation.navigate("Forest");
-    };
+    useEffect(() => {
+        fetch(`https://pocketforestapi.herokuapp.com/api/trees/${treeId}`)
+        .then((response) => {
+            console.log(response, '<<< response')
+            return response.json();
+        })
+        .then((data) => {
+            setTree(data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    })
+
+
+
+    console.log(tree, '<<< tree');
+
     
     return (
         <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
         <ScrollView style={styles.scrollView}>
-        <View style={styles.container}>
-                        
-            <View style={styles.treeImage}>
-                            <Image style={styles.forestImage} 
-                source={{
-                  uri: treeInfo[0].users_image_url[0][loggedInUser]
-                }} />
-            </View>
-            <View style={styles.cardSection}>
+            <View style={styles.pageWrapper}>
             <View style={styles.title}>
-                            <Text style={styles.titleText}>{treeInfo[0].name}</Text>
+                {/* <Text style={styles.titleText}>{treeInfo[0].name}</Text> */}
             </View>
-                        <View style={styles.singleTreeInfo}>
-                            <Text style={styles.family}>Belongs to {treeInfo[0].family} family</Text>
-                        </View>
-                        <View style={styles.dateTime}>
-                            <Text style={styles.dateText}>found on {treeInfo[0].createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
-                            <Text style={styles.placeText}>at {treeInfo[0].latitude} and {treeInfo[0].longitude}</Text>
-                        </View>
-                         <View style={styles.description}>
-                            <Text style={styles.descriptionText}>{treeInfo[0].description}</Text>
-                </View>
-                </View>
-                        
-                    <View style={styles.buttonBoxBottom}>
-                        <Pressable style={styles.leftPressable} onPress={handleOnPressHome}>
-                            <Text style={styles.leftPressableText}>Home</Text>
-                        </Pressable>
-                        <Pressable style={styles.centrePressable} onPress={handleOnPressMap}>
-                            <Text style={styles.centrePressableText}>Map</Text>
-                        </Pressable>
-                        <Pressable style={styles.rightPressable} onPress={handleOnPressForest}>
-                            <Text style={styles.rightPressableText}>Forest</Text>
-                        </Pressable>
-                    </View>
-         </View>
+            <View style={styles.treeImageWrapper}>
+                {/* <Image style={styles.treeImage} 
+                    source={{
+                        uri: treeInfo[1].users_image_url[0][loggedInUser]
+                    }} /> */}
+            </View>
+            <View style={styles.singleTreeInfo}>    
+                {/* <Text style={styles.text}>Belongs to {treeInfo[0].family} family</Text> */}
+            </View>
+            <View style={styles.dateTime}>
+                {/* <Text style={styles.text}>found on {treeInfo[0].createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
+                <Text style={styles.text}>at {treeInfo[0].latitude} and {treeInfo[0].longitude}</Text> */}
+            </View>
+            <View style={styles.description}>
+                {/* <Text style={styles.text}>{treeInfo[0].description}</Text> */}
+            </View>
+            </View>
+            
         </ScrollView>
         </ImageBackground>
+        
     )
 }
 
-{/* <Text style={styles.title}>Information about {matchingDetails.common_names[0]}:</Text>
-            <Image
-            source={{
-              uri: 'https://www.gardeningknowhow.com/wp-content/uploads/2021/11/rowan-berries.jpg',
-            }}
-            />
-            <Text>It belongs to {matchingDetails.structured_name.species} family</Text>
-            <Text>{matchingDetails.wiki_description.value}</Text> */}
-            {/* <Pressable style={styles.forestPressable}onPress={() => navigation.navigate('Forest')}><Text style={styles.forestPressableText}>Forest</Text></Pressable> */}
 
 const styles = StyleSheet.create({
-
+    scrollView: {
+        backgroundColor: 'rgba(0,0,0, 0.60)',
+    },
     backgroundImage: {
         height: '100%',
     },
-    scrollView: {
+    pageWrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
         height: '100%',
-        backgroundColor: 'rgba(0,0,0, 0.60)',
+        display: 'flex',
+        marginTop: 50,
+        marginBottom: 50,
+        width: '100%'
     },
-    container: {
-        display:"flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: 'transparent',
-        // height: '100%'
+    titleText: {
+        color: 'white',
+        fontSize: 30
     },
-    // innerContainer: {
-    //     flex: 1,
-    //     width: '100%',
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     backgroundColor: 'transparent',
-    //     marginTop: 30,
-    //     marginBottom: 50
-    // },
-    cardSection: {
-        // display: 'flex',
-        // justifyContent: 'flex-start',
-        // alignContent: 'center',
-        // flexDirection: 'row',
-        // width: '90%',
-        // backgroundColor: 'transparent',
-        // margin: 20,
-        // flexWrap: 'wrap'
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: 'transparent',
-        margin: 10,
-        padding: 10
+    text: {
+        color: 'white',
+        zIndex: 1 
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
+    treeImageWrapper: {
+        padding: 20
     },
-    buttonBoxBottom: {
-        backgroundColor: "transparent",
-        height: "20%",
-        width: "90%",
-        position: "absolute",
-        bottom: 70,
-        flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexDirection: "row",
-    },
-    leftPressable: {
-        backgroundColor: "green",
-        borderColor: "green",
-        borderRadius: 5,
-        padding: 15,
-        paddingHorizontal: 18,
-        borderWidth: 3,
-    },
-    leftPressableText: {
-        fontSize: 20,
-        fontWeight: "500",
-    },
-    centrePressable: {
-        backgroundColor: "green",
-        borderColor: "green",
-        borderRadius: 5,
-        padding: 15,
-        paddingHorizontal: 18,
-        borderWidth: 3, 
-    },
-    centrePressableText: {
-        fontSize: 20,
-        fontWeight: "500",
-    },
-    rightPressable: {
-        borderRadius: 5,
-        backgroundColor: "green",
-        borderColor: "green",
-        padding: 15,
-        paddingHorizontal: 18,
-        color: "green",
-        borderWidth: 3,
-    },
-    rightPressableText: {
-        fontSize: 20,
-        fontWeight: "500",
-    },
+    treeImage: {
+        height: '100%',
+        width: 300,
+        borderRadius: 20
+    }
+    
 })

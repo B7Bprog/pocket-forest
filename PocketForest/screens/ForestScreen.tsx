@@ -145,6 +145,8 @@ const result = trees.filter((o) =>
 
   // console.log(userTrees, "<<<userTrees");
   // console.log(result, "<<<result");
+
+
   
  
 
@@ -157,7 +159,7 @@ const result = trees.filter((o) =>
           <View style={styles.cardsSection}>
 
           {result.map((tree) => (
-            <TouchableHighlight key={tree.id} style={styles.cardTouchable} onPress={() => navigation.navigate('SingleTreePage', {result})}>
+            <TouchableHighlight key={tree._id} style={styles.cardTouchable} onPress={() => navigation.navigate('SingleTreePage', {result: result, treeId: tree._id})}>
             <View style={styles.card}>
               <View style={styles.imageWrapper}>
                 {tree.users_image_url.length > 0 

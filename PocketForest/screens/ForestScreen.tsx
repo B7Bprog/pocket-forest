@@ -1,113 +1,113 @@
 import { StyleSheet, Button, Image, ImageBackground, Pressable, TouchableHighlight, ScrollView } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import { getTrees } from '../utils/api'
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
-const exampleImage = { img: {uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg"}}
+const exampleImage = { img: { uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" } }
 
 const exampleTrees = [
   {
     id: 1,
     name: 'Apple Tree',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg"
     }
   },
   {
     id: 2,
     name: 'Pear Tree',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/pear-tree-11032021.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/pear-tree-11032021.jpg"
     }
   },
   {
     id: 3,
     name: 'Black Ash',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/black-ash-tree-dec11.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/black-ash-tree-dec11.jpg"
     }
   },
   {
     id: 4,
     name: 'Mahogany',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Mahogany-tree.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Mahogany-tree.jpg"
     }
   },
   {
     id: 5,
     name: 'Peach Tree',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/peach-tree-11032021.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/peach-tree-11032021.jpg"
     }
   },
   {
     id: 6,
     name: 'Common Fig',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/common-fig-tree-10032021.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/common-fig-tree-10032021.jpg"
     }
   },
   {
     id: 7,
     name: 'European Beech',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/european-beech-tree-09032021.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/european-beech-tree-09032021.jpg"
     }
   },
   {
     id: 8,
     name: 'Black Birch',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-birch.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-birch.jpg"
     }
   },
   {
     id: 9,
     name: 'Sweet Cherry',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/sweet-cherry-trees-09032021.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/sweet-cherry-trees-09032021.jpg"
     }
   },
   {
     id: 10,
     name: 'American Elm',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/American-elm.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/American-elm.jpg"
     }
   },
   {
     id: 11,
     name: 'Pignut Hickory',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Pignut-hickory.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Pignut-hickory.jpg"
     }
   },
   {
     id: 12,
     name: 'European Larch',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/European-larch.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/European-larch.jpg"
     }
   },
   {
     id: 13,
     name: 'Red Maple',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg"
     }
   },
   {
     id: 14,
     name: 'Black Oak',
-    img: { 
-      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg" 
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg"
     }
   },
 
@@ -122,77 +122,69 @@ export default function ForestPage() {
 
   const [trees, setTrees] = useState([])
 
-  const {loggedInUser} = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
 
   useEffect(() => {
     getTrees().then((trees) => {
-        setTrees(trees)
+      setTrees(trees)
     })
-}, [])
+  }, [])
 
 
   const userTrees = trees.filter((tree) => {
-     tree.username.includes(loggedInUser)
+    tree.username.includes(loggedInUser)
   })
 
   const filterByTags = [loggedInUser];
 
-const filterByTagSet = new Set(filterByTags);
+  const filterByTagSet = new Set(filterByTags);
 
-const result = trees.filter((o) => 
-  o.username.some((username) => filterByTagSet.has(username))
-);
+  const result = trees.filter((o) =>
+    o.username.some((username) => filterByTagSet.has(username))
+  );
 
-  // console.log(userTrees, "<<<userTrees");
-  // console.log(result, "<<<result");
-
-
-  
- 
 
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-      
-        <View style={styles.innerContainer}>
-          <View style={styles.cardsSection}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.container}>
 
-          {result.map((tree) => (
-            <TouchableHighlight key={tree._id} style={styles.cardTouchable} onPress={() => navigation.navigate('SingleTreePage', {result: result, treeId: tree._id})}>
-            <View style={styles.card}>
-              <View style={styles.imageWrapper}>
-                {tree.users_image_url.length > 0 
-                ? <Image style={styles.forestImage} 
-                source={{
-                  uri: tree.users_image_url[0][loggedInUser]
-                }} />
-                
-                // source={tree.users_image_url[0]['sofia123']}/>
-                : <Image style={styles.forestImage} source={exampleImage.img}/>
-              }
-              </View>
-              <View style={styles.textWrapper}>
-                <Text style={styles.cardTitle}>{tree.name}</Text>
-              </View>
+          <View style={styles.innerContainer}>
+            <View style={styles.cardsSection}>
+
+              {result.map((tree) => (
+                <TouchableHighlight key={tree._id} style={styles.cardTouchable} onPress={() => navigation.navigate('SingleTreePage', { result: result, treeId: tree._id })}>
+                  <View style={styles.card}>
+                    <View style={styles.imageWrapper}>
+                      {tree.users_image_url.length > 0
+                        ? <Image style={styles.forestImage}
+                          source={{
+                            uri: tree.users_image_url[0][loggedInUser]
+                          }} />
+                        : <Image style={styles.forestImage} source={exampleImage.img} />
+                      }
+                    </View>
+                    <View style={styles.textWrapper}>
+                      <Text style={styles.cardTitle}>{tree.name}</Text>
+                    </View>
+                  </View>
+                </TouchableHighlight>
+              ))}
             </View>
-          </TouchableHighlight>
-          )) }
+            <Pressable style={styles.homeButton} onPress={() => navigation.navigate('Home')} >
+              <Text style={styles.homeButtonText}>Home</Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.homeButton} onPress={() => navigation.navigate('Home')} >
-            <Text style={styles.homeButtonText}>Home</Text>
-          </Pressable>
-        </View>
-        
-        
+
+
         </View>
       </ScrollView>
-      </ImageBackground>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  
+
   scrollView: {
     height: '100%',
     backgroundColor: 'rgba(0,0,0, 0.60)',
@@ -241,7 +233,7 @@ const styles = StyleSheet.create({
       width: 2,
       height: 2
     },
-    shadowOpacity:0.9
+    shadowOpacity: 0.9
   },
   cardTitle: {
     fontSize: 18,

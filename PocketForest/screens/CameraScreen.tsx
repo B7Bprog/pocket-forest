@@ -59,11 +59,9 @@ export default function CameraPage() {
           method: "POST",
         })
           .then(async (response) => {
-            console.log("we did the thing");
             let data = await response.json();
             if (data.secure_url) {
               console.log(data.secure_url);
-              // alert("Upload successful");
             }
           })
           .catch((err) => {
@@ -121,7 +119,9 @@ export default function CameraPage() {
 
   if (photo) {
     const uploadPic = () => {
+
       setIsLoading(true);
+
       Promise.resolve(photo.base64).then((base64files) => {
         const data = {
           api_key: "0QaJnCInVbv2wysEGzT5uZkAXFniTTNlMjVbR2qZqsAebjfKdP",
@@ -139,6 +139,7 @@ export default function CameraPage() {
             "synonyms",
           ],
         };
+
         fetch("https://api.plant.id/v2/identify", {
           method: "POST",
           headers: {

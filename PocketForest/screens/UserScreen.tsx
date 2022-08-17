@@ -1,7 +1,7 @@
 import { StyleSheet, Button, Pressable, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
@@ -14,15 +14,15 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 export default function UserPage() {
 
   const [users, setUsers] = useState([])
-  const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext)
 
   const navigation = useNavigation<homeScreenProp>();
 
   useEffect(() => {
     getUsers().then((users) => {
-        setUsers(users)
+      setUsers(users)
     })
-}, [])
+  }, [])
 
   function userPress() {
     navigation.navigate('Map')
@@ -40,12 +40,13 @@ export default function UserPage() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.users}>
         {users.map((user) => (
-            <Pressable key={user.username} style={styles.user} onPress={()=>  clickUser(user.username) }><Text style={styles.userTitle}>{user.username}</Text>
+          <Pressable key={user.username} style={styles.user} onPress={() => clickUser(user.username)}><Text style={styles.userTitle}>{user.username}</Text>
             <View style={styles.animal}>
-              <Image style={styles.animalImage} source={require('../assets/images/fox.png')}/>
-            </View></Pressable>
+              <Image style={styles.animalImage} source={require('../assets/images/fox.png')} />
+            </View>
+          </Pressable>
         ))}
-        </View>
+      </View>
     </View>
   );
 }

@@ -62,33 +62,43 @@ export default function SingleTreePage({ route }) {
         <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.pageWrapper}>
-                    <View style={styles.title}>
-                        <Text style={styles.titleText}>{tree.name}</Text>
+                    <View style={styles.upperContainer}>
+                        <View style={styles.title}>
+                            <Text style={styles.titleText}>{tree.name}</Text>
+                        </View>
+                        <View style={styles.treeImageWrapper}>
+                            {treePic ? <Image style={styles.treeImage}
+                                source={{
+                                    uri: treePic
+                                }} />
+                                : <Image style={styles.treeImage}
+                                    source={exampleImage.img} />
+                            }
+                        </View>
+                        <View style={styles.singleTreeInfo}>
+                            <Text style={styles.text}>Belongs to {tree.family} family</Text>
+                        </View>
+                        <View style={styles.dateTime}>
+                            <Text style={styles.text}>at {tree.latitude} and {tree.longitude}</Text>
+                        </View>
+                        <View style={styles.description}>
+                            <Text style={styles.text}>{tree.description}</Text>
+                        </View>
                     </View>
-                    <View style={styles.treeImageWrapper}>
-                        {treePic ? <Image style={styles.treeImage}
-                            source={{
-                                uri: treePic
-                            }} />
-                            : <Image style={styles.treeImage}
-                                source={exampleImage.img} />
-                        }
+                    <View style={styles.bottomBoxButton}>
+                        <Pressable style={styles.leftPressable} onPress={handleOnPressHome}>
+                            <Text style={styles.leftPressableText}>Home</Text>
+                        </Pressable>
+                        <Pressable style={styles.centrePressable} onPress={handleOnPressMap}>
+                            <Text style={styles.centrePressableText}>Map</Text>
+                        </Pressable>
+                        <Pressable style={styles.rightPressable} onPress={handleOnPressForest}>
+                            <Text style={styles.rightPressableText}>Forest</Text>
+                        </Pressable>
                     </View>
-                    <View style={styles.singleTreeInfo}>
-                        <Text style={styles.text}>Belongs to {tree.family} family</Text>
-                    </View>
-                    <View style={styles.dateTime}>
-                        <Text style={styles.text}>at {tree.latitude} and {tree.longitude}</Text>
-                    </View>
-                    <View style={styles.description}>
-                        <Text style={styles.text}>{tree.description}</Text>
-                    </View>
-
                 </View>
-
             </ScrollView>
         </ImageBackground>
-
     )
 }
 
@@ -101,21 +111,32 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     pageWrapper: {
-        justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
         display: 'flex',
-        marginTop: 50,
-        marginBottom: 50,
-        width: '100%'
+        marginTop: 100,
+        marginBottom: 130,
+        width: '100%',
+        position: "relative"
+    },
+    upperContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "80%",
+        width: "90%",
+        marginTop: "5%"
     },
     titleText: {
         color: 'white',
-        fontSize: 30
+        fontSize: 30,
     },
     text: {
         color: 'white',
-        zIndex: 1
+        zIndex: 1,
+        fontSize: 20,
+        paddingBottom: 2,
+        lineHeight: 40
     },
     treeImageWrapper: {
         padding: 20
@@ -124,6 +145,59 @@ const styles = StyleSheet.create({
         height: 300,
         width: 300,
         borderRadius: 20
-    }
+    },
+    bottomBoxButton: {
+        backgroundColor: "transparent",
+        height: "10%",
+        width: "90%",
+        position: "absolute",
+        marginBottom: "20%",
+        bottom: 1,
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexDirection: "row",
+    },
+    leftPressable: {
+        backgroundColor: "green",
+        borderColor: "green",
+        borderRadius: 5,
+        padding: 15,
+        paddingHorizontal: 18,
+        borderWidth: 3,
+    },
+    leftPressableText: {
+        fontSize: 20,
+        fontWeight: "500",
+        color: "white"
+    },
+    centrePressable: {
+        backgroundColor: "green",
+        borderColor: "green",
+        borderRadius: 5,
+        padding: 15,
+        paddingHorizontal: 18,
+        borderWidth: 3,
+    },
+    centrePressableText: {
+        fontSize: 20,
+        fontWeight: "500",
+        color: "white"
+    },
+    rightPressable: {
+        borderRadius: 5,
+        backgroundColor: "green",
+        borderColor: "green",
+        padding: 15,
+        paddingHorizontal: 18,
+        color: "green",
+        borderWidth: 3,
+    },
+    rightPressableText: {
+        fontSize: 20,
+        fontWeight: "500",
+        color: "white"
+    },
+
 
 })

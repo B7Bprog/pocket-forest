@@ -3,16 +3,20 @@ import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../contexts/User';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function SingleTreePage(props) {
 
-    // const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
+    const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
     const navigation = useNavigation<homeScreenProp>();
     const treeInfo = props.route.params.result;
+      const {loggedInUser} = useContext(UserContext);
 
-    console.log(treeInfo, "<<<treeInfo");
+
+    console.log(treeInfo[0].createdAt, "<<<treeInfo");
 
     const handleOnPressHome = () => {
         return navigation.navigate("Home")
@@ -27,31 +31,31 @@ export default function SingleTreePage(props) {
     };
     
     return (
-        // <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
-        //     <ScrollView style={styles.scrollView}>
-                // <View style={styles.container}>
-                        /* <View style={styles.treeImage}>
+        <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
+        <ScrollView style={styles.scrollView}>
+        <View style={styles.container}>
+                        
+            <View style={styles.treeImage}>
                             <Image style={styles.forestImage} 
                 source={{
-                  uri: treeInfo.users_image_url[0][loggedInUser]
+                  uri: treeInfo[0].users_image_url[0][loggedInUser]
                 }} />
-                        </View> */
-                        /* <View style={styles.title}>
-                            <Text style={styles.titleText}>{treeInfo.name}</Text>
-                        </View>
+            </View>
+            <View style={styles.cardSection}>
+            <View style={styles.title}>
+                            <Text style={styles.titleText}>{treeInfo[0].name}</Text>
+            </View>
                         <View style={styles.singleTreeInfo}>
-                            <Text style={styles.family}>Belongs to {treeInfo.family} family</Text>
+                            <Text style={styles.family}>Belongs to {treeInfo[0].family} family</Text>
                         </View>
                         <View style={styles.dateTime}>
-                            <Text style={styles.dateText}>found on {treeInfo.createdAt}</Text>
-                            <Text style={styles.placeText}>at {treeInfo.latitude} and {treeInfo.longitude}</Text>
-                        </View>
-                        <View style={styles.date}>
-                            <Text style={styles.dateText}>{treeInfo.createdAt}</Text>
+                            <Text style={styles.dateText}>found on {treeInfo[0].createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
+                            <Text style={styles.placeText}>at {treeInfo[0].latitude} and {treeInfo[0].longitude}</Text>
                         </View>
                          <View style={styles.description}>
-                            <Text style={styles.descriptionText}>{treeInfo.description}</Text>
-                        </View> */
+                            <Text style={styles.descriptionText}>{treeInfo[0].description}</Text>
+                </View>
+                </View>
                         
                     <View style={styles.buttonBoxBottom}>
                         <Pressable style={styles.leftPressable} onPress={handleOnPressHome}>
@@ -64,9 +68,9 @@ export default function SingleTreePage(props) {
                             <Text style={styles.rightPressableText}>Forest</Text>
                         </Pressable>
                     </View>
-        // </View>
-        // {/* </ScrollView>
-        // </ImageBackground> */}
+         </View>
+        </ScrollView>
+        </ImageBackground>
     )
 }
 
@@ -82,19 +86,20 @@ export default function SingleTreePage(props) {
 
 const styles = StyleSheet.create({
 
-    // scrollView: {
-    //     height: '100%',
-    //     backgroundColor: 'rgba(0,0,0, 0.60)',
-    // },
-    // container: {
-    //     display: 'flex',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     backgroundColor: 'transparent',
-    // },
-    // backgroundImage: {
-    //     height: '100%',
-    // },
+    backgroundImage: {
+        height: '100%',
+    },
+    scrollView: {
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0, 0.60)',
+    },
+    container: {
+        display:"flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: 'transparent',
+        // height: '100%'
+    },
     // innerContainer: {
     //     flex: 1,
     //     width: '100%',
@@ -104,22 +109,22 @@ const styles = StyleSheet.create({
     //     marginTop: 30,
     //     marginBottom: 50
     // },
-    // cardSection: {
-    //     display: 'flex',
-    //     justifyContent: 'flex-start',
-    //     alignContent: 'center',
-    //     flexDirection: 'row',
-    //     width: '90%',
-    //     backgroundColor: 'transparent',
-    //     margin: 20,
-    //     flexWrap: 'wrap'
-    //     // flex: 1,
-    //     // justifyContent: "center",
-    //     // alignItems: "center",
-    //     // backgroundColor: 'transparent',
-    //     // margin: 10,
-    //     // padding: 10
-    // },
+    cardSection: {
+        // display: 'flex',
+        // justifyContent: 'flex-start',
+        // alignContent: 'center',
+        // flexDirection: 'row',
+        // width: '90%',
+        // backgroundColor: 'transparent',
+        // margin: 20,
+        // flexWrap: 'wrap'
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: 'transparent',
+        margin: 10,
+        padding: 10
+    },
     title: {
         fontSize: 20,
         fontWeight: 'bold',

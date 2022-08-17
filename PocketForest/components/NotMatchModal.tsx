@@ -29,18 +29,13 @@ export default function NotMatchModal(props) {
     return navigation.navigate("Map");
   };
 
-  const handleOnPressForest = () => {
-    setNotMatch(false);
-    return navigation.navigate("Camera");
-  };
-
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
         <View style={styles.textboxTop}>
           <Text style={styles.textInsideTextbox}>
             According to my analysis, the species of the tree in this photo is
-            not correct, make sure you have the right tree and try agin!
+            not correct, make sure you have the right tree and try again!
           </Text>
           <View style={styles.animal}>
             <Image

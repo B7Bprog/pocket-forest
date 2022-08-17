@@ -36,11 +36,6 @@ export default function MatchModal(props) {
     return navigation.navigate("Forest");
   };
 
-  // const handleOnPressSingleTree = () => {
-  //   setMatch(false);
-  //   return navigation.navigate("SingleTreePage", {matchingDetails});
-  // };
-
   return (
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
@@ -71,7 +66,6 @@ export default function MatchModal(props) {
           >
             <Text style={styles.rightPressableText}>Forest</Text>
           </Pressable>
-          {/* <Pressable onPress={handleOnPressSingleTree}><Text>Tree</Text></Pressable> */}
         </View>
       </View>
     </View>

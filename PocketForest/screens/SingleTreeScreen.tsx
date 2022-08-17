@@ -44,11 +44,7 @@ export default function SingleTreePage({ route }) {
             })
     }, [treeId])
 
-
     const picsArray = tree.users_image_url;
-
-    console.log(picsArray);
-
 
     let treePic = undefined;
 
@@ -77,9 +73,6 @@ export default function SingleTreePage({ route }) {
                                 : <Image style={styles.treeImage}
                                     source={exampleImage.img} />
                             }
-                        </View>
-                        <View style={styles.dateTime}>
-                            <Text style={styles.text}>You found that tree at {tree.latitude} and {tree.longitude} on {tree.createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
                         </View>
                         <View style={styles.singleTreeInfo}>
                             <Text style={styles.text}>It belongs to the {tree.family} family.</Text>

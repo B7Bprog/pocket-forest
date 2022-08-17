@@ -23,8 +23,8 @@ export default function Map() {
   const [selectedTree, setSelectedTree] = useState("");
   const [selectedTreeId, setSelectedTreeId] = useState("");
 
-  const navigation = useNavigation(); 
-  const {loggedInUser} = useContext(UserContext);
+  const navigation = useNavigation();
+  const { loggedInUser } = useContext(UserContext);
 
   let foxMessage;
   let alertIcon;
@@ -77,18 +77,7 @@ export default function Map() {
     fetch(apiURL)
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response.username, "response.username");
-        // console.log(response.users_image_url, "response.users_image_url");
-
-        // console.log(
-        //   [...response.users_image_url, newUserImage],
-        //   "[...response.users_image_url, newUserImage]"
-        // );
-        // console.log(
-        //   [...response.username, user],
-        //   "[...response.username, user]"
-        // );
-        console.log(response);
+        // console.log(response);
 
         setTrees(response);
       })
@@ -228,9 +217,9 @@ export default function Map() {
     var a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d * 1000; // meters

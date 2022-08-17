@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff3b0',
     alignSelf: 'stretch',
     shadowColor: 'black',
     shadowOffset: {
@@ -246,6 +246,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     textAlign: 'center',
+    fontWeight: '500'
   },
   imageWrapper: {
     height: 110,

@@ -19,6 +19,9 @@ export default function Map() {
   const [mapRegion, setMapRegion] = useState(null);
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
+  const [selectedTree, setSelectedTree] = useState("");
+  const [selectedTreeId, setSelectedTreeId] = useState("");
+
   const navigation = useNavigation(); 
   const {loggedInUser} = useContext(UserContext);
 
@@ -27,7 +30,14 @@ export default function Map() {
 
   if (closeEnough) {
     foxMessage = (
-      <Pressable onPress={() => navigation.navigate("Camera")}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("Camera", {
+            selectedTree: selectedTree,
+            selectedTreeId: selectedTreeId,
+          });
+        }}
+      >
         <Text style={styles.textInsideTextbox}>
           Let's <Text style={styles.click}>add this tree</Text> to our forest!
         </Text>
@@ -71,10 +81,14 @@ export default function Map() {
         longitude: -2.515016,
       },
       icon: "question",
+      species: "Sorbus aucuparia",
     },
     {
       id: 2,
+
       title: "Unknown Tree",
+      species: "Sorbus aucuparia",
+
       description: "try to add it to your Forest!",
       location: {
         latitude: 53.453316,
@@ -84,7 +98,9 @@ export default function Map() {
     },
     {
       id: 3,
+
       title: "English Oak",
+      species: "Sorbus aucuparia",
       description: "Added to your forest 09/08/22",
       location: {
         latitude: 53.450312,
@@ -94,7 +110,10 @@ export default function Map() {
     },
     {
       id: 4,
+
       title: "Tree in my garden",
+      species: "Sorbus aucuparia",
+
       description: "Added to your forest 09/08/22",
       location: {
         latitude: 53.45394162343724,
@@ -104,8 +123,11 @@ export default function Map() {
       icon: "question",
     },
     {
-      id: 5,
+      id: "62f63c4eb9af5ccf4ef7865a",
+
       title: "Unknown Tree",
+      species: "Sorbus aucuparia",
+
       description: "try to add it to your Forest!",
       location: {
         latitude: 53.47209257474375,
@@ -115,7 +137,10 @@ export default function Map() {
     },
     {
       id: 6,
+
       title: "Unknown Tree",
+      species: "Sorbus aucuparia",
+
       description: "try to add it to your Forest!",
       location: {
         latitude: 53.47061682068318,
@@ -125,6 +150,7 @@ export default function Map() {
     },
     {
       id: 7,
+
       title: "Unknown Tree",
       description: "try to add it to your Forest!",
       location: {
@@ -132,14 +158,18 @@ export default function Map() {
         longitude: -2.2386341689692553,
       },
       icon: "question",
+      species: "Sorbus aucuparia",
     },
     {
       id: 8,
-      title: "Unknown Tree",
+
+      title: "Spider plant",
+      species: "Chlorophytum comosum",
+
       description: "try to add it to your Forest!",
       location: {
-        latitude: 53.47058623012321,
-        longitude: -2.23926192489555,
+        latitude: 53.472332159757165,
+        longitude: -2.2422963213345315,
       },
       icon: "question",
     },
@@ -195,8 +225,10 @@ export default function Map() {
 
     const distance = radiusEarth * c;
 
-    if (distance < 20) {
+    if (distance < 30) {
       setCloseEnough(true);
+      setSelectedTree(this.species);
+      setSelectedTreeId(this.id);
     } else {
       setTreeDistance(distance);
       setCloseEnough(false);
@@ -226,6 +258,8 @@ export default function Map() {
                 coordinate={tree.location}
                 title={tree.title}
                 description={tree.description}
+                species={tree.species}
+                id={tree.id}
                 key={tree.id}
                 onPress={handleOnPress}
               >

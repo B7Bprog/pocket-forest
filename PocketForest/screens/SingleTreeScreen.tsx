@@ -47,6 +47,9 @@ export default function SingleTreePage({ route }) {
 
     const picsArray = tree.users_image_url;
 
+    console.log(picsArray);
+
+
     let treePic = undefined;
 
 

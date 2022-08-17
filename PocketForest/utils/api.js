@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const pocketForestApi = axios.create({
-    baseURL: `https://pocketforestapi.herokuapp.com/api`
+    baseURL: `https://pocket-forest.herokuapp.com/api/`
 })
 
 export const getUsers = () => {

@@ -18,16 +18,9 @@ export default function SingleTreePage({route}) {
     const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
 
 
-    // console.log(treeInfo[0].users_image_url[0][loggedInUser])
-
-    // console.log(treeId)
-    // console.log(result)
-
-
     useEffect(() => {
-        fetch(`https://pocketforestapi.herokuapp.com/api/trees/${treeId}`)
+        fetch(`https://pocket-forest.herokuapp.com/api/trees/${treeId}`)
         .then((response) => {
-            console.log(response, '<<< response')
             return response.json();
         })
         .then((data) => {
@@ -36,35 +29,35 @@ export default function SingleTreePage({route}) {
         .catch((error) => {
             console.log(error)
         })
-    })
+    }, [treeId])
 
 
 
-    console.log(tree, '<<< tree');
 
-    
+  
+
+
     return (
         <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
         <ScrollView style={styles.scrollView}>
             <View style={styles.pageWrapper}>
             <View style={styles.title}>
-                {/* <Text style={styles.titleText}>{treeInfo[0].name}</Text> */}
+                <Text style={styles.titleText}>{tree.name}</Text>
             </View>
-            <View style={styles.treeImageWrapper}>
-                {/* <Image style={styles.treeImage} 
+            {/* <View style={styles.treeImageWrapper}>
+                <Image style={styles.treeImage} 
                     source={{
-                        uri: treeInfo[1].users_image_url[0][loggedInUser]
-                    }} /> */}
-            </View>
+                        uri: treeImg[loggedInUser]
+                    }} />
+            </View> */}
             <View style={styles.singleTreeInfo}>    
-                {/* <Text style={styles.text}>Belongs to {treeInfo[0].family} family</Text> */}
+                <Text style={styles.text}>Belongs to {tree.family} family</Text>
             </View>
             <View style={styles.dateTime}>
-                {/* <Text style={styles.text}>found on {treeInfo[0].createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
-                <Text style={styles.text}>at {treeInfo[0].latitude} and {treeInfo[0].longitude}</Text> */}
+                <Text style={styles.text}>at {tree.latitude} and {tree.longitude}</Text>
             </View>
             <View style={styles.description}>
-                {/* <Text style={styles.text}>{treeInfo[0].description}</Text> */}
+                <Text style={styles.text}>{tree.description}</Text>
             </View>
             </View>
             
@@ -103,7 +96,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     treeImage: {
-        height: '100%',
+        height: 300,
         width: 300,
         borderRadius: 20
     }

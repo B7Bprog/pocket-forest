@@ -1,8 +1,8 @@
+import { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, View, Image, ImageBackground, Pressable } from 'react-native';
-import { RootTabScreenProps, RootStackParamList } from '../types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { useState, useContext, useEffect } from 'react';
+import { RootTabScreenProps, RootStackParamList } from '../types';
 import { UserContext } from '../contexts/User';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
@@ -201,6 +201,4 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         color: "white"
     },
-
-
 })

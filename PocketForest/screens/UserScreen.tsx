@@ -36,10 +36,10 @@ export default function UserPage() {
 
 
   return (
-    
+
     <View style={styles.container}>
-       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-       <View style={styles.innerContainer}>
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        <View style={styles.innerContainer}>
           <Text style={styles.title}>Select User Profile</Text>
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           <View style={styles.users}>
@@ -51,12 +51,11 @@ export default function UserPage() {
                     ? <Image style={styles.animalImage} source={require('../assets/images/owl.png')}/>
                     : <Image style={styles.animalImage} source={require('../assets/images/bear.png')}/>
                   }
-                  
                 </View></Pressable>
             ))}
-            </View>
+          </View>
         </View>
-        </ImageBackground>
+      </ImageBackground>
     </View>
   );
 }
@@ -98,16 +97,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0, 0.60)'
   },
-  // peter22: {
-  //   backgroundColor: '#69a297'
-  // },
-  // john11: {
-  //   backgroundColor: '#fff3b0',
-  //   color: '#303030'
-  // },
-  // sofia123: {
-  //   backgroundColor: '#ff7733'
-  // },
   user: {
     backgroundColor: '#69a297',
     padding: 20,

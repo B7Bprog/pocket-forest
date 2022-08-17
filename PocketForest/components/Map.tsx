@@ -26,8 +26,6 @@ export default function Map() {
   let foxMessage;
   let alertIcon;
 
-  console.log(selectedTree, "selectedTree");
-
   if (closeEnough) {
     foxMessage = (
       <Pressable
@@ -89,6 +87,7 @@ export default function Map() {
     },
     {
       id: 2,
+
       title: "Unknown Tree",
       species: "Sorbus aucuparia",
 
@@ -101,6 +100,7 @@ export default function Map() {
     },
     {
       id: 3,
+
       title: "English Oak",
       species: "Sorbus aucuparia",
       description: "Added to your forest 09/08/22",
@@ -112,6 +112,7 @@ export default function Map() {
     },
     {
       id: 4,
+
       title: "Tree in my garden",
       species: "Sorbus aucuparia",
 
@@ -124,7 +125,8 @@ export default function Map() {
       icon: "question",
     },
     {
-      id: 5,
+      id: "62f63c4eb9af5ccf4ef7865a",
+
       title: "Unknown Tree",
       species: "Sorbus aucuparia",
 
@@ -134,10 +136,10 @@ export default function Map() {
         longitude: -2.238243474494392,
       },
       icon: "question",
-      species: "Sorbus aucuparia",
     },
     {
       id: 6,
+
       title: "Unknown Tree",
       species: "Sorbus aucuparia",
 
@@ -150,6 +152,7 @@ export default function Map() {
     },
     {
       id: 7,
+
       title: "Unknown Tree",
       description: "try to add it to your Forest!",
       location: {
@@ -161,6 +164,7 @@ export default function Map() {
     },
     {
       id: 8,
+
       title: "Spider plant",
       species: "Chlorophytum comosum",
 
@@ -226,9 +230,7 @@ export default function Map() {
     if (distance < 30) {
       setCloseEnough(true);
       setSelectedTree(this.species);
-      setSelectedTreeId(this.key);
-      console.log(this.species, "this.species");
-      console.log(this, "this");
+      setSelectedTreeId(this.id);
     } else {
       setTreeDistance(distance);
       setCloseEnough(false);
@@ -259,6 +261,7 @@ export default function Map() {
                 title={tree.title}
                 description={tree.description}
                 species={tree.species}
+                id={tree.id}
                 key={tree.id}
                 onPress={handleOnPress}
               >

@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   },
   textbox: {
     backgroundColor: "rgba(255, 255, 255, 0.9)",
-    height: "12%",
+    height: "15%",
     width: "100%",
     position: "absolute",
     bottom: 0,

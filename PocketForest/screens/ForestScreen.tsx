@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { getTrees } from '../utils/api'
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
+import { FontAwesome5 } from "@expo/vector-icons";
+
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -172,6 +174,11 @@ export default function ForestPage() {
               ))}
             </View>
             <Pressable style={styles.homeButton} onPress={() => navigation.navigate('Home')} >
+            <FontAwesome5
+                name="home"
+                size={26}
+                style={{ color: "#fff" }}
+              />
               <Text style={styles.homeButtonText}>Home</Text>
             </Pressable>
           </View>
@@ -271,16 +278,20 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   homeButton: {
-    borderRadius: 5,
-    backgroundColor: "green",
-    borderColor: "green",
+    borderRadius: 20,
+    backgroundColor: '#69a297',
     padding: 15,
     paddingHorizontal: 30,
-    color: "green",
-    borderWidth: 3,
+    display: 'flex',
+    justifyContent:'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 80
   },
   homeButtonText: {
     fontSize: 20,
     fontWeight: "500",
+    color: 'white',
+    marginLeft: 15
   }
 });

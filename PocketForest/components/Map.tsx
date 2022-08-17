@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import {
@@ -12,6 +12,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from '../contexts/User';
 
 export default function Map() {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -21,7 +22,8 @@ export default function Map() {
   const [selectedTree, setSelectedTree] = useState("");
   const [selectedTreeId, setSelectedTreeId] = useState("");
 
-  const navigation = useNavigation();
+  const navigation = useNavigation(); 
+  const {loggedInUser} = useContext(UserContext);
 
   let foxMessage;
   let alertIcon;
@@ -66,11 +68,7 @@ export default function Map() {
       </View>
     );
   } else {
-    foxMessage = (
-      <Text style={styles.textInsideTextbox}>
-        Hi! Let's go find some trees!
-      </Text>
-    );
+    foxMessage = <Text style={styles.textInsideTextbox}>Hi {loggedInUser}! Let's go find some trees!</Text>
   }
 
   const [trees] = useState([
@@ -343,8 +341,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   textInsideTextbox: {
-    fontSize: 18,
-    color: "black",
+    fontSize: 16,
+    color: 'black'
   },
   animal: {
     backgroundColor: "#69a297",

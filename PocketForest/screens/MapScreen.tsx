@@ -7,12 +7,9 @@ import Map from '../components/Map';
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
-
 export default function MapPage() {
 
-
   const navigation = useNavigation<homeScreenProp>();
-
 
   return (
     <View style={styles.container}>

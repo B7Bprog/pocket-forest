@@ -12,7 +12,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from '../contexts/User';
+import { UserContext } from "../contexts/User";
 
 export default function Map() {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -23,8 +23,8 @@ export default function Map() {
   const [selectedTree, setSelectedTree] = useState("");
   const [selectedTreeId, setSelectedTreeId] = useState("");
 
-  const navigation = useNavigation(); 
-  const {loggedInUser} = useContext(UserContext);
+  const navigation = useNavigation();
+  const { loggedInUser } = useContext(UserContext);
 
   let foxMessage;
   let alertIcon;
@@ -69,7 +69,11 @@ export default function Map() {
       </View>
     );
   } else {
-    foxMessage = <Text style={styles.textInsideTextbox}>Hi {loggedInUser}! Let's go find some trees!</Text>
+    foxMessage = (
+      <Text style={styles.textInsideTextbox}>
+        Hi {loggedInUser}! Let's go find some trees!
+      </Text>
+    );
   }
 
   useEffect(() => {
@@ -88,7 +92,6 @@ export default function Map() {
         //   [...response.username, user],
         //   "[...response.username, user]"
         // );
-        console.log(response);
 
         setTrees(response);
       })
@@ -372,7 +375,7 @@ const styles = StyleSheet.create({
   },
   textInsideTextbox: {
     fontSize: 16,
-    color: 'black'
+    color: "black",
   },
   animal: {
     backgroundColor: "#69a297",
@@ -408,5 +411,5 @@ const styles = StyleSheet.create({
   },
   click: {
     color: "#ff7733",
-  }
+  },
 });

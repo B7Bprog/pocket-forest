@@ -22,8 +22,9 @@ import { UserContext } from "../contexts/User";
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function CameraPage({ route }) {
-  const { loggeInUser } = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const navigation = useNavigation<cameraScreenProp>();
+  console.log(loggedInUser, "<<<<<<<<<<loggedin user");
 
   const { selectedTree, selectedTreeId } = route.params;
   // console.log(selectedTree, selectedTreeId, "selectedTree, selectedTreeId");
@@ -45,27 +46,15 @@ export default function CameraPage({ route }) {
     console.log("<<<<<<<<<<<<In get tree info UseEffect");
 
     if (imgURL) {
-      const newUserImage = { [loggeInUser]: imgURL };
+      const newUserImage = { [loggedInUser]: imgURL };
       const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}`;
       fetch(apiURL)
         .then((response) => response.json())
         .then((response) => {
-          // console.log(response.username, "response.username");
-          // console.log(response.users_image_url, "response.users_image_url");
-
-          // console.log(
-          //   [...response.users_image_url, newUserImage],
-          //   "[...response.users_image_url, newUserImage]"
-          // );
-          // console.log(
-          //   [...response.username, user],
-          //   "[...response.username, user]"
-          // );
-
           setNewTreeImgUrls({
             users_image_url: [...response.users_image_url, newUserImage],
           });
-          setNewTreeUsers({ username: [...response.username, loggeInUser] });
+          setNewTreeUsers({ username: [...response.username, loggedInUser] });
           setImgURL("");
         })
         .then(() => {
@@ -80,11 +69,10 @@ export default function CameraPage({ route }) {
     }
   }, [imgURL]);
 
-  console.log(newTreeImgUrls, "newTreeImgUrls outside");
-  console.log(newTreeUsers, "newTreeUsers outside");
+  // console.log(newTreeImgUrls, "newTreeImgUrls outside");
+  // console.log(newTreeUsers, "newTreeUsers outside");
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In newTreeImgUrls UseEffect");
     if (newTreeImgUrls) {
       const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}/add-user-image`;
       fetch(apiURL, {
@@ -112,8 +100,6 @@ export default function CameraPage({ route }) {
   }, [newTreeImgUrls]);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In newTreeUsers UseEffect");
-
     if (newTreeUsers) {
       const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}/add-user`;
       fetch(apiURL, {

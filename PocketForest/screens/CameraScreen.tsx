@@ -18,16 +18,15 @@ import { RootTabScreenProps, RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import MatchModal from "../components/MatchModal";
 import NotMatchModal from "../components/NotMatchModal";
+import axios from "axios";
 
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
-export default function CameraPage() {
+export default function CameraPage({ route }) {
   const navigation = useNavigation<cameraScreenProp>();
 
-  const dummyTree = {
-    coords: { latitude: 53.179332013090665, longitude: -2.883641382896462 },
-    species: "Sorbus aucuparia",
-  };
+  const { selectedTree, selectedTreeId } = route.params;
+  // console.log(selectedTree, selectedTreeId, "selectedTree, selectedTreeId");
 
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -37,8 +36,111 @@ export default function CameraPage() {
   const [match, setMatch] = useState(false);
   const [notMatch, setNotMatch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [imgURL, setImgURL] = useState("");
+  const [newTreeImgUrls, setNewTreeImgUrls] = useState(null);
+  const [newTreeUsers, setNewTreeUsers] = useState(null);
+
+  const user = "dummyUser";
+  const tree_id = "62fcd39ad75efeddce76a019";
 
   useEffect(() => {
+    console.log("<<<<<<<<<<<<In get tree info UseEffect");
+
+    if (imgURL) {
+      const newUserImage = { [user]: imgURL };
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}`;
+      fetch(apiURL)
+        .then((response) => response.json())
+        .then((response) => {
+          // console.log(response.username, "response.username");
+          // console.log(response.users_image_url, "response.users_image_url");
+
+          // console.log(
+          //   [...response.users_image_url, newUserImage],
+          //   "[...response.users_image_url, newUserImage]"
+          // );
+          // console.log(
+          //   [...response.username, user],
+          //   "[...response.username, user]"
+          // );
+
+          setNewTreeImgUrls({
+            users_image_url: [...response.users_image_url, newUserImage],
+          });
+          setNewTreeUsers({ username: [...response.username, user] });
+          setImgURL("");
+        })
+        .then(() => {
+          console.log(newTreeImgUrls, "newTreeImgUrls");
+          console.log(newTreeUsers, "newTreeUsers");
+        })
+        .catch((err) => {
+          alert("fetch tree data");
+          console.log(err, "error in newTreeImgUrls");
+          setImgURL("");
+        });
+    }
+  }, [imgURL]);
+
+  console.log(newTreeImgUrls, "newTreeImgUrls outside");
+  console.log(newTreeUsers, "newTreeUsers outside");
+
+  useEffect(() => {
+    console.log("<<<<<<<<<<<<In newTreeImgUrls UseEffect");
+    if (newTreeImgUrls) {
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}/add-user-image`;
+      fetch(apiURL, {
+        method: "PATCH",
+        body: JSON.stringify(newTreeImgUrls),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setNewTreeImgUrls(null);
+          console.log(response);
+          console.log(
+            response.users_image_url,
+            "response for updating image urls"
+          );
+        })
+        .catch((err) => {
+          setNewTreeImgUrls(null);
+          alert("Cannot update tree image urls");
+          console.log(err, "error in newTreeImgUrls");
+        });
+    }
+  }, [newTreeImgUrls]);
+
+  useEffect(() => {
+    console.log("<<<<<<<<<<<<In newTreeUsers UseEffect");
+
+    if (newTreeUsers) {
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}/add-user`;
+      fetch(apiURL, {
+        method: "PATCH",
+        body: JSON.stringify(newTreeUsers),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setNewTreeUsers(null);
+          console.log(response, "response for updating tree usernames");
+        })
+        .catch((err) => {
+          setNewTreeUsers(null);
+          alert("Cannot update tree usernames");
+          console.log(err, "error in newTreeUsers");
+        });
+    }
+  }, [newTreeUsers]);
+
+  useEffect(() => {
+    console.log("<<<<<<<<<<<<In fetch Image UseEffect");
+
     if (match) {
       Promise.resolve(photo.base64).then((base64files) => {
         const options = { quality: 0.1, base64: true };
@@ -63,7 +165,8 @@ export default function CameraPage() {
             let data = await response.json();
             if (data.secure_url) {
               console.log(data.secure_url);
-              // alert("Upload successful");
+              setImgURL(data.secure_url);
+              alert("Upload successful");
             }
           })
           .catch((err) => {
@@ -74,10 +177,14 @@ export default function CameraPage() {
   }, [match]);
 
   useEffect(() => {
+    console.log("<<<<<<<<<<<<in PlantData API Use Effect");
     if (plantData) {
+      // console.log(
+      //   plantData.suggestions[0].plant_details.scientific_name,
+      //   "top suggested Sci Name"
+      // );
       if (
-        plantData.suggestions[0].plant_details.scientific_name ===
-        dummyTree.species
+        plantData.suggestions[0].plant_details.scientific_name === selectedTree
       ) {
         setMatch(true);
         setIsLoading(false);
@@ -124,7 +231,7 @@ export default function CameraPage() {
       setIsLoading(true);
       Promise.resolve(photo.base64).then((base64files) => {
         const data = {
-          api_key: "0QaJnCInVbv2wysEGzT5uZkAXFniTTNlMjVbR2qZqsAebjfKdP",
+          api_key: "kNy7fQGPhdis1LDUEP2hx4Ckuk8D2p6prUBnrSvrgWdSVi0Wt3",
           images: [`image/jpeg;base64,${base64files}`],
           // modifiers docs: https://github.com/flowerchecker/Plant-id-API/wiki/Modifiers
           modifiers: ["crops_fast", "similar_images"],

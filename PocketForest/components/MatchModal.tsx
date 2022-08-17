@@ -23,6 +23,7 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function MatchModal(props) {
   const navigation = useNavigation<homeScreenProp>();
+
   const { matchingDetails, setMatch } = props;
 
   const handleOnPressMap = () => {

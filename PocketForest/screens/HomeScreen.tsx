@@ -22,17 +22,9 @@ export default function HomePage() {
         <Text style={styles.title}>POCKET</Text>
         <Text style={styles.title}>FOREST</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <View>
-        <Pressable style={styles.button} onPress={() => navigation.navigate('User')}>
-          <Text style={styles.buttonText}>LOGIN</Text>
-        </Pressable>
-        </View>
-        <View style={styles.bottomButton}>
-        <Pressable style={styles.button2} onPress={() => navigation.navigate('Camera')}>
-          <Text style={styles.buttonText2}>Snap a pic!</Text>
-        </Pressable>
-        <Pressable style={styles.button2} onPress={() => navigation.navigate('Forest')}>
-          <Text style={styles.buttonText2}>Go straight to forest</Text>
+        <View style={styles.buttonArea}>
+        <Pressable style={styles.pressable} onPress={() => navigation.navigate('User')}>
+            <Text style={styles.buttonText}>LOGIN</Text>
         </Pressable>
         </View>
         </View>
@@ -50,6 +42,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 50,
     fontWeight: '800',
+    color: 'white'
   },
   separator: {
     marginVertical: 30,
@@ -72,16 +65,17 @@ const styles = StyleSheet.create({
   buttonArea: {
     backgroundColor: 'transparent'
   },
-  button: {
-    backgroundColor: 'green',
-    borderRadius: 5,
+  pressable: {
+    backgroundColor: '#69a297',
+    borderRadius: 50,
     color: 'white',
     padding: 15,
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
   },
   buttonText: {
     fontSize: 20,
-    fontWeight: '500'
+    fontWeight: '500',
+    color: 'white',
   },
   button2: {
     borderRadius: 5,

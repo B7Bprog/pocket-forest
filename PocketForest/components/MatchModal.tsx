@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   animal: {
     backgroundColor: "#69a297",
-    borderRadius: "50%",
+    borderRadius: 50,
     padding: 10,
     marginLeft: 20,
     borderColor: "#ff7733",

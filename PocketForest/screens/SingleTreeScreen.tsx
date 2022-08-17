@@ -30,11 +30,34 @@ export default function SingleTreePage({route}) {
             console.log(error)
         })
     }, [treeId])
+    
 
+        const picsArray = tree.users_image_url;
 
+    console.log(picsArray)
 
+    let treePic = undefined;
+    
 
-  
+    if (picsArray) {
+        const filteredArray = picsArray.filter((item) => {
+            return item[loggedInUser]
+        })
+    
+    
+        console.log(filteredArray)
+    
+        treePic = filteredArray[0][loggedInUser]
+    
+        console.log(typeof treePic, '<<<')
+
+    }
+
+   
+    
+    
+
+    
 
 
     return (
@@ -44,12 +67,15 @@ export default function SingleTreePage({route}) {
             <View style={styles.title}>
                 <Text style={styles.titleText}>{tree.name}</Text>
             </View>
-            {/* <View style={styles.treeImageWrapper}>
-                <Image style={styles.treeImage} 
+            <View style={styles.treeImageWrapper}>
+                { treePic ? <Image style={styles.treeImage} 
                     source={{
-                        uri: treeImg[loggedInUser]
+                        uri: treePic
                     }} />
-            </View> */}
+                    : <Image style={styles.treeImage} 
+                    source={exampleImage.img} />
+                }
+            </View>
             <View style={styles.singleTreeInfo}>    
                 <Text style={styles.text}>Belongs to {tree.family} family</Text>
             </View>

@@ -1,4 +1,4 @@
-import { StyleSheet, Button } from 'react-native';
+import { StyleSheet, Button, Pressable } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -15,7 +15,9 @@ export default function MapPage() {
     <View style={styles.container}>
       <Map />
       <View style={styles.bottomBar}>
-        <Button title='forest' onPress={() => navigation.navigate('Forest')}/>
+        <Pressable style={styles.bottomButton} onPress={() => navigation.navigate('Forest')}>
+        <Text style={styles.bottomButtonText}>Forest</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -42,5 +44,17 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  bottomButton: {
+    borderRadius: 5,
+    borderColor: 'white',
+    padding: 15,
+    paddingHorizontal: 30,
+    color: 'white',
+    borderWidth: 3,
+  },
+  bottomButtonText: {
+    fontSize: 20,
+    fontWeight: '500',
   }
 });

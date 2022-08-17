@@ -78,11 +78,11 @@ export default function SingleTreePage({ route }) {
                                     source={exampleImage.img} />
                             }
                         </View>
-                        <View style={styles.singleTreeInfo}>
-                            <Text style={styles.text}>Belongs to {tree.family} family</Text>
-                        </View>
                         <View style={styles.dateTime}>
-                            <Text style={styles.text}>at {tree.latitude} and {tree.longitude}</Text>
+                            <Text style={styles.text}>You found that tree at {tree.latitude} and {tree.longitude} on {tree.createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
+                        </View>
+                        <View style={styles.singleTreeInfo}>
+                            <Text style={styles.text}>It belongs to the {tree.family} family.</Text>
                         </View>
                         <View style={styles.description}>
                             <Text style={styles.text}>{tree.description}</Text>

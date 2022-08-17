@@ -16,9 +16,13 @@ import { UserContext } from '../contexts/User';
 
 export default function Map() {
   const [errorMsg, setErrorMsg] = useState(null);
+  const [trees, setTrees] = useState(null);
   const [mapRegion, setMapRegion] = useState(null);
   const [treeDistance, setTreeDistance] = useState(0);
   const [closeEnough, setCloseEnough] = useState(false);
+  const [selectedTree, setSelectedTree] = useState("");
+  const [selectedTreeId, setSelectedTreeId] = useState("");
+
   const navigation = useNavigation(); 
   const {loggedInUser} = useContext(UserContext);
 
@@ -27,7 +31,14 @@ export default function Map() {
 
   if (closeEnough) {
     foxMessage = (
-      <Pressable onPress={() => navigation.navigate("Camera")}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("Camera", {
+            selectedTree: selectedTree,
+            selectedTreeId: selectedTreeId,
+          });
+        }}
+      >
         <Text style={styles.textInsideTextbox}>
           Let's <Text style={styles.click}>add this tree</Text> to our forest!
         </Text>
@@ -61,89 +72,135 @@ export default function Map() {
     foxMessage = <Text style={styles.textInsideTextbox}>Hi {loggedInUser}! Let's go find some trees!</Text>
   }
 
-  const [trees] = useState([
-    {
-      id: 1,
-      title: "Unknown Tree",
-      description: "try to add it to your Forest!",
-      location: {
-        latitude: 53.451657,
-        longitude: -2.515016,
-      },
-      icon: "question",
-    },
-    {
-      id: 2,
-      title: "Unknown Tree",
-      description: "try to add it to your Forest!",
-      location: {
-        latitude: 53.453316,
-        longitude: -2.519637,
-      },
-      icon: "question",
-    },
-    {
-      id: 3,
-      title: "English Oak",
-      description: "Added to your forest 09/08/22",
-      location: {
-        latitude: 53.450312,
-        longitude: -2.530635,
-      },
-      icon: "question",
-    },
-    {
-      id: 4,
-      title: "Tree in my garden",
-      description: "Added to your forest 09/08/22",
-      location: {
-        latitude: 53.45394162343724,
-        longitude: -2.5236933834300235,
-      },
+  useEffect(() => {
+    const apiURL = `https://pocket-forest.herokuapp.com/api/all-trees`;
+    fetch(apiURL)
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response.username, "response.username");
+        // console.log(response.users_image_url, "response.users_image_url");
 
-      icon: "question",
-    },
-    {
-      id: 5,
-      title: "Unknown Tree",
-      description: "try to add it to your Forest!",
-      location: {
-        latitude: 53.47209257474375,
-        longitude: -2.238243474494392,
-      },
-      icon: "question",
-    },
-    {
-      id: 6,
-      title: "Unknown Tree",
-      description: "try to add it to your Forest!",
-      location: {
-        latitude: 53.47061682068318,
-        longitude: -2.2381110286010633,
-      },
-      icon: "question",
-    },
-    {
-      id: 7,
-      title: "Unknown Tree",
-      description: "try to add it to your Forest!",
-      location: {
-        latitude: 53.4699969889311,
-        longitude: -2.2386341689692553,
-      },
-      icon: "question",
-    },
-    {
-      id: 8,
-      title: "Unknown Tree",
-      description: "try to add it to your Forest!",
-      location: {
-        latitude: 53.47058623012321,
-        longitude: -2.23926192489555,
-      },
-      icon: "question",
-    },
-  ]);
+        // console.log(
+        //   [...response.users_image_url, newUserImage],
+        //   "[...response.users_image_url, newUserImage]"
+        // );
+        // console.log(
+        //   [...response.username, user],
+        //   "[...response.username, user]"
+        // );
+        console.log(response);
+
+        setTrees(response);
+      })
+      .catch((err) => {
+        alert("fetch tree data");
+        console.log(err, "error in newTreeImgUrls");
+      });
+  }, []);
+
+  // const [trees] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Unknown Tree",
+  //     description: "try to add it to your Forest!",
+  //     location: {
+  //       latitude: 53.451657,
+  //       longitude: -2.515016,
+  //     },
+  //     icon: "question",
+  //     species: "Sorbus aucuparia",
+  //   },
+  //   {
+  //     id: 2,
+
+  //     title: "Unknown Tree",
+  //     species: "Sorbus aucuparia",
+
+  //     description: "try to add it to your Forest!",
+  //     location: {
+  //       latitude: 53.453316,
+  //       longitude: -2.519637,
+  //     },
+  //     icon: "question",
+  //   },
+  //   {
+  //     id: 3,
+
+  //     title: "English Oak",
+  //     species: "Sorbus aucuparia",
+  //     description: "Added to your forest 09/08/22",
+  //     location: {
+  //       latitude: 53.450312,
+  //       longitude: -2.530635,
+  //     },
+  //     icon: "question",
+  //   },
+  //   {
+  //     id: 4,
+
+  //     title: "Tree in my garden",
+  //     species: "Sorbus aucuparia",
+
+  //     description: "Added to your forest 09/08/22",
+  //     location: {
+  //       latitude: 53.45394162343724,
+  //       longitude: -2.5236933834300235,
+  //     },
+
+  //     icon: "question",
+  //   },
+  //   {
+  //     id: "62f63c4eb9af5ccf4ef7865a",
+
+  //     title: "Unknown Tree",
+  //     species: "Sorbus aucuparia",
+
+  //     description: "try to add it to your Forest!",
+  //     location: {
+  //       latitude: 53.47209257474375,
+  //       longitude: -2.238243474494392,
+  //     },
+  //     icon: "question",
+  //   },
+  //   {
+  //     id: 6,
+
+  //     title: "Unknown Tree",
+  //     species: "Sorbus aucuparia",
+
+  //     description: "try to add it to your Forest!",
+  //     location: {
+  //       latitude: 53.47061682068318,
+  //       longitude: -2.2381110286010633,
+  //     },
+  //     icon: "question",
+  //   },
+  //   {
+  //     id: 7,
+
+  //     title: "Unknown Tree",
+  //     description: "try to add it to your Forest!",
+  //     location: {
+  //       latitude: 53.4699969889311,
+  //       longitude: -2.2386341689692553,
+  //     },
+  //     icon: "question",
+  //     species: "Sorbus aucuparia",
+  //   },
+  //   {
+  //     id: 8,
+
+  //     title: "Spider plant",
+  //     species: "Chlorophytum comosum",
+
+  //     description: "try to add it to your Forest!",
+  //     location: {
+  //       latitude: 53.472332159757165,
+  //       longitude: -2.2422963213345315,
+  //     },
+  //     icon: "question",
+  //   },
+  // ]);
 
   useEffect(() => {
     (async () => {
@@ -195,8 +252,10 @@ export default function Map() {
 
     const distance = radiusEarth * c;
 
-    if (distance < 20) {
+    if (distance < 30) {
       setCloseEnough(true);
+      setSelectedTree(this.species);
+      setSelectedTreeId(this.id);
     } else {
       setTreeDistance(distance);
       setCloseEnough(false);
@@ -220,23 +279,28 @@ export default function Map() {
             </View>
           </Marker>
         )}
-        {trees
-          ? trees.map((tree) => (
-              <Marker
-                coordinate={tree.location}
-                title={tree.title}
-                description={tree.description}
-                key={tree.id}
-                onPress={handleOnPress}
-              >
-                <FontAwesome5
-                  name={tree.icon}
-                  size={26}
-                  style={{ color: "#00ff6a" }}
-                />
-              </Marker>
-            ))
-          : null}
+
+        {trees &&
+          trees.map((tree) => (
+            <Marker
+              coordinate={{
+                latitude: +tree.latitude,
+                longitude: +tree.longitude,
+              }}
+              title={tree.name}
+              description={tree.description}
+              species={tree.species}
+              id={tree._id}
+              key={tree._id}
+              onPress={handleOnPress}
+            >
+              <FontAwesome5
+                name="tree"
+                size={26}
+                style={{ color: "#00ff6a" }}
+              />
+            </Marker>
+          ))}
       </MapView>
       <View style={styles.textbox}>
         {alertIcon}
@@ -312,7 +376,7 @@ const styles = StyleSheet.create({
   },
   animal: {
     backgroundColor: "#69a297",
-    borderRadius: "50%",
+    borderRadius: 50,
     padding: 10,
     marginLeft: 20,
     borderColor: "#ff7733",
@@ -331,7 +395,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ff7733",
     width: 35,
     height: 35,
-    borderRadius: "50%",
+    borderRadius: 50,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

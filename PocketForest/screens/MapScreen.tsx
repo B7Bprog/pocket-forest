@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   },
   bottomBar: {
     height: 100,
-    backgroundColor: 'green',
+    backgroundColor: '#244f26',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center'
   },
   bottomButton: {
-    borderRadius: 5,
+    borderRadius: 20,
     borderColor: 'white',
     padding: 15,
     paddingHorizontal: 30,

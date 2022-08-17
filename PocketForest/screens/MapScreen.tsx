@@ -1,8 +1,8 @@
 import { StyleSheet, Button, Pressable } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import Map from '../components/Map';
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -18,20 +18,20 @@ export default function MapPage() {
       <Map />
       <View style={styles.bottomBar}>
         <Pressable style={styles.bottomButton} onPress={() => navigation.navigate('Home')}>
-        <FontAwesome5
-                name="home"
-                size={26}
-                style={{ color: "#fff" }}
-              />
-        <Text style={styles.bottomButtonText}>Home</Text>
+          <FontAwesome5
+            name="home"
+            size={26}
+            style={{ color: "#fff" }}
+          />
+          <Text style={styles.bottomButtonText}>Home</Text>
         </Pressable>
         <Pressable style={styles.bottomButton} onPress={() => navigation.navigate('Forest')}>
-        <FontAwesome5
-                name="tree"
-                size={26}
-                style={{ color: "#fff" }}
-              />
-        <Text style={styles.bottomButtonText}>Forest</Text>
+          <FontAwesome5
+            name="tree"
+            size={26}
+            style={{ color: "#fff" }}
+          />
+          <Text style={styles.bottomButtonText}>Forest</Text>
         </Pressable>
       </View>
     </View>

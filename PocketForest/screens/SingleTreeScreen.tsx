@@ -15,7 +15,7 @@ export default function SingleTreePage({ route }) {
     const [tree, setTree] = useState({})
     const { loggedInUser } = useContext(UserContext);
 
-    {require('../assets/images/loading.gif')}
+    { require('../assets/images/loading.gif') }
 
     const loadingImage = require('../assets/images/loading.gif')
 
@@ -86,9 +86,6 @@ export default function SingleTreePage({ route }) {
                             <View style={styles.singleTreeInfo}>
                                 <Text style={[styles.text, styles.familyText]}>{tree.family} family</Text>
                             </View>
-                            {/* <View style={styles.dateTime}>
-                                <Text style={styles.text}>at {tree.latitude} and {tree.longitude}</Text>
-                            </View> */}
                             <View style={styles.description}>
                                 <Text style={styles.text}>{tree.description}</Text>
                             </View>
@@ -105,18 +102,18 @@ export default function SingleTreePage({ route }) {
                         </Pressable>
                         <Pressable style={styles.centrePressable} onPress={handleOnPressMap}>
                             <FontAwesome5
-                                    name="map"
-                                    size={26}
-                                    style={{ color: "#fff" }}
-                                />
+                                name="map"
+                                size={26}
+                                style={{ color: "#fff" }}
+                            />
                             <Text style={styles.centrePressableText}>Map</Text>
                         </Pressable>
                         <Pressable style={styles.rightPressable} onPress={handleOnPressForest}>
                             <FontAwesome5
-                                    name="tree"
-                                    size={26}
-                                    style={{ color: "#fff" }}
-                                />
+                                name="tree"
+                                size={26}
+                                style={{ color: "#fff" }}
+                            />
                             <Text style={styles.rightPressableText}>Forest</Text>
                         </Pressable>
                     </View>
@@ -150,7 +147,7 @@ const styles = StyleSheet.create({
         width: "90%",
         marginTop: "5%"
     },
-    textWrapper : {
+    textWrapper: {
         width: '85%',
         backgroundColor: '#fff3b0',
         borderRadius: 20,

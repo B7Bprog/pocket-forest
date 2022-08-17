@@ -8,6 +8,7 @@ import {
   Modal,
   Dimensions,
   Pressable,
+  Route,
 } from "react-native";
 
 import { RootTabScreenProps, RootStackParamList } from "../types";
@@ -22,10 +23,8 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function MatchModal(props) {
   const navigation = useNavigation<homeScreenProp>();
-  const { setMatch } = props;
-  // console.log(setMatch, "setMatch");
 
-  // console.log(props, "in MatchModal");
+  const { matchingDetails, setMatch } = props;
 
   const handleOnPressMap = () => {
     setMatch(false);
@@ -36,6 +35,11 @@ export default function MatchModal(props) {
     setMatch(false);
     return navigation.navigate("Forest");
   };
+
+  // const handleOnPressSingleTree = () => {
+  //   setMatch(false);
+  //   return navigation.navigate("SingleTreePage", {matchingDetails});
+  // };
 
   return (
     <View style={styles.centeredView}>
@@ -67,6 +71,7 @@ export default function MatchModal(props) {
           >
             <Text style={styles.rightPressableText}>Forest</Text>
           </Pressable>
+          {/* <Pressable onPress={handleOnPressSingleTree}><Text>Tree</Text></Pressable> */}
         </View>
       </View>
     </View>
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
   },
   animal: {
     backgroundColor: "#69a297",
-    borderRadius: "50%",
+    borderRadius: 50,
     padding: 10,
     marginLeft: 20,
     borderColor: "#ff7733",

@@ -20,6 +20,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import HomePage from "../screens/HomeScreen";
 import MapPage from "../screens/MapScreen";
 import ForestPage from "../screens/ForestScreen";
+import SingleTreePage from "../screens/SingleTreeScreen";
 import CameraPage from "../screens/CameraScreen";
 import UserPage from "../screens/UserScreen";
 
@@ -74,6 +75,11 @@ function RootNavigator() {
       <Stack.Screen
         name="Forest"
         component={ForestPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SingleTreePage"
+        component={SingleTreePage}
         options={{ headerShown: false }}
       />
       <Stack.Screen

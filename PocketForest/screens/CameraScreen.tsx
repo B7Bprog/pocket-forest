@@ -186,11 +186,6 @@ export default function CameraPage({ route }) {
       if (
         plantData.suggestions[0].plant_details.scientific_name === selectedTree
       ) {
-        console.log("matching!");
-        // console.log(
-        //   plantData.suggestions[0].plant_details,
-        //   "plantData.suggestions[0].plant_details"
-        // );
         setMatch(true);
         setIsLoading(false);
       } else {
@@ -199,6 +194,7 @@ export default function CameraPage({ route }) {
       }
     }
   }, [plantData]);
+
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -234,7 +230,6 @@ export default function CameraPage({ route }) {
     const uploadPic = () => {
       setIsLoading(true);
       Promise.resolve(photo.base64).then((base64files) => {
-        //console.log(base64files);
         const data = {
           api_key: "kNy7fQGPhdis1LDUEP2hx4Ckuk8D2p6prUBnrSvrgWdSVi0Wt3",
           images: [`image/jpeg;base64,${base64files}`],
@@ -259,13 +254,10 @@ export default function CameraPage({ route }) {
           body: JSON.stringify(data),
         })
           .then((response) => {
-            // console.log(response, "<<< response");
             return response.json();
           })
           .then((data) => {
             setPlantData(data);
-
-            // console.log("Success:", data);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -396,7 +388,7 @@ const styles = StyleSheet.create({
 
   animal: {
     backgroundColor: "#69a297",
-    borderRadius: "50%",
+    borderRadius: 50,
     padding: 10,
     marginLeft: 20,
     borderColor: "#ff7733",

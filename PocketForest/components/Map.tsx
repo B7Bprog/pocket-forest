@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
   },
   animal: {
     backgroundColor: "#69a297",
-    borderRadius: "50%",
+    borderRadius: 50,
     padding: 10,
     marginLeft: 20,
     borderColor: "#ff7733",
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ff7733",
     width: 35,
     height: 35,
-    borderRadius: "50%",
+    borderRadius: 50,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -408,5 +408,5 @@ const styles = StyleSheet.create({
   },
   click: {
     color: "#ff7733",
-  },
+  }
 });

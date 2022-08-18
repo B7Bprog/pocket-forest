@@ -43,8 +43,6 @@ export default function CameraPage({ route }) {
   const tree_id = "selectedTreeId";
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In get tree info UseEffect");
-
     if (imgURL) {
       const newUserImage = { [loggedInUser]: imgURL };
       const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}`;
@@ -58,8 +56,8 @@ export default function CameraPage({ route }) {
           setImgURL("");
         })
         .then(() => {
-          console.log(newTreeImgUrls, "newTreeImgUrls");
-          console.log(newTreeUsers, "newTreeUsers");
+          // console.log(newTreeImgUrls, "newTreeImgUrls");
+          // console.log(newTreeUsers, "newTreeUsers");
         })
         .catch((err) => {
           alert("fetch tree data");
@@ -85,11 +83,11 @@ export default function CameraPage({ route }) {
         .then((response) => response.json())
         .then((response) => {
           setNewTreeImgUrls(null);
-          console.log(response);
-          console.log(
-            response.users_image_url,
-            "response for updating image urls"
-          );
+          // console.log(response);
+          // console.log(
+          //   response.users_image_url,
+          //   "response for updating image urls"
+          // );
         })
         .catch((err) => {
           setNewTreeImgUrls(null);
@@ -112,7 +110,7 @@ export default function CameraPage({ route }) {
         .then((response) => response.json())
         .then((response) => {
           setNewTreeUsers(null);
-          console.log(response, "response for updating tree usernames");
+          // console.log(response, "response for updating tree usernames");
         })
         .catch((err) => {
           setNewTreeUsers(null);
@@ -123,8 +121,6 @@ export default function CameraPage({ route }) {
   }, [newTreeUsers]);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In fetch Image UseEffect");
-
     if (match) {
       Promise.resolve(photo.base64).then((base64files) => {
         const options = { quality: 0.1, base64: true };
@@ -145,12 +141,11 @@ export default function CameraPage({ route }) {
           method: "POST",
         })
           .then(async (response) => {
-            console.log("we did the thing");
             let data = await response.json();
             if (data.secure_url) {
               console.log(data.secure_url);
               setImgURL(data.secure_url);
-              alert("Upload successful");
+              // alert("Upload successful");
             }
           })
           .catch((err) => {
@@ -161,7 +156,6 @@ export default function CameraPage({ route }) {
   }, [match]);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<in PlantData API Use Effect");
     if (plantData) {
       // console.log(
       //   plantData.suggestions[0].plant_details.scientific_name,

@@ -192,7 +192,7 @@ export default function ForestPage() {
                 >
                   <View style={styles.card}>
                     <View style={styles.imageWrapper}>
-                      {console.log(
+                      {/* {console.log(
                         findUserImage(tree.users_image_url),
                         "FUNCTION should be url"
                       )}
@@ -203,7 +203,7 @@ export default function ForestPage() {
                       {console.log(
                         arrayHasKey(tree.users_image_url, loggedInUser),
                         "tree.users_image_url"
-                      )}
+                      )} */}
 
                       {tree.users_image_url.length > 0 ? (
                         <Image

@@ -39,6 +39,7 @@ export default function ForestPage() {
   console.log(loggedInUser, "logged in user in Forest");
 
   useEffect(() => {
+
     getTrees().then((trees) => {
       setTrees(trees);
     });
@@ -84,10 +85,10 @@ export default function ForestPage() {
             <View style={styles.cardsSection}>
               {result.map((tree) => (
                 <TouchableHighlight
-                  key={tree.id}
+                  key={tree._id}
                   style={styles.cardTouchable}
                   onPress={() =>
-                    navigation.navigate("SingleTreePage", { result })
+                    navigation.navigate("SingleTreePage", { tree })
                   }
                 >
                   <View style={styles.card}>

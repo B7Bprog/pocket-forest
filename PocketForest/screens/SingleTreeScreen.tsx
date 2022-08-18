@@ -10,8 +10,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function SingleTreePage({ route }) {
+    console.log(route.params, '<<route.params here');
+    const _id = route.params.tree._id;
 
-    const { treeId, result } = route.params;
+
     const [tree, setTree] = useState({})
     const { loggedInUser } = useContext(UserContext);
 
@@ -34,20 +36,24 @@ export default function SingleTreePage({ route }) {
     const handleOnPressForest = () => {
         return navigation.navigate("Forest");
     };
+    console.log(_id, 'treeid');
 
     useEffect(() => {
-        fetch(`https://pocket-forest.herokuapp.com/api/trees/${treeId}`)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setTree(data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, [treeId])
+        if (_id) {
+            fetch(`https://pocket-forest.herokuapp.com/api/trees/${_id}`)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    setTree(data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+    }, [_id])
 
+    console.log(JSON.stringify(tree))
 
     const picsArray = tree.users_image_url;
 

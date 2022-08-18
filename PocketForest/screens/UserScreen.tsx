@@ -1,7 +1,7 @@
 import { StyleSheet, Button, Pressable, Image, ImageBackground } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps, RootStackParamList } from '../types';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/User';
@@ -13,15 +13,15 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 export default function UserPage() {
 
   const [users, setUsers] = useState([])
-  const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext)
 
   const navigation = useNavigation<homeScreenProp>();
 
   useEffect(() => {
     getUsers().then((users) => {
-        setUsers(users)
+      setUsers(users)
     })
-}, [])
+  }, [])
 
   function userPress() {
     navigation.navigate('Map')
@@ -35,24 +35,27 @@ export default function UserPage() {
   const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
 
 
-
   return (
-    
+
     <View style={styles.container}>
-       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-       <View style={styles.innerContainer}>
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        <View style={styles.innerContainer}>
           <Text style={styles.title}>Select User Profile</Text>
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           <View style={styles.users}>
             {users.map((user) => (
                 <Pressable key={user.username} style={[styles.user, styles[user.username]]} onPress={()=>  clickUser(user.username) }><Text style={[styles.userTitle, styles[user.username]]}>{user.username}</Text>
-                <View style={styles.animal}>{}
-                  <Image style={styles.animalImage} source={require('../assets/images/bird.png')}/>
+                <View style={styles.animal}>
+                  {
+                    user.username === 'Mark' 
+                    ? <Image style={styles.animalImage} source={require('../assets/images/owl.png')}/>
+                    : <Image style={styles.animalImage} source={require('../assets/images/bear.png')}/>
+                  }
                 </View></Pressable>
             ))}
-            </View>
+          </View>
         </View>
-        </ImageBackground>
+      </ImageBackground>
     </View>
   );
 }
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white'
   },
   separator: {
     marginVertical: 30,
@@ -82,7 +86,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   userTitle: {
-    fontSize: 18,
+    fontSize: 20,
+    color: 'white',
+    fontWeight: '500'
   },
   innerContainer: {
     flex: 1,
@@ -91,16 +97,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0, 0.60)'
   },
-  // peter22: {
-  //   backgroundColor: '#69a297'
-  // },
-  // john11: {
-  //   backgroundColor: '#fff3b0',
-  //   color: '#303030'
-  // },
-  // sofia123: {
-  //   backgroundColor: '#ff7733'
-  // },
   user: {
     backgroundColor: '#69a297',
     padding: 20,

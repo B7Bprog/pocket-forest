@@ -206,7 +206,9 @@ export default function CameraPage({ route }) {
 
   if (photo) {
     const uploadPic = () => {
+
       setIsLoading(true);
+
       Promise.resolve(photo.base64).then((base64files) => {
         const data = {
           api_key: "kNy7fQGPhdis1LDUEP2hx4Ckuk8D2p6prUBnrSvrgWdSVi0Wt3",
@@ -224,6 +226,7 @@ export default function CameraPage({ route }) {
             "synonyms",
           ],
         };
+
         fetch("https://api.plant.id/v2/identify", {
           method: "POST",
           headers: {

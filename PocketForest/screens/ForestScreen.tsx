@@ -121,6 +121,101 @@ const exampleTrees = [
     img: {
       uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg",
     },
+    name: 'Apple Tree',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg"
+    }
+  },
+  {
+    id: 2,
+    name: 'Pear Tree',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/pear-tree-11032021.jpg"
+    }
+  },
+  {
+    id: 3,
+    name: 'Black Ash',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/black-ash-tree-dec11.jpg"
+    }
+  },
+  {
+    id: 4,
+    name: 'Mahogany',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Mahogany-tree.jpg"
+    }
+  },
+  {
+    id: 5,
+    name: 'Peach Tree',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/peach-tree-11032021.jpg"
+    }
+  },
+  {
+    id: 6,
+    name: 'Common Fig',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/common-fig-tree-10032021.jpg"
+    }
+  },
+  {
+    id: 7,
+    name: 'European Beech',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/european-beech-tree-09032021.jpg"
+    }
+  },
+  {
+    id: 8,
+    name: 'Black Birch',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-birch.jpg"
+    }
+  },
+  {
+    id: 9,
+    name: 'Sweet Cherry',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/sweet-cherry-trees-09032021.jpg"
+    }
+  },
+  {
+    id: 10,
+    name: 'American Elm',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/American-elm.jpg"
+    }
+  },
+  {
+    id: 11,
+    name: 'Pignut Hickory',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Pignut-hickory.jpg"
+    }
+  },
+  {
+    id: 12,
+    name: 'European Larch',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/European-larch.jpg"
+    }
+  },
+  {
+    id: 13,
+    name: 'Red Maple',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg"
+    }
+  },
+  {
+    id: 14,
+    name: 'Black Oak',
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg"
+    }
   },
 ];
 
@@ -222,6 +317,7 @@ export default function ForestPage() {
                           source={exampleImage.img}
                         />
                       )}
+
                     </View>
                     <View style={styles.textWrapper}>
                       <Text style={styles.cardTitle}>{tree.name}</Text>
@@ -230,13 +326,18 @@ export default function ForestPage() {
                 </TouchableHighlight>
               ))}
             </View>
-            <Pressable
-              style={styles.homeButton}
-              onPress={() => navigation.navigate("Home")}
-            >
+
+            <Pressable style={styles.homeButton} onPress={() => navigation.navigate('Home')} >
+            <FontAwesome5
+                name="home"
+                size={26}
+                style={{ color: "#fff" }}
+              />
               <Text style={styles.homeButtonText}>Home</Text>
             </Pressable>
           </View>
+
+
         </View>
       </ScrollView>
     </ImageBackground>
@@ -292,7 +393,7 @@ const styles = StyleSheet.create({
       width: 2,
       height: 2,
     },
-    shadowOpacity: 0.9,
+    shadowOpacity: 0.9
   },
   cardTitle: {
     fontSize: 18,
@@ -330,16 +431,20 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   homeButton: {
-    borderRadius: 5,
-    backgroundColor: "green",
-    borderColor: "green",
+    borderRadius: 20,
+    backgroundColor: '#69a297',
     padding: 15,
     paddingHorizontal: 30,
-    color: "green",
-    borderWidth: 3,
+    display: 'flex',
+    justifyContent:'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 80
   },
   homeButtonText: {
     fontSize: 20,
     fontWeight: "500",
-  },
+    color: 'white',
+    marginLeft: 15
+  }
 });

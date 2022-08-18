@@ -1,21 +1,126 @@
-import { StyleSheet, Button, Image, ImageBackground, Pressable, TouchableHighlight, ScrollView } from 'react-native';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps, RootStackParamList } from '../types';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
-import { getTrees } from '../utils/api'
-import { useState, useContext, useEffect } from 'react';
-import { UserContext } from '../contexts/User';
-import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  StyleSheet,
+  Button,
+  Image,
+  ImageBackground,
+  Pressable,
+  TouchableHighlight,
+  ScrollView,
+} from "react-native";
+import { Text, View } from "../components/Themed";
+import { RootTabScreenProps, RootStackParamList } from "../types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import { getTrees } from "../utils/api";
+import { useState, useContext, useEffect } from "react";
+import { UserContext } from "../contexts/User";
 
+type homeScreenProp = StackNavigationProp<RootStackParamList, "Home">;
 
-type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
-
-const exampleImage = { img: { uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" } }
+const exampleImage = {
+  img: {
+    uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg",
+  },
+};
 
 const exampleTrees = [
   {
     id: 1,
+    name: "Apple Tree",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg",
+    },
+  },
+  {
+    id: 2,
+    name: "Pear Tree",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/pear-tree-11032021.jpg",
+    },
+  },
+  {
+    id: 3,
+    name: "Black Ash",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/black-ash-tree-dec11.jpg",
+    },
+  },
+  {
+    id: 4,
+    name: "Mahogany",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Mahogany-tree.jpg",
+    },
+  },
+  {
+    id: 5,
+    name: "Peach Tree",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/peach-tree-11032021.jpg",
+    },
+  },
+  {
+    id: 6,
+    name: "Common Fig",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/common-fig-tree-10032021.jpg",
+    },
+  },
+  {
+    id: 7,
+    name: "European Beech",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/european-beech-tree-09032021.jpg",
+    },
+  },
+  {
+    id: 8,
+    name: "Black Birch",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-birch.jpg",
+    },
+  },
+  {
+    id: 9,
+    name: "Sweet Cherry",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/sweet-cherry-trees-09032021.jpg",
+    },
+  },
+  {
+    id: 10,
+    name: "American Elm",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/American-elm.jpg",
+    },
+  },
+  {
+    id: 11,
+    name: "Pignut Hickory",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Pignut-hickory.jpg",
+    },
+  },
+  {
+    id: 12,
+    name: "European Larch",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/European-larch.jpg",
+    },
+  },
+  {
+    id: 13,
+    name: "Red Maple",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg",
+    },
+  },
+  {
+    id: 14,
+    name: "Black Oak",
+    img: {
+      uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg",
+    },
     name: 'Apple Tree',
     img: {
       uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/apple-tree-11032021.jpg"
@@ -112,30 +217,31 @@ const exampleTrees = [
       uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Black-oak.jpg"
     }
   },
-
-]
-
+];
 
 export default function ForestPage() {
-
-  const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
+  const image = {
+    uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f",
+  };
 
   const navigation = useNavigation<homeScreenProp>();
 
-  const [trees, setTrees] = useState([])
+  const [trees, setTrees] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
 
   const { loggedInUser } = useContext(UserContext);
 
+  console.log(loggedInUser, "logged in user in Forest");
+
   useEffect(() => {
     getTrees().then((trees) => {
-      setTrees(trees)
-    })
-  }, [])
-
+      setTrees(trees);
+    });
+  }, []);
 
   const userTrees = trees.filter((tree) => {
-    tree.username.includes(loggedInUser)
-  })
+    tree.username.includes(loggedInUser);
+  });
 
   const filterByTags = [loggedInUser];
 
@@ -145,26 +251,73 @@ export default function ForestPage() {
     o.username.some((username) => filterByTagSet.has(username))
   );
 
+  function arrayHasKey(arr, key) {
+    type ObjectKey = keyof typeof obj;
+
+    const myVar = key as ObjectKey;
+
+    for (const obj of arr) {
+      if (key in obj) {
+        return obj[myVar];
+      }
+    }
+    return false;
+  }
+
+  // console.log(userTrees, "<<<userTrees");
+  // console.log(result, "<<<result");
 
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.backgroundImage}>
+    <ImageBackground
+      source={image}
+      resizeMode="cover"
+      style={styles.backgroundImage}
+    >
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
-
           <View style={styles.innerContainer}>
             <View style={styles.cardsSection}>
-
               {result.map((tree) => (
-                <TouchableHighlight key={tree._id} style={styles.cardTouchable} onPress={() => navigation.navigate('SingleTreePage', { result: result, treeId: tree._id })}>
+                <TouchableHighlight
+                  key={tree.id}
+                  style={styles.cardTouchable}
+                  onPress={() =>
+                    navigation.navigate("SingleTreePage", { result })
+                  }
+                >
                   <View style={styles.card}>
                     <View style={styles.imageWrapper}>
-                      {tree.users_image_url.length > 0
-                        ? <Image style={styles.forestImage}
+                      {/* {console.log(
+                        findUserImage(tree.users_image_url),
+                        "FUNCTION should be url"
+                      )}
+                      {console.log(
+                        tree.users_image_url,
+                        "tree.users_image_url"
+                      )}
+                      {console.log(
+                        arrayHasKey(tree.users_image_url, loggedInUser),
+                        "tree.users_image_url"
+                      )} */}
+
+                      {tree.users_image_url.length > 0 ? (
+                        <Image
+                          style={styles.forestImage}
                           source={{
-                            uri: tree.users_image_url[0][loggedInUser]
-                          }} />
-                        : <Image style={styles.forestImage} source={exampleImage.img} />
-                      }
+                            url: arrayHasKey(
+                              tree.users_image_url,
+                              loggedInUser
+                            ),
+                          }}
+                        />
+                      ) : (
+                        // source={tree.users_image_url[0]['sofia123']}/>
+                        <Image
+                          style={styles.forestImage}
+                          source={exampleImage.img}
+                        />
+                      )}
+
                     </View>
                     <View style={styles.textWrapper}>
                       <Text style={styles.cardTitle}>{tree.name}</Text>
@@ -173,6 +326,7 @@ export default function ForestPage() {
                 </TouchableHighlight>
               ))}
             </View>
+
             <Pressable style={styles.homeButton} onPress={() => navigation.navigate('Home')} >
             <FontAwesome5
                 name="home"
@@ -191,91 +345,90 @@ export default function ForestPage() {
 }
 
 const styles = StyleSheet.create({
-
   scrollView: {
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0, 0.60)',
+    height: "100%",
+    backgroundColor: "rgba(0,0,0, 0.60)",
   },
   container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
   },
   backgroundImage: {
-    height: '100%',
+    height: "100%",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
   cardsSection: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignContent: 'center',
-    flexDirection: 'row',
-    width: '90%',
-    backgroundColor: 'transparent',
+    display: "flex",
+    justifyContent: "flex-start",
+    alignContent: "center",
+    flexDirection: "row",
+    width: "90%",
+    backgroundColor: "transparent",
     margin: 20,
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
   cardTouchable: {
     height: 200,
-    display: 'flex',
-    width: '44%',
+    display: "flex",
+    width: "44%",
     margin: 10,
     borderRadius: 20,
   },
   card: {
     borderRadius: 20,
-    backgroundColor: '#fff',
-    alignSelf: 'stretch',
-    shadowColor: 'black',
+    backgroundColor: "#fff",
+    alignSelf: "stretch",
+    shadowColor: "black",
     shadowOffset: {
       width: 2,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.9
   },
   cardTitle: {
     fontSize: 18,
-    color: 'black',
-    textAlign: 'center',
+    color: "black",
+    textAlign: "center",
   },
   imageWrapper: {
     height: 110,
-    width: '100%',
-    overflow: 'hidden',
+    width: "100%",
+    overflow: "hidden",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   forestImage: {
-    height: '100%',
-    width: '100%',
-    resizeMode: 'cover'
+    height: "100%",
+    width: "100%",
+    resizeMode: "cover",
   },
   textWrapper: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     padding: 20,
-    textAlign: 'center',
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
-    height: '45%'
+    textAlign: "center",
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
+    height: "45%",
   },
   innerContainer: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
     marginTop: 30,
-    marginBottom: 50
+    marginBottom: 50,
   },
   homeButton: {
     borderRadius: 20,

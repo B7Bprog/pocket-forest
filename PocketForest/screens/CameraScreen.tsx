@@ -9,7 +9,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useContext } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
@@ -18,12 +18,13 @@ import { RootTabScreenProps, RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import MatchModal from "../components/MatchModal";
 import NotMatchModal from "../components/NotMatchModal";
-import axios from "axios";
-
+import { UserContext } from "../contexts/User";
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function CameraPage({ route }) {
+  const { loggedInUser } = useContext(UserContext);
   const navigation = useNavigation<cameraScreenProp>();
+  console.log(loggedInUser, "<<<<<<<<<<loggedin user");
 
   const { selectedTree, selectedTreeId } = route.params;
   // console.log(selectedTree, selectedTreeId, "selectedTree, selectedTreeId");
@@ -39,40 +40,24 @@ export default function CameraPage({ route }) {
   const [imgURL, setImgURL] = useState("");
   const [newTreeImgUrls, setNewTreeImgUrls] = useState(null);
   const [newTreeUsers, setNewTreeUsers] = useState(null);
-
-  const user = "dummyUser";
-  const tree_id = "62fcd39ad75efeddce76a019";
+  const tree_id = "selectedTreeId";
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In get tree info UseEffect");
-
     if (imgURL) {
-      const newUserImage = { [user]: imgURL };
-      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}`;
+      const newUserImage = { [loggedInUser]: imgURL };
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}`;
       fetch(apiURL)
         .then((response) => response.json())
         .then((response) => {
-          // console.log(response.username, "response.username");
-          // console.log(response.users_image_url, "response.users_image_url");
-
-          // console.log(
-          //   [...response.users_image_url, newUserImage],
-          //   "[...response.users_image_url, newUserImage]"
-          // );
-          // console.log(
-          //   [...response.username, user],
-          //   "[...response.username, user]"
-          // );
-
           setNewTreeImgUrls({
             users_image_url: [...response.users_image_url, newUserImage],
           });
-          setNewTreeUsers({ username: [...response.username, user] });
+          setNewTreeUsers({ username: [...response.username, loggedInUser] });
           setImgURL("");
         })
         .then(() => {
-          console.log(newTreeImgUrls, "newTreeImgUrls");
-          console.log(newTreeUsers, "newTreeUsers");
+          // console.log(newTreeImgUrls, "newTreeImgUrls");
+          // console.log(newTreeUsers, "newTreeUsers");
         })
         .catch((err) => {
           alert("fetch tree data");
@@ -82,13 +67,12 @@ export default function CameraPage({ route }) {
     }
   }, [imgURL]);
 
-  console.log(newTreeImgUrls, "newTreeImgUrls outside");
-  console.log(newTreeUsers, "newTreeUsers outside");
+  // console.log(newTreeImgUrls, "newTreeImgUrls outside");
+  // console.log(newTreeUsers, "newTreeUsers outside");
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In newTreeImgUrls UseEffect");
     if (newTreeImgUrls) {
-      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}/add-user-image`;
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}/add-user-image`;
       fetch(apiURL, {
         method: "PATCH",
         body: JSON.stringify(newTreeImgUrls),
@@ -99,11 +83,11 @@ export default function CameraPage({ route }) {
         .then((response) => response.json())
         .then((response) => {
           setNewTreeImgUrls(null);
-          console.log(response);
-          console.log(
-            response.users_image_url,
-            "response for updating image urls"
-          );
+          // console.log(response);
+          // console.log(
+          //   response.users_image_url,
+          //   "response for updating image urls"
+          // );
         })
         .catch((err) => {
           setNewTreeImgUrls(null);
@@ -114,10 +98,8 @@ export default function CameraPage({ route }) {
   }, [newTreeImgUrls]);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In newTreeUsers UseEffect");
-
     if (newTreeUsers) {
-      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}/add-user`;
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}/add-user`;
       fetch(apiURL, {
         method: "PATCH",
         body: JSON.stringify(newTreeUsers),
@@ -128,7 +110,7 @@ export default function CameraPage({ route }) {
         .then((response) => response.json())
         .then((response) => {
           setNewTreeUsers(null);
-          console.log(response, "response for updating tree usernames");
+          // console.log(response, "response for updating tree usernames");
         })
         .catch((err) => {
           setNewTreeUsers(null);
@@ -139,8 +121,6 @@ export default function CameraPage({ route }) {
   }, [newTreeUsers]);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<In fetch Image UseEffect");
-
     if (match) {
       Promise.resolve(photo.base64).then((base64files) => {
         const options = { quality: 0.1, base64: true };
@@ -165,7 +145,7 @@ export default function CameraPage({ route }) {
             if (data.secure_url) {
               console.log(data.secure_url);
               setImgURL(data.secure_url);
-              alert("Upload successful");
+              // alert("Upload successful");
             }
           })
           .catch((err) => {
@@ -176,7 +156,6 @@ export default function CameraPage({ route }) {
   }, [match]);
 
   useEffect(() => {
-    console.log("<<<<<<<<<<<<in PlantData API Use Effect");
     if (plantData) {
       // console.log(
       //   plantData.suggestions[0].plant_details.scientific_name,

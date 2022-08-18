@@ -10,10 +10,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function SingleTreePage({ route }) {
-    console.log(route.params, '<<route.params here');
+
     const _id = route.params.tree._id;
-
-
     const [tree, setTree] = useState({})
     const { loggedInUser } = useContext(UserContext);
 
@@ -36,7 +34,6 @@ export default function SingleTreePage({ route }) {
     const handleOnPressForest = () => {
         return navigation.navigate("Forest");
     };
-    console.log(_id, 'treeid');
 
     useEffect(() => {
         if (_id) {
@@ -53,15 +50,8 @@ export default function SingleTreePage({ route }) {
         }
     }, [_id])
 
-    console.log(JSON.stringify(tree))
-
     const picsArray = tree.users_image_url;
-
-    console.log(picsArray);
-
-
     let treePic = undefined;
-
 
     if (picsArray) {
         const filteredArray = picsArray.filter((item) => {

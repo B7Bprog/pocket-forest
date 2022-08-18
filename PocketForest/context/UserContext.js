@@ -6,7 +6,6 @@ const pocketForestApi = axios.create({
 let user;
 
 pocketForestApi.get("/all-users").then((result) => {
-  // console.log(result, "<<< Result here");
   user = result.data;
 });
 

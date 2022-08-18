@@ -33,10 +33,7 @@ export default function ForestPage() {
 
   const [trees, setTrees] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
-
   const { loggedInUser } = useContext(UserContext);
-
-  console.log(loggedInUser, "logged in user in Forest");
 
   useEffect(() => {
 
@@ -70,9 +67,6 @@ export default function ForestPage() {
     return false;
   }
 
-  // console.log(userTrees, "<<<userTrees");
-  // console.log(result, "<<<result");
-
   return (
     <ImageBackground
       source={image}
@@ -93,19 +87,6 @@ export default function ForestPage() {
                 >
                   <View style={styles.card}>
                     <View style={styles.imageWrapper}>
-                      {/* {console.log(
-                        findUserImage(tree.users_image_url),
-                        "FUNCTION should be url"
-                      )}
-                      {console.log(
-                        tree.users_image_url,
-                        "tree.users_image_url"
-                      )}
-                      {console.log(
-                        arrayHasKey(tree.users_image_url, loggedInUser),
-                        "tree.users_image_url"
-                      )} */}
-
                       {tree.users_image_url.length > 0 ? (
                         <Image
                           style={styles.forestImage}
@@ -117,7 +98,6 @@ export default function ForestPage() {
                           }}
                         />
                       ) : (
-                        // source={tree.users_image_url[0]['sofia123']}/>
                         <Image
                           style={styles.forestImage}
                           source={exampleImage.img}
@@ -142,7 +122,6 @@ export default function ForestPage() {
               <Text style={styles.homeButtonText}>Home</Text>
             </Pressable>
           </View>
-
 
         </View>
       </ScrollView>

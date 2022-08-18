@@ -9,7 +9,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useContext } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
@@ -19,11 +19,14 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import MatchModal from "../components/MatchModal";
 import NotMatchModal from "../components/NotMatchModal";
 
+import { UserContext } from "../contexts/User";
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function CameraPage({ route }) {
+  const { loggedInUser } = useContext(UserContext);
 
   const navigation = useNavigation<cameraScreenProp>();
+  console.log(loggedInUser, "<<<<<<<<<<loggedin user");
 
   const { selectedTree, selectedTreeId } = route.params;
 
@@ -38,23 +41,19 @@ export default function CameraPage({ route }) {
   const [imgURL, setImgURL] = useState("");
   const [newTreeImgUrls, setNewTreeImgUrls] = useState(null);
   const [newTreeUsers, setNewTreeUsers] = useState(null);
-
-  const user = "dummyUser";
-  const tree_id = "62fcd39ad75efeddce76a019";
+  const tree_id = "selectedTreeId";
 
   useEffect(() => {
-
     if (imgURL) {
-      const newUserImage = { [user]: imgURL };
-      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}`;
+      const newUserImage = { [loggedInUser]: imgURL };
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}`;
       fetch(apiURL)
         .then((response) => response.json())
         .then((response) => {
-
           setNewTreeImgUrls({
             users_image_url: [...response.users_image_url, newUserImage],
           });
-          setNewTreeUsers({ username: [...response.username, user] });
+          setNewTreeUsers({ username: [...response.username, loggedInUser] });
           setImgURL("");
         })
         .then(() => {
@@ -71,7 +70,7 @@ export default function CameraPage({ route }) {
 
   useEffect(() => {
     if (newTreeImgUrls) {
-      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}/add-user-image`;
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}/add-user-image`;
       fetch(apiURL, {
         method: "PATCH",
         body: JSON.stringify(newTreeImgUrls),
@@ -97,9 +96,8 @@ export default function CameraPage({ route }) {
   }, [newTreeImgUrls]);
 
   useEffect(() => {
-
     if (newTreeUsers) {
-      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${tree_id}/add-user`;
+      const apiURL = `https://pocket-forest.herokuapp.com/api/trees/${selectedTreeId}/add-user`;
       fetch(apiURL, {
         method: "PATCH",
         body: JSON.stringify(newTreeUsers),
@@ -121,7 +119,6 @@ export default function CameraPage({ route }) {
   }, [newTreeUsers]);
 
   useEffect(() => {
-
     if (match) {
       Promise.resolve(photo.base64).then((base64files) => {
         const options = { quality: 0.1, base64: true };
@@ -146,7 +143,7 @@ export default function CameraPage({ route }) {
             if (data.secure_url) {
               // console.log(data.secure_url);
               setImgURL(data.secure_url);
-              alert("Upload successful");
+              // alert("Upload successful");
             }
           })
           .catch((err) => {

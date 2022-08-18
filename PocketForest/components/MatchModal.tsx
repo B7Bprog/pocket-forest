@@ -164,28 +164,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   leftPressable: {
-    backgroundColor: "white",
-    borderColor: "green",
-    borderRadius: 5,
-    padding: 15,
+    backgroundColor: "#ff7733",
+    borderRadius: 20,
+    padding: 20,
     paddingHorizontal: 30,
-    borderWidth: 3,
   },
   leftPressableText: {
     fontSize: 20,
     fontWeight: "500",
+    color: 'white'
   },
   rightPressable: {
-    borderRadius: 5,
-    backgroundColor: "green",
-    borderColor: "green",
-    padding: 15,
+    borderRadius: 20,
+    backgroundColor: "#69a297",
+    padding: 20,
     paddingHorizontal: 30,
-    color: "green",
-    borderWidth: 3,
   },
   rightPressableText: {
     fontSize: 20,
     fontWeight: "500",
+    color: 'white'
   },
 });

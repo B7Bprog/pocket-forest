@@ -284,14 +284,9 @@ export default function CameraPage({ route }) {
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
         {!match && !notMatch && !isLoading && (
-          <View>
-            <Button title="upload" onPress={uploadPic} />
-
-            <Button title="Share" onPress={sharePic} />
-            {hasMediaLibraryPermission ? (
-              <Button title="Save" onPress={savePhoto} />
-            ) : undefined}
-            <Button title="Discard" onPress={() => setPhoto(undefined)} />
+          <View style={styles.photoOptionsWrapper}>
+            <Pressable style={styles.addButton} onPress={uploadPic}><Text style={styles.addButtonText}>Add to Forest</Text></Pressable>
+            <Pressable style={styles.discardButton} onPress={() => setPhoto(undefined)}><Text style={styles.discardButtonText}>Discard</Text></Pressable>
           </View>
         )}
       </View>
@@ -300,7 +295,7 @@ export default function CameraPage({ route }) {
 
   return (
     <Camera style={styles.container} ref={cameraRef}>
-      <View>
+      <View style={styles.cameraButtonWrapper}>
         <Pressable style={styles.button} onPress={takePic} />
       </View>
       <StatusBar style="auto" />
@@ -320,6 +315,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-end",
+  },
+  cameraButtonWrapper: {
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   loadingMsgBox: {
     backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -349,12 +351,38 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#00b894",
-    justifyContent: "center",
-    alignItems: "flex-end",
     height: 100,
     width: 100,
     borderRadius: 50,
     marginBottom: 50,
+  },
+  photoOptionsWrapper: {
+    display: "flex",
+    flexDirection: 'row',
+    height: 100,
+    width: '100%',
+    justifyContent: "space-around",
+    alignItems: 'center',
+  },
+  addButton: {
+    backgroundColor: '#69a297',
+    borderRadius: 20,
+    padding: 15
+  },
+  addButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: "500"
+  },
+  discardButton: {
+    backgroundColor: '#ff7733',
+    borderRadius: 20,
+    padding: 15
+  },
+  discardButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: "500"
   },
   preview: {
     alignSelf: "stretch",

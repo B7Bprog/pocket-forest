@@ -18,16 +18,17 @@ import { RootTabScreenProps, RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import MatchModal from "../components/MatchModal";
 import NotMatchModal from "../components/NotMatchModal";
+
 import { UserContext } from "../contexts/User";
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function CameraPage({ route }) {
   const { loggedInUser } = useContext(UserContext);
+
   const navigation = useNavigation<cameraScreenProp>();
   console.log(loggedInUser, "<<<<<<<<<<loggedin user");
 
   const { selectedTree, selectedTreeId } = route.params;
-  // console.log(selectedTree, selectedTreeId, "selectedTree, selectedTreeId");
 
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -66,9 +67,6 @@ export default function CameraPage({ route }) {
         });
     }
   }, [imgURL]);
-
-  // console.log(newTreeImgUrls, "newTreeImgUrls outside");
-  // console.log(newTreeUsers, "newTreeUsers outside");
 
   useEffect(() => {
     if (newTreeImgUrls) {
@@ -143,7 +141,7 @@ export default function CameraPage({ route }) {
           .then(async (response) => {
             let data = await response.json();
             if (data.secure_url) {
-              console.log(data.secure_url);
+              // console.log(data.secure_url);
               setImgURL(data.secure_url);
               // alert("Upload successful");
             }
@@ -157,10 +155,6 @@ export default function CameraPage({ route }) {
 
   useEffect(() => {
     if (plantData) {
-      // console.log(
-      //   plantData.suggestions[0].plant_details.scientific_name,
-      //   "top suggested Sci Name"
-      // );
       if (
         plantData.suggestions[0].plant_details.scientific_name === selectedTree
       ) {
@@ -213,10 +207,8 @@ export default function CameraPage({ route }) {
         const data = {
           api_key: "kNy7fQGPhdis1LDUEP2hx4Ckuk8D2p6prUBnrSvrgWdSVi0Wt3",
           images: [`image/jpeg;base64,${base64files}`],
-          // modifiers docs: https://github.com/flowerchecker/Plant-id-API/wiki/Modifiers
           modifiers: ["crops_fast", "similar_images"],
           plant_language: "en",
-          // plant details docs: https://github.com/flowerchecker/Plant-id-API/wiki/Plant-details
           plant_details: [
             "common_names",
             "url",
@@ -289,14 +281,9 @@ export default function CameraPage({ route }) {
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
         {!match && !notMatch && !isLoading && (
-          <View>
-            <Button title="upload" onPress={uploadPic} />
-
-            <Button title="Share" onPress={sharePic} />
-            {hasMediaLibraryPermission ? (
-              <Button title="Save" onPress={savePhoto} />
-            ) : undefined}
-            <Button title="Discard" onPress={() => setPhoto(undefined)} />
+          <View style={styles.photoOptionsWrapper}>
+            <Pressable style={styles.addButton} onPress={uploadPic}><Text style={styles.addButtonText}>Add to Forest</Text></Pressable>
+            <Pressable style={styles.discardButton} onPress={() => setPhoto(undefined)}><Text style={styles.discardButtonText}>Discard</Text></Pressable>
           </View>
         )}
       </View>
@@ -305,7 +292,7 @@ export default function CameraPage({ route }) {
 
   return (
     <Camera style={styles.container} ref={cameraRef}>
-      <View>
+      <View style={styles.cameraButtonWrapper}>
         <Pressable style={styles.button} onPress={takePic} />
       </View>
       <StatusBar style="auto" />
@@ -325,6 +312,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-end",
+  },
+  cameraButtonWrapper: {
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   loadingMsgBox: {
     backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -352,21 +346,45 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
   },
-
   button: {
     backgroundColor: "#00b894",
-    justifyContent: "center",
-    alignItems: "flex-end",
     height: 100,
     width: 100,
     borderRadius: 50,
     marginBottom: 50,
   },
+  photoOptionsWrapper: {
+    display: "flex",
+    flexDirection: 'row',
+    height: 100,
+    width: '100%',
+    justifyContent: "space-around",
+    alignItems: 'center',
+  },
+  addButton: {
+    backgroundColor: '#69a297',
+    borderRadius: 20,
+    padding: 15
+  },
+  addButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: "500"
+  },
+  discardButton: {
+    backgroundColor: '#ff7733',
+    borderRadius: 20,
+    padding: 15
+  },
+  discardButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: "500"
+  },
   preview: {
     alignSelf: "stretch",
     flex: 1,
   },
-
   animal: {
     backgroundColor: "#69a297",
     borderRadius: 50,

@@ -4,6 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootTabScreenProps, RootStackParamList } from '../types';
 import { UserContext } from '../contexts/User';
+import { FontAwesome5 } from "@expo/vector-icons";
+
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
@@ -13,7 +15,9 @@ export default function SingleTreePage({ route }) {
     const [tree, setTree] = useState({})
     const { loggedInUser } = useContext(UserContext);
 
-    const exampleImage = { img: { uri: "https://www.homestratosphere.com/wp-content/uploads/2019/07/Red-maple.jpg" } }
+    { require('../assets/images/loading.gif') }
+
+    const loadingImage = require('../assets/images/loading.gif')
 
     const image = { uri: "https://img.freepik.com/free-vector/misty-landscape-with-fog-pine-forest-mountain-slopes-illustration-nature-scene_1150-37301.jpg?w=1800&t=st=1660227623~exp=1660228223~hmac=41f17c953452b51388c7841bc44922934313643e7b0d3ec95d1da77b06f1129f" };
 
@@ -75,27 +79,41 @@ export default function SingleTreePage({ route }) {
                                     uri: treePic
                                 }} />
                                 : <Image style={styles.treeImage}
-                                    source={exampleImage.img} />
+                                    source={loadingImage} />
                             }
                         </View>
-                        <View style={styles.dateTime}>
-                            <Text style={styles.text}>You found that tree at {tree.latitude} and {tree.longitude} on {tree.createdAt.slice(0, 10).split("-").reverse().join("-")}</Text>
-                        </View>
-                        <View style={styles.singleTreeInfo}>
-                            <Text style={styles.text}>It belongs to the {tree.family} family.</Text>
-                        </View>
-                        <View style={styles.description}>
-                            <Text style={styles.text}>{tree.description}</Text>
+                        <View style={styles.textWrapper}>
+                            <View style={styles.singleTreeInfo}>
+                                <Text style={[styles.text, styles.familyText]}>{tree.family} family</Text>
+                            </View>
+                            <View style={styles.description}>
+                                <Text style={styles.text}>{tree.description}</Text>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.bottomBoxButton}>
                         <Pressable style={styles.leftPressable} onPress={handleOnPressHome}>
+                            <FontAwesome5
+                                name="home"
+                                size={26}
+                                style={{ color: "#fff" }}
+                            />
                             <Text style={styles.leftPressableText}>Home</Text>
                         </Pressable>
                         <Pressable style={styles.centrePressable} onPress={handleOnPressMap}>
+                            <FontAwesome5
+                                name="map"
+                                size={26}
+                                style={{ color: "#fff" }}
+                            />
                             <Text style={styles.centrePressableText}>Map</Text>
                         </Pressable>
                         <Pressable style={styles.rightPressable} onPress={handleOnPressForest}>
+                            <FontAwesome5
+                                name="tree"
+                                size={26}
+                                style={{ color: "#fff" }}
+                            />
                             <Text style={styles.rightPressableText}>Forest</Text>
                         </Pressable>
                     </View>
@@ -117,10 +135,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '100%',
         display: 'flex',
-        marginTop: 100,
+        marginTop: 50,
         marginBottom: 130,
         width: '100%',
-        position: "relative"
     },
     upperContainer: {
         display: "flex",
@@ -130,44 +147,56 @@ const styles = StyleSheet.create({
         width: "90%",
         marginTop: "5%"
     },
+    textWrapper: {
+        width: '85%',
+        backgroundColor: '#fff3b0',
+        borderRadius: 20,
+        padding: 20
+    },
     titleText: {
         color: 'white',
         fontSize: 30,
     },
+    familyText: {
+        fontWeight: '500',
+        fontSize: 18,
+        paddingBottom: 10,
+    },
     text: {
-        color: 'white',
+        color: 'black',
         zIndex: 1,
-        fontSize: 20,
+        fontSize: 16,
         paddingBottom: 2,
-        lineHeight: 40
+        lineHeight: 30
     },
     treeImageWrapper: {
-        padding: 20
+        padding: 20,
+        borderRadius: 20,
     },
     treeImage: {
-        height: 300,
+        height: 450,
         width: 300,
-        borderRadius: 20
+        borderRadius: 20,
+        resizeMode: 'cover'
     },
     bottomBoxButton: {
         backgroundColor: "transparent",
         height: "10%",
-        width: "90%",
-        position: "absolute",
-        marginBottom: "20%",
-        bottom: 1,
-        flex: 1,
-        justifyContent: "space-between",
+        width: "100%",
+        display: 'flex',
+        justifyContent: "space-around",
         alignItems: "center",
         flexDirection: "row",
     },
     leftPressable: {
-        backgroundColor: "green",
-        borderColor: "green",
-        borderRadius: 5,
+        backgroundColor: "#69a297",
+        borderRadius: 20,
+        width: 100,
         padding: 15,
         paddingHorizontal: 18,
-        borderWidth: 3,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     leftPressableText: {
         fontSize: 20,
@@ -175,12 +204,14 @@ const styles = StyleSheet.create({
         color: "white"
     },
     centrePressable: {
-        backgroundColor: "green",
-        borderColor: "green",
-        borderRadius: 5,
+        backgroundColor: "#69a297",
+        borderRadius: 20,
+        width: 100,
         padding: 15,
         paddingHorizontal: 18,
-        borderWidth: 3,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     centrePressableText: {
         fontSize: 20,
@@ -188,13 +219,14 @@ const styles = StyleSheet.create({
         color: "white"
     },
     rightPressable: {
-        borderRadius: 5,
-        backgroundColor: "green",
-        borderColor: "green",
+        width: 100,
+        borderRadius: 20,
+        backgroundColor: "#69a297",
         padding: 15,
         paddingHorizontal: 18,
-        color: "green",
-        borderWidth: 3,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     rightPressableText: {
         fontSize: 20,

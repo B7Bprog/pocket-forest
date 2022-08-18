@@ -23,10 +23,6 @@ export default function UserPage() {
     })
   }, [])
 
-  function userPress() {
-    navigation.navigate('Map')
-  }
-
   const clickUser = (username) => {
     setLoggedInUser(username)
     navigation.navigate('Map')
@@ -44,14 +40,15 @@ export default function UserPage() {
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           <View style={styles.users}>
             {users.map((user) => (
-                <Pressable key={user.username} style={[styles.user, styles[user.username]]} onPress={()=>  clickUser(user.username) }><Text style={[styles.userTitle, styles[user.username]]}>{user.username}</Text>
+              <Pressable key={user.username} style={[styles.user, styles[user.username]]} onPress={() => clickUser(user.username)}><Text style={[styles.userTitle, styles[user.username]]}>{user.username}</Text>
                 <View style={styles.animal}>
                   {
-                    user.username === 'Mark' 
-                    ? <Image style={styles.animalImage} source={require('../assets/images/owl.png')}/>
-                    : <Image style={styles.animalImage} source={require('../assets/images/bear.png')}/>
+                    user.username === 'Mark'
+                      ? <Image style={styles.animalImage} source={require('../assets/images/owl.png')} />
+                      : <Image style={styles.animalImage} source={require('../assets/images/bear.png')} />
                   }
-                </View></Pressable>
+                </View>
+              </Pressable>
             ))}
           </View>
         </View>

@@ -81,18 +81,6 @@ export default function Map() {
     fetch(apiURL)
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response.username, "response.username");
-        // console.log(response.users_image_url, "response.users_image_url");
-
-        // console.log(
-        //   [...response.users_image_url, newUserImage],
-        //   "[...response.users_image_url, newUserImage]"
-        // );
-        // console.log(
-        //   [...response.username, user],
-        //   "[...response.username, user]"
-        // );
-
         setTrees(response);
       })
       .catch((err) => {
@@ -100,110 +88,6 @@ export default function Map() {
         console.log(err, "error in newTreeImgUrls");
       });
   }, []);
-
-  // const [trees] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Unknown Tree",
-  //     description: "try to add it to your Forest!",
-  //     location: {
-  //       latitude: 53.451657,
-  //       longitude: -2.515016,
-  //     },
-  //     icon: "question",
-  //     species: "Sorbus aucuparia",
-  //   },
-  //   {
-  //     id: 2,
-
-  //     title: "Unknown Tree",
-  //     species: "Sorbus aucuparia",
-
-  //     description: "try to add it to your Forest!",
-  //     location: {
-  //       latitude: 53.453316,
-  //       longitude: -2.519637,
-  //     },
-  //     icon: "question",
-  //   },
-  //   {
-  //     id: 3,
-
-  //     title: "English Oak",
-  //     species: "Sorbus aucuparia",
-  //     description: "Added to your forest 09/08/22",
-  //     location: {
-  //       latitude: 53.450312,
-  //       longitude: -2.530635,
-  //     },
-  //     icon: "question",
-  //   },
-  //   {
-  //     id: 4,
-
-  //     title: "Tree in my garden",
-  //     species: "Sorbus aucuparia",
-
-  //     description: "Added to your forest 09/08/22",
-  //     location: {
-  //       latitude: 53.45394162343724,
-  //       longitude: -2.5236933834300235,
-  //     },
-
-  //     icon: "question",
-  //   },
-  //   {
-  //     id: "62f63c4eb9af5ccf4ef7865a",
-
-  //     title: "Unknown Tree",
-  //     species: "Sorbus aucuparia",
-
-  //     description: "try to add it to your Forest!",
-  //     location: {
-  //       latitude: 53.47209257474375,
-  //       longitude: -2.238243474494392,
-  //     },
-  //     icon: "question",
-  //   },
-  //   {
-  //     id: 6,
-
-  //     title: "Unknown Tree",
-  //     species: "Sorbus aucuparia",
-
-  //     description: "try to add it to your Forest!",
-  //     location: {
-  //       latitude: 53.47061682068318,
-  //       longitude: -2.2381110286010633,
-  //     },
-  //     icon: "question",
-  //   },
-  //   {
-  //     id: 7,
-
-  //     title: "Unknown Tree",
-  //     description: "try to add it to your Forest!",
-  //     location: {
-  //       latitude: 53.4699969889311,
-  //       longitude: -2.2386341689692553,
-  //     },
-  //     icon: "question",
-  //     species: "Sorbus aucuparia",
-  //   },
-  //   {
-  //     id: 8,
-
-  //     title: "Spider plant",
-  //     species: "Chlorophytum comosum",
-
-  //     description: "try to add it to your Forest!",
-  //     location: {
-  //       latitude: 53.472332159757165,
-  //       longitude: -2.2422963213345315,
-  //     },
-  //     icon: "question",
-  //   },
-  // ]);
 
   useEffect(() => {
     (async () => {
@@ -231,9 +115,9 @@ export default function Map() {
     var a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d * 1000; // meters

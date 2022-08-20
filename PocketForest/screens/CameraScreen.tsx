@@ -18,15 +18,14 @@ import { RootTabScreenProps, RootStackParamList } from "../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import MatchModal from "../components/MatchModal";
 import NotMatchModal from "../components/NotMatchModal";
-
 import { UserContext } from "../contexts/User";
+
 type cameraScreenProp = StackNavigationProp<RootStackParamList, "Camera">;
 
 export default function CameraPage({ route }) {
   const { loggedInUser } = useContext(UserContext);
 
   const navigation = useNavigation<cameraScreenProp>();
-  console.log(loggedInUser, "<<<<<<<<<<loggedin user");
 
   const { selectedTree, selectedTreeId } = route.params;
 
@@ -57,8 +56,6 @@ export default function CameraPage({ route }) {
           setImgURL("");
         })
         .then(() => {
-          // console.log(newTreeImgUrls, "newTreeImgUrls");
-          // console.log(newTreeUsers, "newTreeUsers");
         })
         .catch((err) => {
           alert("fetch tree data");
@@ -81,11 +78,6 @@ export default function CameraPage({ route }) {
         .then((response) => response.json())
         .then((response) => {
           setNewTreeImgUrls(null);
-          // console.log(response);
-          // console.log(
-          //   response.users_image_url,
-          //   "response for updating image urls"
-          // );
         })
         .catch((err) => {
           setNewTreeImgUrls(null);
@@ -108,7 +100,6 @@ export default function CameraPage({ route }) {
         .then((response) => response.json())
         .then((response) => {
           setNewTreeUsers(null);
-          // console.log(response, "response for updating tree usernames");
         })
         .catch((err) => {
           setNewTreeUsers(null);
@@ -141,9 +132,7 @@ export default function CameraPage({ route }) {
           .then(async (response) => {
             let data = await response.json();
             if (data.secure_url) {
-              // console.log(data.secure_url);
               setImgURL(data.secure_url);
-              // alert("Upload successful");
             }
           })
           .catch((err) => {

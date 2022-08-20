@@ -2,33 +2,41 @@
 
 # Summary
 
-Our main goal is to help people get out and learn about trees. 
-In this app, a user has the ability to find a tree which is in their location and capture it to add their collection. 
-Later, users have the ability to gain points and level up in a leaderboard 
-as well as interact with other users.
+The main goal of our app is to help everyone regardless of their age to connect with nature and learn more about the natural world. 
 
 # Main features
-Watch the map of the local area on the screen (while walking around the local area)
-Watch the specific tree on the map
-Locate a specific tree with the camera
-Answer questions about the specific tree
-Adding funfacts
-If correct, tree added to their profile in the app.
-Have an own tree collection page
- 
-# Extra features
-Gain points every time that adds a tree in their profile
-High ranking users can be in a leaderboard
-Interact with other users
 
+Once the user has logged in to the app, they’ll see their current location. When they want to add a tree around their area, they can take a photo of the tree. The photo is sent to an AI which identifies the type of the tree. At this point, the image is uploaded to Cloudinary and our database is updated to add the newly generated image URL and the username of the logged-in user. This way each individual user has their own unique pocket forest that displays their own images. When the user navigates to their Forest page, they will see the full display of the trees that they have collected on their adventures, pulled through from the database using Axios. Once inside your own pocket forest, you can press on each tree to view more information about it.
+ 
+# Idea
+The idea of the app came after a discussion within our team about home gardens and the love that previous generations had around fruit trees.
 
 
 # Tech Stack
-React Native
 
-MapBox
+* React JS
 
-Mongo DB
+* React Native
 
-APIs
+* Expo
+
+* Mongo DB
+
+* Mongoose
+
+* Express
+
+* Node.JS
+
+* Jest
+
+* Heroku
+
+* Axios
+
+* APIs
+
+* TypeScript
+
+* JavaScript
 

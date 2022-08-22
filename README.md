@@ -40,3 +40,4 @@ The idea of the app came after a discussion within our team about home gardens a
 
 * JavaScript
 
+Please check out the pocket-forest-api repo for the backend of this project.
